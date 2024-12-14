@@ -7,6 +7,8 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/base.nix
+    ../../modules/ssh.nix
+    ../../modules/docker.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -47,17 +49,7 @@
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-    };
-  };
-  services.fail2ban.enable = true;
 
-  virtualisation.docker.enable = true;
-  users.extraGroups.docker.members = [ "jona" ];
 nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
