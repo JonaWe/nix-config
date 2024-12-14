@@ -15,10 +15,12 @@
     nixosConfigurations = {
       homelab = let
         username = "jona";
+        specialArgs = {inherit username;};
       in
         nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
           system = "x86_64-linux";
-          specialArgs = {inherit inputs;};
+
           modules = [
             ./hosts/homelab
             ./users/jona/nixos.nix
@@ -27,17 +29,18 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              # home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
             }
           ];
         };
       laptop = let
         username = "jona";
+        specialArgs = {inherit username;};
       in
         nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
           system = "x86_64-linux";
-          specialArgs = {inherit inputs;};
           modules = [
             ./hosts/laptop
             ./users/jona/nixos.nix
