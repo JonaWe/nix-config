@@ -9,8 +9,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 
-
-
 local disable_dir = vim.fn.expand('$HOME/vault') .. '/*'
 
 vim.api.nvim_create_autocmd({"LspAttach"}, {
