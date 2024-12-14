@@ -53,5 +53,6 @@
     git
     wget
     curl
+    tmux
   ];
 }

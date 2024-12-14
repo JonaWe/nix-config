@@ -9,6 +9,8 @@
     ../../modules/base.nix
     ../../modules/ssh.nix
     ../../modules/docker.nix
+    ../../modules/samba.nix
+    ../../modules/jellyfin.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -26,91 +28,11 @@
 
   networking.hostName = "homelab";
 
-  environment.systemPackages = with pkgs; [
-     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     tmux
-     btop
-     kitty
-     git
-     wget
-
-     jellyfin
-     jellyfin-web
-     jellyfin-ffmpeg
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-
-nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  };
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      intel-vaapi-driver # previously vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-      intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
-      # vpl-gpu-rt # QSV on 11th gen or newer
-      intel-media-sdk # QSV up to 11th gen
-    ];
-  };
-
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  services.samba = {
-    openFirewall = true;
-    enable = true;
-    settings = {
-      global = {
-        "server string" = "Nix Samba Share";
-        "netbios name" = "smbnix";
-        security = "user";
-        "hosts allow" = "192.168.188. 127.0.0.1 localhost";
-        "host deny" = "0.0.0.0/0";
-        "guest account" = "nobody";
-        "map to guest" = "bad user";
-      };
-      public = {
-        path = "/mnt/media";
-        "read only" = "no";
-        browsable = "yes";
-        "guest ok" = "yes";
-        comment = "public samba share";
-      };
-    };
-  };
-  services.samba-wsdd = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  # services.immich = {
-  #   enable = true;
-  #   environment.IMMICH_MACHINE_LEARNING_URL = "http://localhost:3003";
-  # };
-
-  # users.users.immich.extraGroups = [ "video" "render" ];
-
-
   networking.firewall = {
     enable = true;
     allowPing = true;
     # Open ports in the firewall.
-    allowedTCPPorts = [ 3001 ];
+    allowedTCPPorts = [3001];
     # allowedUDPPorts = [ ... ];
   };
 
