@@ -239,11 +239,11 @@ return {
             },
         },
     },
-    -- {
-    --     "windwp/nvim-autopairs",
-    --     event = "InsertEnter",
-    --     opts = {},
-    -- },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        opts = {},
+    },
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {
@@ -273,17 +273,6 @@ return {
                 names = false,
             },
         },
-    },
-    {
-        "toppair/peek.nvim",
-        event = { "VeryLazy" },
-        build = "deno task --quiet build:fast",
-        config = function()
-            -- require("peek").setup()
-            require("peek").setup({ app = { "browser" } })
-            vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-            vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
-        end,
     },
     {
         "folke/todo-comments.nvim",
