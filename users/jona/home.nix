@@ -3,7 +3,10 @@
   pkgs,
   ...
 }: {
-  # TODO please change the username & home directory to your own
+  imports = [
+    ../../home/neovim
+  ];
+
   home.username = "jona";
   home.homeDirectory = "/home/jona";
 
@@ -90,11 +93,10 @@
     gh
   ];
 
-  # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
     userName = "Jona";
-    userEmail = "jona@example.com";
+    userEmail = "jona.wessendorf1@uni-bielefeld.de";
     extraConfig = {
       init.defaultBranch = "main";
     };
