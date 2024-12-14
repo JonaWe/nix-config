@@ -49,7 +49,7 @@
   networking.networkmanager.enable = lib.mkDefault true;
 
   environment.systemPackages = with pkgs; [
-    nvim
+    neovim
     git
     wget
     curl
