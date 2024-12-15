@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     tmux
     # these are used for the statusbar
-    hostname
-    whoami
+    # hostname
+    # whoami
   ];
 }
