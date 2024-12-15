@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../home/neovim
+    ../../home/kitty
   ];
 
   home.username = "jona";
