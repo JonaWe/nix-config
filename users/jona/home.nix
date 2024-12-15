@@ -7,6 +7,7 @@
     ../../home/neovim
     ../../home/kitty
     ../../home/tmux
+    ../../home/zathura
   ];
 
   home.username = "jona";

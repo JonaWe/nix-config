@@ -1,0 +1,52 @@
+# set to true to enable dark mode by default
+set recolor false
+
+set adjust-open width
+set recolor-keephue true
+map D set "first-page-column 1:1"
+
+set window-title-basename "true"
+set selection-clipboard "clipboard"
+
+# color theme
+set notification-error-bg       "#E06C75"
+set notification-error-fg       "#FFFEFC" # Foreground
+set notification-warning-bg     "#E5C07B"
+set notification-warning-fg     "#44475a" # Selection
+set notification-bg             "#1A1919" # Background
+set notification-fg             "#FFFEFC" # Foreground
+
+set completion-bg               "#1A1919" # Background
+set completion-fg               "#6272a4" # Comment
+set completion-group-bg         "#1A1919" # Background
+set completion-group-fg         "#6272a4" # Comment
+set completion-highlight-bg     "#44475a" # Selection
+set completion-highlight-fg     "#FFFEFC" # Foreground
+
+set index-bg                    "#1A1919" # Background
+set index-fg                    "#FFFEFC" # Foreground
+set index-active-bg             "#44475a" # Current Line
+set index-active-fg             "#FFFEFC" # Foreground
+
+set inputbar-bg                 "#1A1919" # Background
+set inputbar-fg                 "#FFFEFC" # Foreground
+set statusbar-bg                "#1A1919" # Background
+set statusbar-fg                "#FFFEFC" # Foreground
+
+set highlight-color             "#E5C07B"
+set highlight-active-color      "#C678DD"
+
+set default-bg                  "#1A1919" # Background
+set default-fg                  "#FFFEFC" # Foreground
+
+set render-loading              true
+set render-loading-fg           "#1A1919" # Background
+set render-loading-bg           "#FFFEFC" # Foreground
+
+#
+# Recolor mode settings
+#
+
+set recolor-lightcolor          "#1A1919" # Background
+set recolor-darkcolor           "#FFFEFC" # Foreground
+
