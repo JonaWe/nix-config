@@ -4,10 +4,8 @@
   ...
 }: {
   imports = [
-    ../../home/neovim
-    ../../home/kitty
-    ../../home/tmux
-    ../../home/zathura
+    ../../home/programs/neovim
+    ../../home/programs/tmux
   ];
 
   home.username = "jona";
