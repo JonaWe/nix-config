@@ -48,6 +48,9 @@
 
   networking.networkmanager.enable = lib.mkDefault true;
 
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+
   environment.systemPackages = with pkgs; [
     neovim
     git
