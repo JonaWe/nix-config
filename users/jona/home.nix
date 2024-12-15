@@ -6,6 +6,7 @@
   imports = [
     ../../home/neovim
     ../../home/kitty
+    ../../home/tmux
   ];
 
   home.username = "jona";
