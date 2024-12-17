@@ -2,6 +2,15 @@
 
 This repository ocntains the configuration for my nixos systems.
 
+```nix
+nix.settings.experimental-features = ["nix-command" "flakes"];
+add git to packages
+```
+
+```bash
+git clone https://github.com/JonaWe/nix-config.git
+```
+
 ## Setup on a new system
 
 ```nix
