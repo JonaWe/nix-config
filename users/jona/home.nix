@@ -18,6 +18,8 @@
 
     neofetch
 
+    ventoy
+
     # archives
     zip
     xz
