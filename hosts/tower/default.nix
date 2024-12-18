@@ -25,7 +25,6 @@
       kitty
       alacritty
       sway
-      dbus-sway-environment
       configure-gtk
       wayland
       xdg-utils
