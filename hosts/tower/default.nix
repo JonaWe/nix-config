@@ -23,7 +23,7 @@
     extraPackages = with pkgs; [
       mako
       kitty
-      alacritty
+      foot
       sway
       wayland
       xdg-utils
