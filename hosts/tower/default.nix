@@ -21,20 +21,41 @@
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-    wl-clipboard
-    mako
-
+      wl-clipboard
+      mako
+      alacritty
+      kitty
     ];
+
+    extraSessionCommands = ''
+      export SDL_VIDEODRIVER=wayland
+      export QT_QPA_PLATFORM=wayland
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export MOZ_ENABLE_WAYLAND=1
+    '';
   };
+  programs.waybar.enable = true;
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+        # command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+        user = "jona";
+      };
+      default_session = initial_session;
+    };
+  };
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.wayland = true;
 
   boot.supportedFilesystems = ["ntfs"];
 
