@@ -25,15 +25,12 @@
       kitty
       alacritty
       sway
-      configure-gtk
       wayland
       xdg-utils
       glib
-      whitesur-icon-theme
       grim
       slurp
       wl-clipboard
-      capitaine-cursors
     ];
 
     extraSessionCommands = ''
