@@ -21,10 +21,20 @@
     enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
-      wl-clipboard
       mako
-      alacritty
       kitty
+      alacritty
+      sway
+      dbus-sway-environment
+      configure-gtk
+      wayland
+      xdg-utils
+      glib
+      whitesur-icon-theme
+      grim
+      slurp
+      wl-clipboard
+      capitaine-cursors
     ];
 
     extraSessionCommands = ''
@@ -35,6 +45,7 @@
       export MOZ_ENABLE_WAYLAND=1
     '';
   };
+  services.dbus.enable = true;
   programs.waybar.enable = true;
 
   xdg.portal = {
