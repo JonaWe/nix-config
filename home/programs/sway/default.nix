@@ -17,7 +17,9 @@
     recursive = true;
   };
   programs.waybar.enable = true;
-  programs.rofy-wayland.enable = true;
+  home.packages = with pkgs; [
+    rofi-wayland
+  ];
   # programs.sway = {
   #   enable = true;
   # };
