@@ -16,8 +16,35 @@
 
   services.gnome.gnome-keyring.enable = true;
   # services.dbus.enable = true;
-  security.polkit.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
+  programs.sway = {
+    enable = true;
+    systemd.enable = true;
+    wrapperFeatures.gtk = true;
+
+    extraPackages = with pkgs; [
+      foot
+      wayland
+      xdg-utils
+      glib
+      grim
+      slurp
+      wl-clipboard
+    ];
+
+    extraSessionCommands = ''
+      export SDL_VIDEODRIVER=wayland
+      export QT_QPA_PLATFORM=wayland
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+      export _JAVA_AWT_WM_NONREPARENTING=1
+      export MOZ_ENABLE_WAYLAND=1
+    '';
+  };
   services.greetd = {
     enable = true;
     settings = rec {

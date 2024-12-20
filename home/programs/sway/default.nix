@@ -23,32 +23,5 @@
     sway
     mako
     kitty
-
-    foot
-    wayland
-    xdg-utils
-    glib
-    grim
-    slurp
-    wl-clipboard
   ];
-
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
-  wayland.windowManager.sway = {
-    enable = true;
-    systemd.enable = true;
-    wrapperFeatures.gtk = true;
-
-    extraSessionCommands = ''
-      export SDL_VIDEODRIVER=wayland
-      export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-      export _JAVA_AWT_WM_NONREPARENTING=1
-      export MOZ_ENABLE_WAYLAND=1
-    '';
-  };
 }
