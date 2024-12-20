@@ -27,7 +27,7 @@
   # enable Sway window manager
   programs.sway = {
     enable = true;
-    systemd.enable = true;
+    # systemd.enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       mako
