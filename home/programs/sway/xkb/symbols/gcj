@@ -1,0 +1,57 @@
+// Keyboard layout for coding for Germany.
+
+default partial alphanumeric_keys
+
+xkb_symbols "basic" {
+
+    include "latin(type4)"
+
+    name[Group1]="GCJ";
+
+    include "kpdl(comma)"
+
+    include "level3(ralt_switch)"
+
+    key <ESC>   {[ Escape ]};
+    key <SCLK>   {[ Caps_Lock ]};
+
+    key <TLDE>	{[ asciicircum, degree ]};
+    key <AE01>	{[ 1, exclam ]};
+    key <AE02>	{[ 2, quotedbl, twosuperior ]};
+    key <AE03>	{[ 3, ampersand, threesuperior ]};
+    key <AE04>	{[ 4, dollar ]};
+    key <AE06>	{[ 6, section ]};
+    key <AE07>	{[ 7, grave ]};
+    key <AE08>	{[ 8, less ]};
+    key <AE09>	{[ 9, greater ]};
+    key <AE10>	{[ 0, equal ]};
+    key <AE11>	{[ numbersign, question ]};
+    key <AE12>	{[ asciitilde ]};
+
+    key <AD01>	{[ q, Q, at ]};
+    key <AD02>	{[ w, W ]};
+    key <AD03>	{[ e, E, EuroSign ]};
+    key <AD04>	{[ r, R, registered ]};
+    key <AD06>	{[ z, Z ]};
+    key <AD08>	{[ i, I, infinity ]};
+    key <AD11>	{[ asterisk, braceleft ]};
+    key <AD12>	{[ plus, braceright, plusminus ]};
+
+    key <AC01>	{[ a, A, adiaeresis, Adiaeresis ]};
+    key <AC02>	{[ s, S, ssharp, ssharp ]};
+    key <AC03>	{[ d, D, odiaeresis, Odiaeresis ]};
+    key <AC04>	{[ f, F, udiaeresis, Udiaeresis ]};
+    key <AC06>	{[ h, H, heart ]};
+    key <AC07>	{[ j, J, dead_belowdot, dead_abovedot ]};
+    key <AC10>	{[ slash, apostrophe ]};
+    key <AC11>	{[ parenleft, bracketleft ]};
+    key <BKSL>	{[ parenright, bracketright ]};
+
+    key <LSGT>	{[ backslash, bar ]};
+    key <AB01>	{[ y, Y ]};
+    key <AB02>	{[ x, X ]};
+    key <AB03>	{[ c, C, copyright ]};
+    key <AB08>	{[ comma, semicolon ]};
+    key <AB09>	{[ period, colon ]};
+    key <AB10>	{[ minus, underscore ]};
+};

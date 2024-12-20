@@ -10,12 +10,12 @@ set $term kitty
 
 # set $change_ws exec ~/dotfiles/.config/sway/scripts/workspace.sh 
 
-# input type:keyboard {
-#     xkb_layout "gcj"
-#     xkb_options caps:ctrl_modifier
-#     repeat_delay 1000
-#     repeat_rate 25
-# }
+input type:keyboard {
+    xkb_layout "gcj"
+    xkb_options caps:ctrl_modifier
+    repeat_delay 1000
+    repeat_rate 25
+}
 
 input type:touchpad {
     tap enable
