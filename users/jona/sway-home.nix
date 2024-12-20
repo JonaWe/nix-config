@@ -7,7 +7,7 @@
     ../../home/programs/neovim
     ../../home/programs/tmux
     ../../home/programs/sway
-    ./base-home
+    ./base-home.nix
   ];
 
 }
