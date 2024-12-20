@@ -21,6 +21,16 @@
     rofi-wayland
     pcmanfm
       sway
+      mako
+      kitty
+
+      foot
+      wayland
+      xdg-utils
+      glib
+      grim
+      slurp
+      wl-clipboard
   ];
   # programs.sway = {
   #   enable = true;
@@ -30,17 +40,6 @@
     enable = true;
     systemd.enable = true;
     wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      mako
-      kitty
-      foot
-      wayland
-      xdg-utils
-      glib
-      grim
-      slurp
-      wl-clipboard
-    ];
 
     extraSessionCommands = ''
       export SDL_VIDEODRIVER=wayland
