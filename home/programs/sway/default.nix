@@ -34,7 +34,7 @@
     };
     cursorTheme = {
         name = "Adawaita";
-        size = 64;
+        size = 24;
     };
   };
 }
