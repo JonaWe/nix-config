@@ -8,7 +8,8 @@
         "netbios name" = "smbnix";
         security = "user";
         "hosts allow" = "192.168.188. 127.0.0.1 localhost";
-        "host deny" = "0.0.0.0/0";
+        # this seems to be an unknown parameter
+        # "host deny" = "0.0.0.0/0";
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
