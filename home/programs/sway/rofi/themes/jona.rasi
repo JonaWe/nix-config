@@ -1,0 +1,96 @@
+configuration {
+  font: "FiraCode Nerd Font Mono 14";
+
+  drun {
+    display-name: "";
+  }
+
+  calc {
+    display-name: "󱖦";
+  }
+
+  clipboard {
+    display-name: "";
+  }
+
+  timeout {
+    delay: 15;
+    action: "kb-cancel";
+  }
+}
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+
+  //bg: #1A1919;
+  bg: #212020;
+  bg-90: #292828;
+  bg-alt: #333131;
+  fg: #FFFEFC;
+  fg-alt: #F5D487;
+
+  background-color: @bg;
+  text-color: @fg;
+}
+
+window {
+  width: 750px;
+}
+
+mainbox {
+  children: [inputbar, listview];
+}
+
+scrollbar {
+  background-color: @bg;
+  handle-color: @bg-alt;
+  margin: 0;
+}
+
+inputbar {
+  background-color: @bg-alt;
+  children: [prompt, entry];
+  padding: 6px;
+  margin: 0 0 10px 0;
+}
+
+entry {
+  background-color: inherit;
+  padding: 12px 3px;
+}
+
+prompt {
+  background-color: inherit;
+  padding: 12px;
+}
+
+listview {
+  lines: 9;
+  scrollbar: true;
+}
+
+element {
+  children: [element-icon, element-text];
+}
+
+element-icon {
+  padding: 10px 10px;
+  size: 42px;
+}
+
+element-icon selected {
+  background-color: @bg-90;
+}
+
+element-text {
+  padding: 10px 0;
+  vertical-align: 0.5;
+}
+
+element-text selected {
+  text-color: @fg-alt;
+  background-color: @bg-90;
+}

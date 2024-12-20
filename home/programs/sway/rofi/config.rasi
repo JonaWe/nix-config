@@ -1,0 +1,6 @@
+configuration {
+  modes: "drun";
+  font: "FiraCode Nerd Font Mono 14";
+}
+
+@theme "jona"
