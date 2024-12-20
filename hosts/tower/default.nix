@@ -15,8 +15,8 @@
   ];
 
   services.gnome.gnome-keyring.enable = true;
-
-  services.dbus.enable = true;
+  # services.dbus.enable = true;
+  security.polkit.enable = true;
 
   xdg.portal = {
     enable = true;
