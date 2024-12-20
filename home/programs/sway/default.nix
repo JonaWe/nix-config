@@ -20,22 +20,24 @@
   home.packages = with pkgs; [
     rofi-wayland
     pcmanfm
-      sway
-      mako
-      kitty
+    sway
+    mako
+    kitty
 
-      foot
-      wayland
-      xdg-utils
-      glib
-      grim
-      slurp
-      wl-clipboard
+    foot
+    wayland
+    xdg-utils
+    glib
+    grim
+    slurp
+    wl-clipboard
   ];
-  # programs.sway = {
-  #   enable = true;
-  # };
-  # enable Sway window manager
+
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;

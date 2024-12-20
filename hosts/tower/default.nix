@@ -18,11 +18,6 @@
   # services.dbus.enable = true;
   security.polkit.enable = true;
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
   services.greetd = {
     enable = true;
     settings = rec {
