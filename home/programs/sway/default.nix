@@ -37,4 +37,5 @@
         size = 24;
     };
   };
+  programs.steam.enable = true;
 }
