@@ -13,7 +13,6 @@
     ../../modules/jellyfin.nix
     ../../modules/fonts.nix
   ];
-
   services.gnome.gnome-keyring.enable = true;
   # services.dbus.enable = true;
 
@@ -34,6 +33,9 @@
       grim
       slurp
       wl-clipboard
+      # glib # provides gsettings command
+      # swaybg
+      # hyprlock
     ];
 
     extraSessionCommands = ''
