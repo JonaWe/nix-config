@@ -1,0 +1,467 @@
+# include /etc/sway/config.d/*
+
+set $mod Mod4
+set $term kitty
+# set $asd grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | "\(.rect.x+.window_rect.x),\(.rect.y+.window_rect.y) \(.window_rect.width)x\(.window_rect.height)"' | slurp)" - | wl-copy
+# set $slurp_window "$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | "\(.rect.x+.window_rect.x),\(.rect.y+.window_rect.y) \(.window_rect.width)x\(.window_rect.height)"' | slurp)"
+
+
+# set $intellij-projects projects/dachs-webapp
+
+# set $change_ws exec ~/dotfiles/.config/sway/scripts/workspace.sh 
+
+# input type:keyboard {
+#     xkb_layout "gcj"
+#     xkb_options caps:ctrl_modifier
+#     repeat_delay 1000
+#     repeat_rate 25
+# }
+
+input type:touchpad {
+    tap enable
+    natural_scroll enable
+    pointer_accel 0.25
+    scroll_factor 0.5
+}
+    # accel_profile adaptive
+
+# output DP-2 scale 1 scale_filter linear position 0 0
+# res = 3840x2160 * (1 / scale)
+# 1.5 = 2560x1440
+# y-offset = 1440
+# x-offsest = 2560-1920 / 2 = 320
+# output $laptop scale 1 pos 0 0
+# output $laptop scale 1 pos 320 1440
+# res = 1920x1200
+
+# output DP-2 scale 1.5 scale_filter linear position 0 0
+# output HDMI-A-1 scale 1 position 0 0
+# output DP-8 position 0 0
+# output DP-7 position 2560 180
+
+# bindswitch --reload --locked lid:on output $laptop disable
+# bindswitch --reload --locked lid:off output $laptop enable
+# bindswitch lid:on output $laptop disable
+# bindswitch lid:off output $laptop enable
+
+
+# for_window [shell="xwayland"] title_format "[XW] %title"
+
+# exec --no-startup-id swayidle.sh
+
+# General Settings + Gap & Border {{{
+
+# Font for window titles
+font xft:FiraCode Nerd Font 12
+
+# Set inner/outer gaps
+gaps inner 0
+gaps outer 0
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only container on this workspace)
+smart_borders on
+
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+default_border pixel 1
+default_floating_border pixel 1
+
+# Hide borders
+hide_edge_borders none
+
+# Hide window title bar
+for_window [class=^.*] border pixel 1
+
+# }}}
+
+# Keybindings {{{
+
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec $term
+
+# kill focused window
+bindsym $mod+q kill
+
+# start program launcher
+bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
+bindsym $mod+Shift+d exec --no-startup-id rofi -show calc -modi calc -no-show-match -no-sort -calc-command "echo '{result}' | wl-copy"
+bindsym $mod+Ctrl+m exec pavucontrol
+
+# Start Applications
+# bindsym $mod+Ctrl+b exec $term -e 'bmenu'
+# bindsym $mod+o exec brave
+bindsym $mod+e exec pcmanfm
+# bindsym $mod+p exec pamac-manager
+bindsym $mod+t exec $term btop
+
+bindsym $mod+g exec swaync-client -t -sw
+
+bindsym $mod+shift+t exec ~/.local/bin/random_wallpaper.sh
+
+bindsym $mod+v exec rofi -modi clipboard:/home/jona/dotfiles/.config/rofi/modis/clipboard-history-modi.sh -show clipboard -show-icons -theme clipboard
+
+# set $asd grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | "\(.rect.x+.window_rect.x),\(.rect.y+.window_rect.y) \(.window_rect.width)x\(.window_rect.height)"' | slurp)" - | wl-copy
+
+#
+# Screen capture
+#
+# set $screenshot 1 selected, 2 whole, 3 selected clipboard, 4 whole clipboard, 5 swappy
+# mode "$screenshot" {
+#     bindsym 1 exec 'grim -g "$(slurp)" ~/ps_$(date +"%Y%m%d%H%M%S").png', mode "default"
+#     bindsym 2 exec 'grim ~/ps_$(date +"%Y%m%d%H%M%S").png', mode "default"
+#     bindsym 3 exec 'grim -g "$(slurp)" - | wl-copy', mode "default"
+#     bindsym 4 exec 'grim - | wl-copy', mode "default"
+#     bindsym 5 exec 'grim -g "$(slurp)" - | swappy -f -', mode "default"
+#
+# # back to normal: Enter or Escape
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+#     bindsym $mod+Print mode "default"
+# }
+#
+# bindsym $mod+Print mode "$screenshot"
+
+
+# bindsym Print exec "grim -g $slurp_window - | wl-copy"
+# bindsym $mod+Print exec "grim -g '$(slurp)' - | wl-copy"
+
+
+
+# # Screenshots
+# bindsym Print exec --no-startup-id maim --select "/home/$USER/Pictures/screenshots/$(date).png"
+# bindsym Ctrl+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/screenshots/$(date).png"
+# bindsym Shift+Print exec --no-startup-id maim "/home/$USER/Pictures/screenshots/$(date).png"
+
+# bindsym $mod+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+# bindsym $mod+Ctrl+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+# bindsym $mod+Shift+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+
+# Disable focus following mouse
+focus_follows_mouse no
+
+# Binds for changing focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Moving focused windows
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym Mod1+Tab workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# Split orientation
+# bindsym $mod+Shift+s split h
+bindsym $mod+Shift+v split v
+
+# Toggle fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Toggle sticky
+bindsym $mod+Shift+s sticky toggle
+
+# Focus the parent container
+# bindsym $mod+a focus parent
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# bindsym $mod+Shift+r restart
+
+# bindsym $mod+Shift+e exec "swaymsg -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'swaymsg exit'"
+
+bindsym $mod+ctrl+l layout toggle split tabbed
+
+# Set shut down, restart and locking features
+# bindsym $mod+minus exec wlogout
+set $mode_system (S)hutdown, (r)eboot, (s)uspend, (h)ibernate, (l)lock, (L)logout
+bindsym $mod+minus mode "$mode_system"
+mode "$mode_system" {
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym l exec --no-startup-id swaylock, mode "default"
+    bindsym Shift+l exec --no-startup-id swaymsg exit, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+set $mode_resize Resize
+bindsym $mod+r mode "$mode_resize"
+mode "$mode_resize" {
+        bindsym j resize grow height 50 px or 50 ppt
+        bindsym k resize shrink height 50 px or 50 ppt
+        bindsym l resize grow width 50 px or 50 ppt
+        bindsym h resize shrink width 50 px or 50 ppt
+
+        # exit resize mode: Enter or Escape
+        bindsym q mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+set $playerctl (space)play/pause, (n)ext, (p)revious
+bindsym $mod+parenright mode "$playerctl"
+mode "$playerctl" {
+    bindsym space exec --no-startup-id playerctl play-pause
+    bindsym n exec --no-startup-id playerctl next
+    bindsym p exec --no-startup-id playerctl previous
+    # exit system mode: "Enter" or "Escape"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# bindsym $mod+u mode "$messenger"
+# set $messenger (s)ignal, (t)elegram, (e)lement
+# mode "$messenger" {
+#     bindsym t [class="Telegram"] focus, mode "default"
+#     bindsym e [class="Element"] focus, mode "default"
+#     bindsym s [class="Signal"] focus, mode "default"
+#     # exit system mode: "Enter" or "Escape"
+#     bindsym q mode "default"
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+# }
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+# }}}
+
+# Workspaces and Displays {{{
+
+# Workspace names
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+
+set $ws11 11
+set $ws12 12
+set $ws13 13
+set $ws14 14
+set $ws15 15
+set $ws16 16
+set $ws17 17
+set $ws18 18
+set $ws19 19
+
+# bindsym $mod+p [class="Signal"] focus
+
+# set $wsMessages "󰍩"
+
+# Primary monitor
+# set $s1 eDP
+# workspace $ws10 output $s1
+# workspace $ws9 output $s1
+# workspace $ws8 output $s1
+# workspace $ws7 output $s1
+#
+# workspace $ws4 output $s1
+# workspace $ws5 output $s1
+# workspace $ws6 output $s1
+#
+# workspace $ws1 output $s1
+# workspace $ws2 output $s1
+# workspace $ws3 output $s1
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+m workspace $ws11
+bindsym $mod+slash workspace $ws12
+bindsym $mod+p workspace $ws13
+bindsym $mod+comma workspace $ws14
+bindsym $mod+u workspace $ws15
+bindsym $mod+n workspace $ws16
+bindsym $mod+parenleft workspace $ws17
+bindsym $mod+i workspace $ws18
+bindsym $mod+o workspace $ws19
+
+bindsym $mod+Shift+m move container to workspace $ws11; workspace $ws11
+bindsym $mod+Shift+slash move container to workspace $ws12; workspace $ws12
+bindsym $mod+Shift+u move container to workspace $ws15; workspace $ws15
+bindsym $mod+Shift+n move container to workspace $ws16; workspace $ws16
+bindsym $mod+Shift+p move container to workspace $ws13; workspace $ws13
+bindsym $mod+Shift+parenleft move container to workspace $ws17; workspace $ws17
+bindsym $mod+Shift+i move container to workspace $ws18; workspace $ws18
+bindsym $mod+Shift+o move container to workspace $ws19; workspace $ws19
+bindsym $mod+Shift+comma move container to workspace $ws14; workspace $ws14
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
+bindsym $mod+Ctrl+0 move container to workspace $ws10
+
+# Move to workspace with focused container
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
+# }}}
+
+# Applications {{{
+#
+# Open applications on specific workspaces
+assign [class="Signal"] $ws15
+assign [class="Element"] $ws15
+assign [class="Telegram"] $ws15
+assign [class="thunderbird"] $ws17
+assign [instance="spotify"]  $ws11
+assign [class="jetbrains-idea"] $ws13
+assign [class="obsidian"] $ws14
+assign [app_id="firefox"] $ws12
+assign [title="Obsidian Terminal"] $ws14
+# for_window [class="calendar.proton.me__u_0"] move to workspace $ws16
+assign [instance="calendar.proton.me__u_0"] $ws16
+# for_window [instance="spotify"] move to workspace $ws11
+assign [instance="brave-browser"] $ws18
+# assign [window_role="browser"] $ws18
+
+for_window [class="Signal"] layout tabbed
+for_window [class="Element"] layout tabbed
+for_window [class="Telegram"] layout tabbed
+for_window [app_id="firefox"] layout tabbed
+for_window [class="obsidian"] layout tabbed
+
+for_window [class="jetbrains-idea"] layout tabbed
+
+for_window [title="File Transfer*"] floating enable
+for_window [class="jetbrains-toolbox"] floating disable
+
+# Zoom Meeting App
+# For pop up notification windows that don't use notifications api
+for_window [app_id="zoom" title="^zoom$"] border none, floating enable
+# For specific Zoom windows
+# for_window [app_id="zoom" title="^(Zoom|About|Settings)$"] border pixel, floating enable
+for_window [app_id="zoom" window_type="notification"] floating enable
+
+# for_window [app_id="zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+# Open Zoom Meeting windows on a new workspace (a bit hacky)
+# for_window [app_id="zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
+for_window [app_id="zoom" title="Zoom Meeting(.*)?"] inhibit_idle open
+
+# System applications
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# exec --no-startup-id nm-applet
+# exec --no-startup-id nm-applet --indicator
+# exec --no-startup-id blueman-applet
+# exec --no-startup-id /home/jona/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox --minimize
+# exec --no-startup-id swaync
+# exec --no-startup-id /home/jona/.local/bin/swayidle.sh
+# exec --no-startup-id wl-paste --watch cliphist store
+
+# exec --no-startup-id xfce4-power-manager
+# exec --no-startup-id pamac-tray
+# exec --no-startup-id clipit
+
+# Audio
+# exec --no-startup-id start-pulseaudio-x11
+# exec --no-startup-id pa-applet
+# exec --no-startup-id pavucontrol
+
+
+# User applications
+# exec --no-startup-id swaymsg 'workspace 17; exec /usr/bin/thunderbird'
+# exec --no-startup-id signal-desktop
+# exec --no-startup-id swaymsg 'workspace 15; exec /usr/bin/telegram-desktop'
+# exec --no-startup-id element-desktop
+# exec --no-startup-id spotify
+# exec --no-startup-id swaymsg 'workspace 19; exec /usr/bin/kitty tmux new-session -A -s main'
+# TODO: verify that this works
+# exec --no-startup-id kitty --directory /home/jona/vault/personal -e "/home/jona/.local/share/bob/nvim-bin/nvim /home/jona/vault/personal/Home.md"
+# exec --no-startup-id protonmail-bridge --noninteractive
+# exec --no-startup-id brave
+# exec --no-startup-id firefox
+# exec --no-startup-id /usr/bin/brave --app=https://calendar.proton.me/u/0/
+# exec --no-startup-id /home/jona/projects/steh/steh.sh 30
+# exec --no-startup-id obsidian
+# exec --no-startup-id kitty --title "Obsidian Terminal" -e zsh 'cd ~/vault/personal && nvim Home.md'
+# exec --no-startup-id syncthing
+# exec --no-startup-id "sleep 10; syncthingtray"
+
+# exec --no-startup-id /home/jona/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea.sh nosplash $intellij-projects
+
+# exec --no-startup-id wlsunset -L 52 -T 4500 -g 1..0 -l 9 -t 3000
+
+# sets wallpaper
+# exec --no-startup-id swww init; $wallpaper_shuffle; swww img ~/Pictures/Wallpapers/active.jpg
+# exec --no-startup-id swww init
+# exec --no-startup-id $wallpaper_shuffle
+# exec --no-startup-id swww img ~/Pictures/Wallpapers/active.jpg
+
+# }}}
+
+
+
+# Theme colors
+# class                 border  backgr. text    indic.   child_border
+client.focused          #F5D48f #F5D48f #1A1919 #BAF59A
+client.focused_inactive #1A1919 #1A1919 #BAF59A #1A1919
+client.unfocused        #1A1919 #1A1919 #F5D48f #1A1919
+client.urgent           #1A1919 #1A1919 #F5D48f #1A1919
+client.placeholder      #1A1919 #1A1919 #F5D48f #1A1919
+
+client.background       #1A1919
+
+
+bar swaybar_command waybar

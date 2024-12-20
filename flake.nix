@@ -30,7 +30,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
+              home-manager.users.${username} = import ./users/${username}/base-home.nix;
             }
           ];
         };
@@ -51,7 +51,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
+              home-manager.users.${username} = import ./users/${username}/sway-home.nix;
             }
           ];
         };
