@@ -25,6 +25,8 @@ input type:touchpad {
 }
     # accel_profile adaptive
 
+output DP-1 mode 2560x1440@144Hz
+
 # output DP-2 scale 1 scale_filter linear position 0 0
 # res = 3840x2160 * (1 / scale)
 # 1.5 = 2560x1440
