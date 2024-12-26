@@ -10,5 +10,5 @@
     commandLineArgs = [
       "--disable-features=WebRtcAllowInputVolumeAdjustment"
     ];
-  }
+  };
 }
