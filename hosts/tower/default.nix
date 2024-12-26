@@ -13,58 +13,60 @@
     ../../modules/jellyfin.nix
     ../../modules/fonts.nix
   ];
-  services.gnome.gnome-keyring.enable = true;
-  services.dbus.enable = true;
+  security.polkit.enable = true;
 
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
+  # services.gnome.gnome-keyring.enable = true;
+  # services.dbus.enable = true;
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
+  # services.gvfs.enable = true; # Mount, trash, and other functionalities
+  # services.tumbler.enable = true; # Thumbnail support for images
+
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  # };
   programs.steam.enable = true;
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-
-    extraPackages = with pkgs; [
-      foot
-      wayland
-      xdg-utils
-      glib
-      grim
-      slurp
-      wl-clipboard
-      # glib # provides gsettings command
-      # swaybg
-      # hyprlock
-    ];
-
-    extraSessionCommands = ''
-      export SDL_VIDEODRIVER=wayland
-      export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-      export _JAVA_AWT_WM_NONREPARENTING=1
-      export MOZ_ENABLE_WAYLAND=1
-    '';
-  };
-  services.greetd = {
-    enable = true;
-    systemdIntegration = {
-      enable = true;
-      extraVariables = ["DISPLAY" "HYPRLAND_INSTANCE_SIGNATURE"];
-    };
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-        # command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-        user = "jona";
-      };
-      default_session = initial_session;
-    };
-  };
+  # programs.sway = {
+  #   enable = true;
+  #   wrapperFeatures.gtk = true;
+  #
+  #   extraPackages = with pkgs; [
+  #     foot
+  #     wayland
+  #     xdg-utils
+  #     glib
+  #     grim
+  #     slurp
+  #     wl-clipboard
+  #     # glib # provides gsettings command
+  #     # swaybg
+  #     # hyprlock
+  #   ];
+  #
+  #   extraSessionCommands = ''
+  #     export SDL_VIDEODRIVER=wayland
+  #     export QT_QPA_PLATFORM=wayland
+  #     export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+  #     export _JAVA_AWT_WM_NONREPARENTING=1
+  #     export MOZ_ENABLE_WAYLAND=1
+  #   '';
+  # };
+  # services.greetd = {
+  #   enable = true;
+  #   systemdIntegration = {
+  #     enable = true;
+  #     extraVariables = ["DISPLAY" "HYPRLAND_INSTANCE_SIGNATURE"];
+  #   };
+  #   settings = rec {
+  #     initial_session = {
+  #       command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+  #       # command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+  #       user = "jona";
+  #     };
+  #     default_session = initial_session;
+  #   };
+  # };
 
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.displayManager.gdm.wayland = true;
