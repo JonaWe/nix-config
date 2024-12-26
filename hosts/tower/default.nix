@@ -52,6 +52,10 @@
   };
   services.greetd = {
     enable = true;
+    systemdIntegration = {
+      enable = true;
+      extraVariables = ["DISPLAY" "HYPRLAND_INSTANCE_SIGNATURE"];
+    };
     settings = rec {
       initial_session = {
         command = "${pkgs.sway}/bin/sway --unsupported-gpu";
