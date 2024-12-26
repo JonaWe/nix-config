@@ -9,6 +9,7 @@
     ../../home/programs/sway
     ../../home/programs/kitty
     ../../home/programs/zathura
+    ../../home/programs/browser
     ./base-home.nix
   ];
 
