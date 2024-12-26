@@ -15,7 +15,7 @@
   ];
   security.polkit.enable = true;
 
-  # services.gnome.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = true;
   # services.dbus.enable = true;
 
   # services.gvfs.enable = true; # Mount, trash, and other functionalities
@@ -28,6 +28,7 @@
   # };
   programs.steam.enable = true;
   programs.dconf.enable = true;
+    programs.sway.enable = true;
   # programs.sway = {
   #   enable = true;
   #   wrapperFeatures.gtk = true;
@@ -53,21 +54,16 @@
   #     export MOZ_ENABLE_WAYLAND=1
   #   '';
   # };
-  # services.greetd = {
-  #   enable = true;
-  #   systemdIntegration = {
-  #     enable = true;
-  #     extraVariables = ["DISPLAY" "HYPRLAND_INSTANCE_SIGNATURE"];
-  #   };
-  #   settings = rec {
-  #     initial_session = {
-  #       command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #       # command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #       user = "jona";
-  #     };
-  #     default_session = initial_session;
-  #   };
-  # };
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+        user = "jona";
+      };
+      default_session = initial_session;
+    };
+  };
 
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.displayManager.gdm.wayland = true;
