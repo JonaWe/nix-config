@@ -33,7 +33,7 @@
           startup = [
           ];
       };
-      extraOption = [  "--unsupported-gpu"
+      extraOptions = [  "--unsupported-gpu"
       ];
       swaynag.enable = true;
       extraSessionCommands = ''
