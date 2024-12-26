@@ -1,9 +1,9 @@
 {pkgs, ...}: {
-  home.file.".config/sway" = {
-    source = ./sway;
-    recursive = true;
-    executable = true;
-  };
+  # home.file.".config/sway" = {
+  #   source = ./sway;
+  #   recursive = true;
+  #   executable = true;
+  # };
   home.file.".config/xkb" = {
     source = ./xkb;
     recursive = true;
@@ -26,7 +26,6 @@
   ];
 
   gtk = {
-
     enable = true;
     theme = {
         name = "Adwaita-dark";
