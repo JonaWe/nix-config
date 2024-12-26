@@ -1,4 +1,4 @@
 {pkgs, ...}: {
   # home.file.".config/kitty/kitty.conf".source = ./kitty.conf;
-  home.packages = with pkgs; [floorp];
+  home.packages = with pkgs; [floorp firefox];
 }
