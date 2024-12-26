@@ -10,6 +10,7 @@
     ../../home/programs/kitty
     ../../home/programs/zathura
     ../../home/programs/browser
+    ../../home/programs/discord
     ./base-home.nix
   ];
 
