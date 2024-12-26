@@ -30,7 +30,7 @@
           };
       };
 # wlr.enable = true;
-# extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
   wayland.windowManager.sway = {
       enable = true;
