@@ -20,7 +20,7 @@
   home.packages = with pkgs; [
     rofi-wayland
     pcmanfm
-    sway
+    # sway
     mako
     kitty
   ];
