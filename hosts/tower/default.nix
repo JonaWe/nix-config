@@ -27,6 +27,7 @@
   #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
   # };
   programs.steam.enable = true;
+  programs.dconf.enable = true;
   # programs.sway = {
   #   enable = true;
   #   wrapperFeatures.gtk = true;
