@@ -93,10 +93,11 @@ in {
             border = 1;
             titlebar = false;
           };
-          startup = [
-            # { command = "systemctl --user restart waybar"; always = true; }
-          ];
-          keybindings = lib.mkOptionDefault {
+          # startup = [
+          #   # { command = "systemctl --user restart waybar"; always = true; }
+          # ];
+          # keybindings = lib.mkOptionDefault {
+          keybindings = {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
             "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun -show-icons";
