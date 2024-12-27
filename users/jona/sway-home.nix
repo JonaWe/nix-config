@@ -45,6 +45,8 @@ in {
 
   wayland.windowManager.sway = {
       enable = true;
+      # workaround for gcj keyboard layout
+      checkConfig = false;
 
       config = rec {
           modifier = "Mod4";
