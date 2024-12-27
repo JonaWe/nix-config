@@ -2,7 +2,16 @@
   config,
   pkgs,
   ...
-}: {
+}:let
+  mod = "Mod4";
+
+  left = "h";
+  down = "j";
+  up = "k";
+  right = "l";
+
+  terminal = "${pkgs.kitty}/bin/kitty";
+in {
   imports = [
     ../../home/programs/neovim
     ../../home/programs/tmux
@@ -36,9 +45,13 @@
       enable = true;
       config = rec {
           modifier = "Mod4";
-          terminal = "kitty"; 
-          startup = [
-          ];
+          bars = [{
+            command = "${pkgs.waybar}/bin/waybar"
+          }];
+          focus = {
+              forceWrapping = false;
+              followMouse = false;
+          };
       };
       extraOptions = [  "--unsupported-gpu"
       ];

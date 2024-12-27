@@ -20,9 +20,9 @@
   home.packages = with pkgs; [
     rofi-wayland
     pcmanfm
-    # sway
     mako
     kitty
+    swaynotificationcenter
   ];
 
   gtk = {
