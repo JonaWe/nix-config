@@ -54,7 +54,7 @@ in {
           }];
           fonts = {
             names = ["FiraCode Nerd Font"];
-            size = 12;
+            size = 10.0;
           };
           input = {
             "type:keyboard" = {
@@ -91,6 +91,9 @@ in {
             border = 1;
             titlebar = false;
           };
+          startup = [
+            # { command = "systemctl --user restart waybar"; always = true; }
+          ];
           keybindings = lib.mkOptionDefault {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
