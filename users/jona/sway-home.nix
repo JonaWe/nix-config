@@ -46,7 +46,7 @@ in {
       config = rec {
           modifier = "Mod4";
           bars = [{
-            command = "${pkgs.waybar}/bin/waybar"
+            command = "${pkgs.waybar}/bin/waybar";
           }];
           focus = {
               forceWrapping = false;
