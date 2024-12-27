@@ -466,4 +466,4 @@ client.placeholder      #1A1919 #1A1919 #F5D48f #1A1919
 client.background       #1A1919
 
 
-bar swaybar_command waybar
+# bar swaybar_command waybar
