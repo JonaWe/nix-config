@@ -60,8 +60,8 @@ in {
             "type:keyboard" = {
                 xkb_layout = "gcj";
                 xkb_options = "caps:ctrl_modifier";
-                repeat_delay = 1000;
-                repeat_rate = 25;
+                repeat_delay = "1000";
+                repeat_rate = "25";
             };
             "type:touchpad" = {
                 tap = "enable";
