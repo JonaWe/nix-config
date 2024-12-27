@@ -101,7 +101,6 @@ in {
             "${mod}+Shift+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show calc -modi calc -no-show-match -no-sort";
             "${mod}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
             "${mod}+g" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
-            "${mod}+g" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
 
             "${mod}+${left}" = "focus left";
             "${mod}+${right}" = "focus right";
