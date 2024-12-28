@@ -52,9 +52,9 @@ in {
       config = rec {
           modifier = "Mod4";
           terminal = "kitty";
-          # bars = [{
-          #     command = "${pkgs.waybar}/bin/waybar";
-          # }];
+          bars = [{
+              command = "${pkgs.waybar}/bin/waybar";
+          }];
           fonts = {
             names = ["FiraCode Nerd Font"];
             size = 10.0;
