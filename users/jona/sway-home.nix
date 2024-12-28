@@ -12,6 +12,7 @@
   right = "l";
 
   terminal = "${pkgs.kitty}/bin/kitty";
+  bar = "${pkgs.waybar}/bin/waybar";
 
 in {
   imports = [
@@ -52,9 +53,9 @@ in {
       config = rec {
           modifier = "Mod4";
           terminal = "kitty";
-          bars = [{
-              command = "${pkgs.waybar}/bin/waybar";
-          }];
+          bars = [
+            { command = bar; }
+          ];
           fonts = {
             names = ["FiraCode Nerd Font"];
             size = 10.0;
@@ -95,12 +96,10 @@ in {
             titlebar = false;
           };
           startup = [
-            # { command = "systemctl --user restart waybar"; always = true; }
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
           ];
           keybindings = lib.mkOptionDefault {
-          keybindings = {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
             "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun -show-icons";
