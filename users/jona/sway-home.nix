@@ -12,6 +12,7 @@
   right = "l";
 
   terminal = "${pkgs.kitty}/bin/kitty";
+
 in {
   imports = [
     ../../home/programs/neovim
@@ -93,10 +94,12 @@ in {
             border = 1;
             titlebar = false;
           };
-          # startup = [
-          #   # { command = "systemctl --user restart waybar"; always = true; }
-          # ];
-          # keybindings = lib.mkOptionDefault {
+          startup = [
+            # { command = "systemctl --user restart waybar"; always = true; }
+            { command = "dbus-sway-environment"; always = true; }
+            { command = "systemctl --user import-environment"; always = true; }
+          ];
+          keybindings = lib.mkOptionDefault {
           keybindings = {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
