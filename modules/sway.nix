@@ -8,9 +8,10 @@ dbus-sway-environment = pkgs.writeTextFile {
     executable = true;
 
     text = ''
-      dbus-update-activation-enviroment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-      systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-      systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+      systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+      dbus-update-activation-enviroment
+      systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-gtk
+      systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-gtk
     '';
   };
 
