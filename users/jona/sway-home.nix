@@ -161,6 +161,26 @@ in {
             "${mod}+parenleft" = "workspace 17";
             "${mod}+i" = "workspace 18";
             "${mod}+o" = "workspace 19";
+
+            "${mod}+Shift+1" = "move container to workspace 1; workspace 1";
+            "${mod}+Shift+2" = "move container to workspace 2; workspace 2";
+            "${mod}+Shift+3" = "move container to workspace 3; workspace 3";
+            "${mod}+Shift+4" = "move container to workspace 4; workspace 4";
+            "${mod}+Shift+5" = "move container to workspace 5; workspace 5";
+            "${mod}+Shift+6" = "move container to workspace 6; workspace 6";
+            "${mod}+Shift+7" = "move container to workspace 7; workspace 7";
+            "${mod}+Shift+8" = "move container to workspace 8; workspace 8";
+            "${mod}+Shift+9" = "move container to workspace 9; workspace 9";
+            "${mod}+Shift+0" = "move container to workspace 10; workspace 10";
+            "${mod}+Shift+m" = "move container to workspace 11; workspace 11";
+            "${mod}+Shift+slash" = "move container to workspace 12; workspace 12";
+            "${mod}+Shift+p" = "move container to workspace 13; workspace 13";
+            "${mod}+Shift+comma" = "move container to workspace 14; workspace 14";
+            "${mod}+Shift+u" = "move container to workspace 15; workspace 15";
+            "${mod}+Shift+n" = "move container to workspace 16; workspace 16";
+            "${mod}+Shift+parenleft" = "move container to workspace 17; workspace 17";
+            "${mod}+Shift+i" = "move container to workspace 18; workspace 18";
+            "${mod}+Shift+o" = "move container to workspace 19; workspace 19";
           };
            colors = let
                primary = "#F5D48f";
