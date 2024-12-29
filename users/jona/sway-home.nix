@@ -159,12 +159,14 @@ in {
                   background = primary;
                   text = background;
                   indicator = secondary;
+                  childBorder = secondary;
                 };
                 focusedInactive = {
                   border = background;
                   background = background;
                   text = secondary;
                   indicator = background;
+                  childBorder = background;
                 };
                 unfocused = {
                   border = background;
@@ -178,12 +180,14 @@ in {
                   background = background;
                   text = primary;
                   indicator = background;
+                  childBorder = background;
                 };
                 placeholder = {
                   border = background;
                   background = background;
                   text = primary;
                   indicator = background;
+                  childBorder = background;
                 };
               };
       };
