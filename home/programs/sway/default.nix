@@ -27,22 +27,22 @@
 
   gtk = {
     enable = true;
-    # theme = {
-    #     name = "Adwaita-dark";
-    #     package = pkgs.gnome-themes-extra;
-    # };
-    # cursorTheme = {
-    #     name = "Adawaita";
-    #     size = 24;
-    # };
-       theme = {
-      package = pkgs.flat-remix-gtk;
-      name = "Flat-Remix-GTK-Grey-Darkest";
+    theme = {
+        name = "Adwaita-dark";
+        package = pkgs.gnome-themes-extra;
     };
-
-    iconTheme = {
-      package = pkgs.gnome.adwaita-icon-theme;
-      name = "Adwaita";
+    cursorTheme = {
+        name = "Adawaita";
+        size = 24;
     };
+    #    theme = {
+    #   package = pkgs.flat-remix-gtk;
+    #   name = "Flat-Remix-GTK-Grey-Darkest";
+    # };
+    #
+    # iconTheme = {
+    #   package = pkgs.gnome.adwaita-icon-theme;
+    #   name = "Adwaita";
+    # };
   };
 }

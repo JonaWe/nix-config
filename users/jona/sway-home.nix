@@ -103,7 +103,6 @@ in {
             { command = "systemctl --user import-environment"; always = true; }
           ];
           keybindings = {
-          # keybindings = lib.mkOptionDefault {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
             "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun -show-icons";
@@ -150,6 +149,18 @@ in {
             "${mod}+5" = "workspace 5";
             "${mod}+6" = "workspace 6";
             "${mod}+7" = "workspace 7";
+            "${mod}+8" = "workspace 8";
+            "${mod}+9" = "workspace 9";
+            "${mod}+0" = "workspace 10";
+            "${mod}+m" = "workspace 11";
+            "${mod}+slash" = "workspace 12";
+            "${mod}+p" = "workspace 13";
+            "${mod}+comma" = "workspace 14";
+            "${mod}+u" = "workspace 15";
+            "${mod}+n" = "workspace 16";
+            "${mod}+parenleft" = "workspace 17";
+            "${mod}+i" = "workspace 18";
+            "${mod}+o" = "workspace 19";
           };
            colors = let
                primary = "#F5D48f";
