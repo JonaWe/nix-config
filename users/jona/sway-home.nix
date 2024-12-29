@@ -86,10 +86,13 @@ in {
           gaps = {
               inner = 0;
               outer = 0;
+              smartBorders = "on";
+              smartGaps = "on";
           };
           window = {
               border = 1;
               titlebar = false;
+              hideEdgeBorders = "none";
           };
           floating = {
             border = 1;
@@ -159,7 +162,7 @@ in {
                   background = primary;
                   text = background;
                   indicator = secondary;
-                  childBorder = secondary;
+                  childBorder = background;
                 };
                 focusedInactive = {
                   border = background;
