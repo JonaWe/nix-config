@@ -29,7 +29,7 @@
   # };
   programs.steam.enable = true;
   programs.dconf.enable = true;
-    programs.sway.enable = true;
+  programs.sway.enable = true;
   # programs.sway = {
   #   enable = true;
   #   wrapperFeatures.gtk = true;
@@ -65,9 +65,6 @@
       default_session = initial_session;
     };
   };
-
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.gdm.wayland = true;
 
   boot.supportedFilesystems = ["ntfs"];
 
