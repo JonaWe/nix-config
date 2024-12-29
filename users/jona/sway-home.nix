@@ -225,7 +225,7 @@ in {
             { command = "swaymsg 'workspace 15; exec ${pkgs.telegram-desktop}/bin/telegram-desktop'"; }
             { command = "${pkgs.element-desktop}/bin/element-desktop"; }
             { command = "${pkgs.spotify}/bin/spotify"; }
-            { command = "swaymsg 'workspace 19; exec ${pkts.kitty}/bin/kitty tmux new-session -A -s main'"; }
+            { command = "swaymsg 'workspace 19; exec ${pkgs.kitty}/bin/kitty tmux new-session -A -s main'"; }
             { command = "${pkgs.brave}/bin/brave"; }
             { command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/"; }
             { command = "${pkgs.firefox}/bin/firefox"; }
