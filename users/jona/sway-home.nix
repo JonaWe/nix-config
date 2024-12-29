@@ -99,7 +99,8 @@ in {
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
           ];
-          keybindings = lib.mkOptionDefault {
+          keybindings = {
+          # keybindings = lib.mkOptionDefault {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
             "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun -show-icons";
