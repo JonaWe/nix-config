@@ -174,16 +174,29 @@ in {
             "${mod}+Shift+o" = "move container to workspace 19; workspace 19";
 
             "${mod}+r" = "mode resize";
+            "${mod}+minus" = "mode session";
           };
           modes = {
             resize = {
                 "q" = "mode default";
                 "Return" = "mode default";
                 "Escape" = "mode default";
-                "j" = "resize grow height 50 px or 50 ppt";
-                "k" = "resize shrink height 50 px or 50 ppt";
-                "l" = "resize grow width 50 px or 50 ppt";
-                "h" = "resize shrink width 50 px or 50 ppt";
+                "${down}" = "resize shrink height 50 px or 50 ppt";
+                "${up}" = "resize grow height 50 px or 50 ppt";
+                "${left}" = "resize shrink width 50 px or 50 ppt";
+                "${right}" = "resize grow width 50 px or 50 ppt";
+            };
+            session = {
+                "q" = "mode default";
+                "Return" = "mode default";
+                "Escape" = "mode default";
+
+                "Shift+s" = "exec ${pkgs.systemd}/bin/systemctl poweroff, mode default";
+                "r" = "exec ${pkgs.systemd}/bin/systemctl reboot, mode default";
+                "h" = "exec ${pkgs.systemd}/bin/systemctl hibernate, mode default";
+                "s" = "exec ${pkgs.systemd}/bin/systemctl suspend, mode default";
+                # "l" = "exec ${swaylock}/bin/swaylock, mode default";
+                "Shift+l" = "exec ${pkgs.sway}/bin/swaymsg exit, mode default";
             };
           };
           startup = [
