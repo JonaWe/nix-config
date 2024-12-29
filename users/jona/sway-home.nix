@@ -162,7 +162,7 @@ in {
                   background = primary;
                   text = background;
                   indicator = secondary;
-                  childBorder = background;
+                  childBorder = primary;
                 };
                 focusedInactive = {
                   border = background;
