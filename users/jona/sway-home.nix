@@ -54,6 +54,7 @@ in {
     firefox
     syncthingtray
     jetbrains.idea-ultimate
+    keepassxc
   ];
 
   services.syncthing = {
