@@ -89,19 +89,10 @@ in {
               smartBorders = "on";
               smartGaps = true;
           };
-          window = {
-              border = 1;
-              titlebar = false;
-              hideEdgeBorders = "none";
-          };
           floating = {
             border = 1;
             titlebar = false;
           };
-          startup = [
-            { command = "dbus-sway-environment"; always = true; }
-            { command = "systemctl --user import-environment"; always = true; }
-          ];
           keybindings = {
             "${mod}+q" = "kill";
             "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
@@ -181,6 +172,81 @@ in {
             "${mod}+Shift+parenleft" = "move container to workspace 17; workspace 17";
             "${mod}+Shift+i" = "move container to workspace 18; workspace 18";
             "${mod}+Shift+o" = "move container to workspace 19; workspace 19";
+
+            "${mod}+r" = "mode resize";
+          };
+          modes = {
+            resize = {
+                "q" = "mode default";
+                "Return" = "mode default";
+                "Escape" = "mode default";
+                "j" = "resize grow height 50 px or 50 ppt";
+                "k" = "resize shrink height 50 px or 50 ppt";
+                "l" = "resize grow width 50 px or 50 ppt";
+                "h" = "resize shrink width 50 px or 50 ppt";
+            };
+          };
+          startup = [
+            # fixes wayland stuff
+            { command = "dbus-sway-environment"; always = true; }
+            { command = "systemctl --user import-environment"; always = true; }
+            # other stuff
+            { command = "firefox"; }
+            { command = "kitty tmux new-session -A -s main"; }
+          ];
+          window = {
+              border = 1;
+              titlebar = false;
+              hideEdgeBorders = "none";
+              commands = [
+              {
+                  command = "layout tabbed";
+                  criteria = {
+                      class = "Signal";
+                  };
+              }
+              {
+                  command = "layout tabbed";
+                  criteria = {
+                      app_id = "firefox";
+                  };
+              }
+              {
+                  command = "floating enable";
+                  criteria = {
+                      title = "File Transfer*";
+                  };
+              }
+              ];
+          };
+          assigns = {
+            "11" = [
+                {instance="spotify";}
+            ];
+            "12" = [
+                {app_id="firefox";}
+            ];
+            "13" = [
+                {class="jetbrains-idea";}
+            ];
+            "14" = [
+                {class="obsidian";}
+                {title="Obsidian Terminal";}
+            ];
+            "15" = [
+                {class="Signal";}
+                {class="Element";}
+                {class="Telegram";}
+            ];
+            "16" = [
+                {instance="calendar.proton.me__u_0";}
+            ];
+            "17" = [
+                {class="thunderbird";}
+            ];
+            "18" = [
+                {instance="brave-browser";}
+            ];
           };
            colors = let
                primary = "#F5D48f";
