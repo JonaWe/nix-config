@@ -52,11 +52,13 @@ in {
     spotify
     obsidian
     firefox
+    syncthingtray
+    jetbrains.idea-ultimate
   ];
 
   services.syncthing = {
       enable = true;
-      tray = true;
+      # tray.enable = true;
   };
 
   wayland.windowManager.sway = {
@@ -219,13 +221,15 @@ in {
             { command = "systemctl --user import-environment"; always = true; }
             # other stuff
             { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
-            { command = "signal-desktop"; }
+            { command = "${pkgs.signal-desktop}/bin/signal-desktop"; }
             { command = "swaymsg 'workspace 15; exec ${pkgs.telegram-desktop}/bin/telegram-desktop'"; }
-            { command = "spotify"; }
-            { command = "swaymsg 'workspace 19; exec kitty tmux new-session -A -s main'"; }
-            { command = "brave"; }
+            { command = "${pkgs.element-desktop}/bin/element-desktop"; }
+            { command = "${pkgs.spotify}/bin/spotify"; }
+            { command = "swaymsg 'workspace 19; exec ${pkts.kitty}/bin/kitty tmux new-session -A -s main'"; }
+            { command = "${pkgs.brave}/bin/brave"; }
             { command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/"; }
-            { command = "firefox"; }
+            { command = "${pkgs.firefox}/bin/firefox"; }
+            { command = "sleep 10; ${pkgs.syncthingtray}/bin/syncthingtray"; }
           ];
           window = {
               border = 1;
