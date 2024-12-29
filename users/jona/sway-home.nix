@@ -44,6 +44,20 @@ in {
 # wlr.enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
+  home.packages = with pkgs; [
+    signal-desktop
+    element-desktop
+    telegram-desktop
+    thunderbird
+    spotify
+    obsidian
+    firefox
+  ];
+
+  services.syncthing = {
+      enable = true;
+      tray = true;
+  };
 
   wayland.windowManager.sway = {
       enable = true;
@@ -204,8 +218,14 @@ in {
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
             # other stuff
+            { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
+            { command = "signal-desktop"; }
+            { command = "swaymsg 'workspace 15; exec ${pkgs.telegram-desktop}/bin/telegram-desktop'"; }
+            { command = "spotify"; }
+            { command = "swaymsg 'workspace 19; exec kitty tmux new-session -A -s main'"; }
+            { command = "brave"; }
+            { command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/"; }
             { command = "firefox"; }
-            { command = "kitty tmux new-session -A -s main"; }
           ];
           window = {
               border = 1;
