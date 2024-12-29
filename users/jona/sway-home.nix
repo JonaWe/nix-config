@@ -148,6 +148,44 @@ in {
             "${mod}+6" = "workspace 6";
             "${mod}+7" = "workspace 7";
           };
+           colors = let
+               primary = "#F5D48f";
+               secondary = "#BAF59A";
+               background = "#1A1919";
+           in {
+                background = background;
+                focused = {
+                  border = primary;
+                  background = primary;
+                  text = background;
+                  indicator = secondary;
+                };
+                focusedInactive = {
+                  border = background;
+                  background = background;
+                  text = secondary;
+                  indicator = background;
+                };
+                unfocused = {
+                  border = background;
+                  background = background;
+                  text = primary;
+                  indicator = background;
+                  childBorder = background;
+                };
+                urgent = {
+                  border = background;
+                  background = background;
+                  text = primary;
+                  indicator = background;
+                };
+                placeholder = {
+                  border = background;
+                  background = background;
+                  text = primary;
+                  indicator = background;
+                };
+              };
       };
 
       extraOptions = [ "--unsupported-gpu" ];
