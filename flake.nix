@@ -55,7 +55,7 @@
             }
           ];
         };
-      laptop = let
+      pangolin = let
         username = "jona";
         specialArgs = {inherit username;};
       in
@@ -63,8 +63,15 @@
           inherit specialArgs;
           system = "x86_64-linux";
           modules = [
-            ./hosts/laptop
+            ./hosts/pangolin
             ./users/jona/nixos.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = inputs // specialArgs;
+              home-manager.users.${username} = import ./users/${username}/sway-home.nix;
+            }
           ];
         };
     };
