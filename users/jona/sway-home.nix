@@ -55,6 +55,7 @@ in {
     syncthingtray
     jetbrains.idea-ultimate
     gparted
+    polkit_gnome
   ];
 
   services.syncthing = {
@@ -220,6 +221,8 @@ in {
             # fixes wayland stuff
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
+            { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; always = true; }
+
             # other stuff
             { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
             { command = "${pkgs.signal-desktop}/bin/signal-desktop"; }

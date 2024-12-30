@@ -24,50 +24,19 @@
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Enable networking
   networking.networkmanager.enable = true;
 
   security.polkit.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
-  # services.dbus.enable = true;
+  services.dbus.enable = true;
 
   # services.gvfs.enable = true; # Mount, trash, and other functionalities
   # services.tumbler.enable = true; # Thumbnail support for images
 
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  # };
   programs.steam.enable = true;
   programs.dconf.enable = true;
   programs.sway.enable = true;
-  # programs.sway = {
-  #   enable = true;
-  #   wrapperFeatures.gtk = true;
-  #
-  #   extraPackages = with pkgs; [
-  #     foot
-  #     wayland
-  #     xdg-utils
-  #     glib
-  #     grim
-  #     slurp
-  #     wl-clipboard
-  #     # glib # provides gsettings command
-  #     # swaybg
-  #     # hyprlock
-  #   ];
-  #
-  #   extraSessionCommands = ''
-  #     export SDL_VIDEODRIVER=wayland
-  #     export QT_QPA_PLATFORM=wayland
-  #     export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-  #     export _JAVA_AWT_WM_NONREPARENTING=1
-  #     export MOZ_ENABLE_WAYLAND=1
-  #   '';
-  # };
   services.greetd = {
     enable = true;
     settings = rec {
@@ -92,31 +61,9 @@
 #    configurationLimit = 10;
 #  };
 
-  # this sets the system time to local time to work with windows dual boot
-#  time.hardwareClockInLocalTime = true;
-
   networking.hostName = "pangolin";
 
-#  boot.blacklistedKernelModules = ["nouveau"];
-#  boot.extraModprobeConfig = ''
-#    blacklist nouveau
-#    options nouveau modeset=0
-#  '';
-#
-#  hardware.graphics = {
-#    enable = true;
-#  };
-#
   services.xserver.videoDrivers = ["amdgpu"];
-#
-#  hardware.nvidia = {
-#    modesetting.enable = true;
-#    powerManagement.enable = false;
-#    powerManagement.finegrained = false;
-#    open = false;
-#    nvidiaSettings = true;
-#    package = config.boot.kernelPackages.nvidiaPackages.stable;
-#  };
 
   networking.firewall = {
     enable = true;
