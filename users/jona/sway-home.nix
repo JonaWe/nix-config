@@ -26,9 +26,6 @@ in {
     ./base-home.nix
   ];
 
-  programs.nm-applet.enable = true;
-
-
   xdg.portal = {
       enable = true;
       config = {
@@ -53,6 +50,7 @@ in {
     jetbrains.idea-ultimate
     gparted
     polkit_gnome
+    nm-applet
   ];
 
   services.syncthing = {
@@ -219,6 +217,7 @@ in {
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
             { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; always = true; }
+            { command = "${pkgs.nm-applet}/bin/nm-applet"; always = true; }
 
             # other stuff
             { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
