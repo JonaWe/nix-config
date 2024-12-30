@@ -26,11 +26,8 @@ in {
     ./base-home.nix
   ];
 
-  # services.gnome.gnome-keyring.enable = true;
-  # services.dbus.enable = true;
+  programs.nm-applet.enable = true;
 
-  # services.gvfs.enable = true; # Mount, trash, and other functionalities
-  # services.tumbler.enable = true; # Thumbnail support for images
 
   xdg.portal = {
       enable = true;
@@ -344,29 +341,4 @@ in {
           '';
       wrapperFeatures.gtk = true;
   };
-
-
-  # programs.sway = {
-  #   enable = true;
-  #
-  #
-  # };
-  # services.greetd = {
-  #   enable = true;
-  #   systemdIntegration = {
-  #     enable = true;
-  #     extraVariables = ["DISPLAY" "HYPRLAND_INSTANCE_SIGNATURE"];
-  #   };
-  #   settings = rec {
-  #     initial_session = {
-  #       command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #       # command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #       user = "jona";
-  #     };
-  #     default_session = initial_session;
-  #   };
-  # };
-
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.gdm.wayland = true;
 }
