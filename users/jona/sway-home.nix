@@ -50,7 +50,7 @@ in {
     jetbrains.idea-ultimate
     gparted
     polkit_gnome
-    nm-applet
+    networkmanagerapplet
   ];
 
   services.syncthing = {
@@ -217,7 +217,7 @@ in {
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
             { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; always = true; }
-            { command = "${pkgs.nm-applet}/bin/nm-applet"; always = true; }
+            { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; always = true; }
 
             # other stuff
             { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
