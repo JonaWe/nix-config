@@ -8,5 +8,6 @@
     neovim
     alejandra
     nixd
+    go
   ];
 }
