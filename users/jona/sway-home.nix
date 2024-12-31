@@ -218,6 +218,7 @@ in {
             { command = "systemctl --user import-environment"; always = true; }
             { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; always = true; }
             { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; always = true; }
+            { command = "${pkgs.swaynotificationcenter}/bin/swaync"; always = true; }
 
             # other stuff
             { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
