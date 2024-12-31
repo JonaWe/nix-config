@@ -9,19 +9,19 @@ return {
             wk.setup({
                 show_help = true,
                 plugins = { spelling = true },
-                key_labels = { ["<leader>"] = "SPC" },
+                replace = { ["<leader>"] = "SPC" },
                 triggers = "auto",
             })
             wk.register({
                 w = { "<cmd>update!<CR>", "Save" },
                 q = { "<cmd>quit<CR>", "Quit" },
-                b = { name = "+Buffer" },
-                f = { name = "+Find" },
-                c = { name = "+Code" },
-                g = { name = "+Git" },
-                l = { name = "+Latex" },
-                t = { name = "+Trouble" },
-                o = { name = "+Obsidian" },
+                b = { group = "+Buffer" },
+                f = { group = "+Find" },
+                c = { group = "+Code" },
+                g = { group = "+Git" },
+                l = { group = "+Latex" },
+                t = { group = "+Trouble" },
+                o = { group = "+Obsidian" },
             }, { prefix = "<leader>" })
         end,
     },
