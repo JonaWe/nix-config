@@ -10,19 +10,18 @@ return {
                 show_help = true,
                 plugins = { spelling = true },
                 replace = { ["<leader>"] = "SPC" },
-                triggers = "auto",
             })
-            wk.register({
-                w = { "<cmd>update!<CR>", "Save" },
-                q = { "<cmd>quit<CR>", "Quit" },
-                b = { group = "+Buffer" },
-                f = { group = "+Find" },
-                c = { group = "+Code" },
-                g = { group = "+Git" },
-                l = { group = "+Latex" },
-                t = { group = "+Trouble" },
-                o = { group = "+Obsidian" },
-            }, { prefix = "<leader>" })
+            wk.add({
+                { "<leader>w", "<cmd>update!<CR>", desc = "Save" },
+                { "<leader>q", "<cmd>quit<CR>", desc = "Quit" },
+                { "<leader>b", group = "+Buffer" },
+                { "<leader>f", group = "+Find" },
+                { "<leader>c", group = "+Code" },
+                { "<leader>g", group = "+Git" },
+                { "<leader>l", group = "+Latex" },
+                { "<leader>t", group = "+Trouble" },
+                { "<leader>o", group = "+Obsidian" },
+            })
         end,
     },
 }
