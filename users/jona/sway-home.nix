@@ -51,6 +51,7 @@ in {
     polkit_gnome
     networkmanagerapplet
     swaynotificationcenter
+    libnotify
   ];
 
   services.syncthing = {
