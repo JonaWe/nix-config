@@ -9,5 +9,8 @@
     alejandra
     nixd
     go
+    nodejs
+    python3
+    cargo
   ];
 }
