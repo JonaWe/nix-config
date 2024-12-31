@@ -54,6 +54,7 @@ in {
     libnotify
     swaylock
     wl-clipboard
+    pavucontrol
   ];
 
   services.syncthing = {
