@@ -88,11 +88,8 @@ return {
                     "tailwindcss",
                     "eslint",
                     "kotlin_language_server",
-                    "omnisharp",
-                    "omnisharp",
                     "ltex",
                     "texlab",
-                    "nixd",
                 },
                 handlers = {
                     function(server_name)
