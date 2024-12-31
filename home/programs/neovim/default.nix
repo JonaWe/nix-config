@@ -12,5 +12,7 @@
     nodejs
     python3
     cargo
+    gcc
+    gnumake
   ];
 }
