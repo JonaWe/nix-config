@@ -50,6 +50,7 @@ in {
     gparted
     polkit_gnome
     networkmanagerapplet
+    swaynotificationcenter
   ];
 
   services.syncthing = {
