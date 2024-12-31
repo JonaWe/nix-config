@@ -52,6 +52,7 @@ in {
     networkmanagerapplet
     swaynotificationcenter
     libnotify
+    swaylock
     wl-clipboard
   ];
 
@@ -210,7 +211,7 @@ in {
                 "r" = "exec ${pkgs.systemd}/bin/systemctl reboot, mode default";
                 "h" = "exec ${pkgs.systemd}/bin/systemctl hibernate, mode default";
                 "s" = "exec ${pkgs.systemd}/bin/systemctl suspend, mode default";
-                # "l" = "exec ${swaylock}/bin/swaylock, mode default";
+                "l" = "exec ${swaylock}/bin/swaylock, mode default";
                 "Shift+l" = "exec ${pkgs.sway}/bin/swaymsg exit, mode default";
             };
           };
@@ -232,7 +233,7 @@ in {
             { command = "${pkgs.brave}/bin/brave"; }
             { command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/"; }
             { command = "${pkgs.firefox}/bin/firefox"; }
-            { command = "sleep 10; ${pkgs.syncthingtray}/bin/syncthingtray"; }
+            { command = "sleep 10; syncthingtray"; }
           ];
           window = {
               border = 1;
