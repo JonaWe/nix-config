@@ -52,6 +52,7 @@ in {
     networkmanagerapplet
     swaynotificationcenter
     libnotify
+    wl-clipboard
   ];
 
   services.syncthing = {
