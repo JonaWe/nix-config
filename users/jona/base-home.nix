@@ -49,6 +49,7 @@
     gawk
     zstd
     # gnupg
+    gnumake
 
     # nix related
     #
