@@ -4,5 +4,9 @@
     recursive = true;
   };
 
-  home.packages = with pkgs; [neovim];
+  home.packages = with pkgs; [
+    neovim
+    alejandra
+    nixd
+  ];
 }
