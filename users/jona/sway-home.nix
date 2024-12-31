@@ -211,7 +211,7 @@ in {
                 "r" = "exec ${pkgs.systemd}/bin/systemctl reboot, mode default";
                 "h" = "exec ${pkgs.systemd}/bin/systemctl hibernate, mode default";
                 "s" = "exec ${pkgs.systemd}/bin/systemctl suspend, mode default";
-                "l" = "exec ${swaylock}/bin/swaylock, mode default";
+                "l" = "exec ${pkgs.swaylock}/bin/swaylock, mode default";
                 "Shift+l" = "exec ${pkgs.sway}/bin/swaymsg exit, mode default";
             };
           };
