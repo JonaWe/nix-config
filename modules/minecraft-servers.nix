@@ -24,6 +24,10 @@
               url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/5tj7y3PJ/fabric-api-0.114.0%2B1.21.4.jar";
               hash = "sha256-TATNEpMOzG19eCI5NDhdYonSpkRLzH3q9T49o3kgHC0=";
             };
+            sodium = pkgs.fetchurl {
+              url = "https://cdn.modrinth.com/data/AANobbMI/versions/tu8qILqH/sodium-fabric-0.6.6%2Bmc1.21.4.jar";
+              hash = "sha256-Lt0Dw1YwlFQ9Pz1rlBB+D1hFtoL4QXKO5/jNXVwPjoM=";
+            };
           });
         };
       };
