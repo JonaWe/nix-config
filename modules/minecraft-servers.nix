@@ -20,7 +20,10 @@
         };
         symlinks = {
           "mods" = pkgs.linkFarmFromDrvs "mods" (builtins.attrValues {
-            fabric-api = pkgs.fetchurl {url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/5tj7y3PJ/fabric-api-0.114.0%2B1.21.4.jar";};
+            fabric-api = pkgs.fetchurl {
+              url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/5tj7y3PJ/fabric-api-0.114.0%2B1.21.4.jar";
+              hash = "sha256-TATNEpMOzG19eCI5NDhdYonSpkRLzH3q9T49o3kgHC0=";
+            };
           });
         };
       };
