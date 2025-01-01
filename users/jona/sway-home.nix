@@ -26,12 +26,6 @@ in {
     ./base-home.nix
   ];
 
-  # services.gnome.gnome-keyring.enable = true;
-  # services.dbus.enable = true;
-
-  # services.gvfs.enable = true; # Mount, trash, and other functionalities
-  # services.tumbler.enable = true; # Thumbnail support for images
-
   xdg.portal = {
       enable = true;
       config = {
@@ -41,7 +35,6 @@ in {
               ];
           };
       };
-# wlr.enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
   home.packages = with pkgs; [
@@ -55,6 +48,14 @@ in {
     syncthingtray
     jetbrains.idea-ultimate
     keepassxc
+    gparted
+    polkit_gnome
+    networkmanagerapplet
+    swaynotificationcenter
+    libnotify
+    swaylock
+    wl-clipboard
+    pavucontrol
   ];
 
   services.syncthing = {
@@ -212,7 +213,7 @@ in {
                 "r" = "exec ${pkgs.systemd}/bin/systemctl reboot, mode default";
                 "h" = "exec ${pkgs.systemd}/bin/systemctl hibernate, mode default";
                 "s" = "exec ${pkgs.systemd}/bin/systemctl suspend, mode default";
-                # "l" = "exec ${swaylock}/bin/swaylock, mode default";
+                "l" = "exec ${pkgs.swaylock}/bin/swaylock, mode default";
                 "Shift+l" = "exec ${pkgs.sway}/bin/swaymsg exit, mode default";
             };
           };
@@ -220,6 +221,10 @@ in {
             # fixes wayland stuff
             { command = "dbus-sway-environment"; always = true; }
             { command = "systemctl --user import-environment"; always = true; }
+            { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; always = true; }
+            { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; always = true; }
+            { command = "${pkgs.swaynotificationcenter}/bin/swaync"; always = true; }
+
             # other stuff
             { command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'"; }
             { command = "${pkgs.signal-desktop}/bin/signal-desktop"; }
@@ -230,7 +235,7 @@ in {
             { command = "${pkgs.brave}/bin/brave"; }
             { command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/"; }
             { command = "${pkgs.firefox}/bin/firefox"; }
-            { command = "sleep 10; ${pkgs.syncthingtray}/bin/syncthingtray"; }
+            { command = "sleep 10; syncthingtray"; }
           ];
           window = {
               border = 1;
@@ -341,29 +346,4 @@ in {
           '';
       wrapperFeatures.gtk = true;
   };
-
-
-  # programs.sway = {
-  #   enable = true;
-  #
-  #
-  # };
-  # services.greetd = {
-  #   enable = true;
-  #   systemdIntegration = {
-  #     enable = true;
-  #     extraVariables = ["DISPLAY" "HYPRLAND_INSTANCE_SIGNATURE"];
-  #   };
-  #   settings = rec {
-  #     initial_session = {
-  #       command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #       # command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-  #       user = "jona";
-  #     };
-  #     default_session = initial_session;
-  #   };
-  # };
-
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.gdm.wayland = true;
 }

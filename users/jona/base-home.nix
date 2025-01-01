@@ -28,6 +28,7 @@
     # yq-go # yaml processor https://github.com/mikefarah/yq
     # eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
+    lsd
 
     # networking tools
     # mtr # A network diagnostic tool
@@ -49,6 +50,7 @@
     gawk
     zstd
     # gnupg
+    gnumake
 
     # nix related
     #
@@ -94,15 +96,16 @@
   programs.fd.enable = true;
   programs.ripgrep.enable = true;
   programs.lazygit.enable = true;
+  programs.lsd = {
+    enable = true;
+    enableAliases = true;
+  };
 
   programs.zsh = {
     enable = true;
     oh-my-zsh.enable = true;
     shellAliases = {
       v = "nvim";
-      ls = "ls";
-      ll = "ls -l";
-      lla = "ls -la";
     };
   };
 

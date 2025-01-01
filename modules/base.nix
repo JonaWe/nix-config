@@ -7,7 +7,7 @@
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = ["networkmanager" "wheel" "input"];
+    extraGroups = ["networkmanager" "wheel" "input" "video"];
   };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
