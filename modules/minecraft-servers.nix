@@ -9,7 +9,6 @@
   services.minecraft-servers = {
     enable = true;
     eula = true;
-    package = pkgs.minecraft-server-1-12;
     servers = {
       test-server = {
         enable = true;
