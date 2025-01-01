@@ -55,6 +55,7 @@ in {
     swaylock
     wl-clipboard
     pavucontrol
+    prismlauncher
   ];
 
   services.syncthing = {
