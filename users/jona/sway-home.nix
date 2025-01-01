@@ -56,6 +56,7 @@ in {
     wl-clipboard
     pavucontrol
     prismlauncher
+    ncdu
   ];
 
   services.syncthing = {
