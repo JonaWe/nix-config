@@ -12,6 +12,7 @@
     self,
     nixpkgs,
     home-manager,
+    nix-minecraft,
   }: {
     nixosConfigurations = {
       homelab = let
