@@ -12,12 +12,12 @@
     self,
     nixpkgs,
     home-manager,
-    nix-minecraft,
+    ...
   }: {
     nixosConfigurations = {
       homelab = let
         username = "jona";
-        specialArgs = {inherit username;};
+        specialArgs = {inherit username; inherit inputs;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
@@ -38,7 +38,7 @@
         };
       tower = let
         username = "jona";
-        specialArgs = {inherit username;};
+        specialArgs = {inherit username; inherit inputs;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
@@ -59,7 +59,7 @@
         };
       pangolin = let
         username = "jona";
-        specialArgs = {inherit username;};
+        specialArgs = {inherit username; inherit inputs;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
