@@ -27,6 +27,7 @@
     wlsunset
     blueman
     cliphist
+    vlc
   ];
   services.blueman-applet.enable = true;
 
