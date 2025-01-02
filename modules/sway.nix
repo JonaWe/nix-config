@@ -27,8 +27,26 @@
     '';
   };
 in {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     dbus-sway-environment
     configure-gtk
   ];
+
+  security.polkit.enable = true;
+
+  services.gnome.gnome-keyring.enable = true;
+  # services.dbus.enable = true;
+
+  programs.dconf.enable = true;
+  programs.sway.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      initial_session = {
+        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
+        user = "jona";
+      };
+      default_session = initial_session;
+    };
+  };
 }

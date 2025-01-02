@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }: {
   imports = [
@@ -9,67 +8,14 @@
     ../../modules/base.nix
     ../../modules/ssh.nix
     ../../modules/docker.nix
-    # ../../modules/samba.nix
-    # ../../modules/jellyfin.nix
     ../../modules/fonts.nix
     ../../modules/minecraft-servers.nix
     ../../modules/steam.nix
     ../../modules/sway.nix
   ];
-  security.polkit.enable = true;
+  networking.hostName = "octopus";
 
-  services.gnome.gnome-keyring.enable = true;
-  # services.dbus.enable = true;
-
-  # services.gvfs.enable = true; # Mount, trash, and other functionalities
-  # services.tumbler.enable = true; # Thumbnail support for images
-
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  # };
-  programs.dconf.enable = true;
-  programs.sway.enable = true;
-  # programs.sway = {
-  #   enable = true;
-  #   wrapperFeatures.gtk = true;
-  #
-  #   extraPackages = with pkgs; [
-  #     foot
-  #     wayland
-  #     xdg-utils
-  #     glib
-  #     grim
-  #     slurp
-  #     wl-clipboard
-  #     # glib # provides gsettings command
-  #     # swaybg
-  #     # hyprlock
-  #   ];
-  #
-  #   extraSessionCommands = ''
-  #     export SDL_VIDEODRIVER=wayland
-  #     export QT_QPA_PLATFORM=wayland
-  #     export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-  #     export _JAVA_AWT_WM_NONREPARENTING=1
-  #     export MOZ_ENABLE_WAYLAND=1
-  #   '';
-  # };
-  services.greetd = {
-    enable = true;
-    settings = rec {
-      initial_session = {
-        command = "${pkgs.sway}/bin/sway --unsupported-gpu";
-        user = "jona";
-      };
-      default_session = initial_session;
-    };
-  };
-
-  boot.supportedFilesystems = ["ntfs"];
-
-  # Bootloader.
+  # use grub as the bootloader for better dual booting experience
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub = {
@@ -83,7 +29,7 @@
   # this sets the system time to local time to work with windows dual boot
   time.hardwareClockInLocalTime = true;
 
-  networking.hostName = "tower";
+  boot.supportedFilesystems = ["ntfs"];
 
   boot.blacklistedKernelModules = ["nouveau"];
   boot.extraModprobeConfig = ''
@@ -109,9 +55,7 @@
   networking.firewall = {
     enable = true;
     allowPing = true;
-    # Open ports in the firewall.
     allowedTCPPorts = [3001];
-    # allowedUDPPorts = [ ... ];
   };
 
   # This value determines the NixOS release from which the default
