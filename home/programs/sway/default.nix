@@ -227,6 +227,7 @@
           command = "${pkgs.networkmanagerapplet}/bin/nm-applet";
           always = true;
         }
+
         {
           command = "${pkgs.swaynotificationcenter}/bin/swaync";
           always = true;
