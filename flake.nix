@@ -36,7 +36,7 @@
             }
           ];
         };
-      tower = let
+      octopus = let
         username = "jona";
         specialArgs = {inherit username; inherit inputs;};
       in
@@ -45,7 +45,7 @@
           system = "x86_64-linux";
 
           modules = [
-            ./hosts/tower
+            ./hosts/octopus
             ./users/jona/nixos.nix
 
             home-manager.nixosModules.home-manager
