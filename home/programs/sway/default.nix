@@ -22,10 +22,12 @@
   programs.waybar.enable = true;
   home.packages = with pkgs; [
     rofi-wayland
+    rofi-bluetooth
     pcmanfm
     kitty
     wlsunset
     blueman
+    cliphist
   ];
 
   gtk = {
@@ -111,6 +113,10 @@
         "${mod}+q" = "kill";
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun -show-icons";
+        "${mod}+y" = "exec ${pkgs.rofi-bluetooth}/bin/rofi-bluetooth";
+        "${mod}+v" = "exec rofi -modi clipboard:/home/jona/.config/rofi/modis/clipboard-history-modi.sh -show clipboard -show-icons -theme clipboard";
+
+
         "${mod}+Shift+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show calc -modi calc -no-show-match -no-sort";
         "${mod}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${mod}+g" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
@@ -239,6 +245,10 @@
         }
         {
           command = "${pkgs.wlsunset}/bin/wlsunset";
+          always = true;
+        }
+        {
+          command = "wl-paste --watch cliphist store";
           always = true;
         }
 

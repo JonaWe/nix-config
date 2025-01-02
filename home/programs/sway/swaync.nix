@@ -14,7 +14,7 @@
       control-center-positionY = "center";
       fit-to-screen = true;
       hide-on-action = false;
-      hide-on-clear = true;
+      hide-on-clear = false;
       image-visibility = "when-available";
       keyboard-shortcuts = true;
       layer = "layer";
