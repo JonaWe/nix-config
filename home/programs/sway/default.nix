@@ -19,6 +19,19 @@
   programs.waybar.enable = true;
   services.swaync = {
     enable = true;
+    settings = {
+      buttons-grid = {
+        actions = [
+          {
+            label = "WiFi";
+            type = "toggle";
+            active = true;
+            command = "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'";
+            update-command = "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'";
+          }
+        ];
+      };
+    };
   };
   home.packages = with pkgs; [
     rofi-wayland
@@ -231,10 +244,11 @@
           always = true;
         }
 
-        # {
-        #   command = "${pkgs.swaynotificationcenter}/bin/swaync";
-        #   always = true;
-        # }
+        # service needs restart after startup
+        {
+          command = "systemctl --user restart swaync";
+          always = true;
+        }
         {
           command = "${pkgs.wlsunset}/bin/wlsunset";
           always = true;
