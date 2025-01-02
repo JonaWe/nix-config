@@ -57,6 +57,8 @@ in {
     pavucontrol
     prismlauncher
     ncdu
+    gamemode
+    mangohud
   ];
 
   services.syncthing = {
