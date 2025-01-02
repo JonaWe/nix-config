@@ -64,9 +64,8 @@ in {
     enable = true;
     # tray.enable = true;
   };
-  services.gammastep = {
+  services.wlsunset = {
     enable = true;
-    provider = "manual";
     latitude = 51.0;
     longitude = 10.0;
   };
