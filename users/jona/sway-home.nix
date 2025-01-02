@@ -58,16 +58,12 @@ in {
     prismlauncher
     ncdu
     mangohud
+    wlsunset
   ];
 
   services.syncthing = {
     enable = true;
     # tray.enable = true;
-  };
-  services.wlsunset = {
-    enable = true;
-    latitude = 51.0;
-    longitude = 10.0;
   };
 
   wayland.windowManager.sway = {
