@@ -17,11 +17,13 @@
     recursive = true;
   };
   programs.waybar.enable = true;
+  services.swaync = {
+    enable = true;
+  };
   home.packages = with pkgs; [
     rofi-wayland
     pcmanfm
     kitty
-    swaynotificationcenter
     wlsunset
   ];
 
@@ -229,10 +231,10 @@
           always = true;
         }
 
-        {
-          command = "${pkgs.swaynotificationcenter}/bin/swaync";
-          always = true;
-        }
+        # {
+        #   command = "${pkgs.swaynotificationcenter}/bin/swaync";
+        #   always = true;
+        # }
         {
           command = "${pkgs.wlsunset}/bin/wlsunset";
           always = true;
