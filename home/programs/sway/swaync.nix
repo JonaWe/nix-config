@@ -54,7 +54,7 @@
         volume = {
           label = "󰕾";
           show-per-app = true;
-          show-per-app-icon = true;
+          # show-per-app-icon = true;
           show-per-app-label = true;
         };
         backlight = {
@@ -90,7 +90,7 @@
             }
             {
               label = "󰂯";
-              command = "notify-send blueman-manager";
+              command = "blueman-manager";
             }
             {
               active = false;

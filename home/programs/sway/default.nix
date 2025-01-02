@@ -25,6 +25,7 @@
     pcmanfm
     kitty
     wlsunset
+    blueman
   ];
 
   gtk = {
