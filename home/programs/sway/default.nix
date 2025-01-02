@@ -103,6 +103,7 @@
         border = 1;
         titlebar = false;
       };
+      workspaceAutoBackAndForth = true;
       keybindings = {
         "${mod}+q" = "kill";
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
