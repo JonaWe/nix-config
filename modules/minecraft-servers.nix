@@ -37,4 +37,8 @@
       };
     };
   };
+
+  networking.firewall = {
+    allowedUDPPorts = [ 24454 ];
+  };
 }
