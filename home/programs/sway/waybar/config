@@ -1,15 +1,10 @@
 // vim: set ft=json:
 {
-    // "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media", "sway/window"],
     "modules-center": [],
     "modules-right": ["custom/swayidle", "custom/notification", "mpd", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock",  "tray"],
-    // Modules configuration
     "sway/workspaces": {
         //     "disable-scroll": true,
         //     "all-outputs": true,
@@ -36,15 +31,6 @@
             "18": "",
             "19": "",
             "default": ""
-        }
-    },
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
         }
     },
     "sway/mode": {
@@ -96,7 +82,8 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%A, %d. %B %Y     %H:%M}"
+        "format": "{:%A, %d. %B %Y     %H:%M}",
+        "on-click": "swaymsg workspace 16"
     },
     "clock#time": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
@@ -166,27 +153,27 @@
         },
         "on-click": "pavucontrol"
     },
-//    "custom/notification": {
-//        "tooltip": true,
-//        "tooltip-format": "You currently have {} new notifications",
-//        "format": "{}  {icon}",
-//        "format-icons": {
-//            "notification": "",
-//            "none": "",
-//            "dnd-notification": "",
-//            "dnd-none": "",
-//            "inhibited-notification": "",
-//            "inhibited-none": "",
-//            "dnd-inhibited-notification": "",
-//            "dnd-inhibited-none": ""
-//        },
-//        "return-type": "json",
-//        "exec-if": "which swaync-client",
-//        "exec": "swaync-client -swb",
-//        "on-click": "swaync-client -t -sw",
-//        "on-click-right": "swaync-client -d -sw",
-//        "escape": true
-//    },
+    "custom/notification": {
+        "tooltip": true,
+        "tooltip-format": "You currently have {} new notifications",
+        "format": "{}  {icon}",
+        "format-icons": {
+            "notification": "",
+            "none": "",
+            "dnd-notification": "",
+            "dnd-none": "",
+            "inhibited-notification": "",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
 //    "custom/swayidle": {
 //        "format": "{} ",
 //        "exec": "if pgrep swayidle > /dev/null; then echo 'On'; else echo 'Off'; fi",
