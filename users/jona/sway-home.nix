@@ -57,7 +57,6 @@ in {
     pavucontrol
     prismlauncher
     ncdu
-    gamemode
     mangohud
   ];
 

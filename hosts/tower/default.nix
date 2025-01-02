@@ -13,6 +13,7 @@
     # ../../modules/jellyfin.nix
     ../../modules/fonts.nix
     ../../modules/minecraft-servers.nix
+    ../../modules/steam.nix
     ../../modules/sway.nix
   ];
   security.polkit.enable = true;
@@ -28,7 +29,6 @@
   #   wlr.enable = true;
   #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
   # };
-  programs.steam.enable = true;
   programs.dconf.enable = true;
   programs.sway.enable = true;
   # programs.sway = {
