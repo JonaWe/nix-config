@@ -20,17 +20,21 @@
   services.swaync = {
     enable = true;
     settings = {
-      buttons-grid = {
-        actions = [
-          {
-            label = "WiFi";
-            type = "toggle";
-            active = true;
-            command = "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'";
-            update-command = "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'";
-          }
-        ];
-      };
+      positionX = "left";
+      positionY = "top";
+      layer = "overlay";
+      control-center-layer = "top";
+      # buttons-grid = {
+      #   actions = [
+      #     {
+      #       label = "WiFi";
+      #       type = "toggle";
+      #       active = true;
+      #       command = "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'";
+      #       update-command = "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'";
+      #     }
+      #   ];
+      # };
     };
   };
   home.packages = with pkgs; [
