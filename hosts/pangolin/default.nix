@@ -15,6 +15,7 @@
     ../../modules/sway.nix
     ../../modules/steam.nix
     ../../modules/bluetooth.nix
+    ../../modules/powermanagement.nix
   ];
   networking.hostName = "pangolin";
 
