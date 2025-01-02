@@ -46,7 +46,7 @@ vim.opt.undofile = true
 vim.opt.updatetime = 50
 vim.opt.wildmode = "longest:full,full"
 vim.opt.wrap = false
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
