@@ -64,6 +64,12 @@ in {
     enable = true;
     # tray.enable = true;
   };
+  services.gammastep = {
+    enable = true;
+    provider = "manual";
+    latitude = 51.0;
+    longitude = 10.0;
+  };
 
   wayland.windowManager.sway = {
     enable = true;
