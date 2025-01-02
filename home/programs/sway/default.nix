@@ -29,6 +29,7 @@
     blueman
     cliphist
   ];
+  services.blueman-applet.enable = true;
 
   gtk = {
     enable = true;
