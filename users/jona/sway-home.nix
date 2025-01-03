@@ -48,6 +48,7 @@
     prismlauncher
     ncdu
     mangohud
+    texlive.combined.scheme-full
   ];
 
   services.syncthing = {
