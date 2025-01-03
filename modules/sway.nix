@@ -37,6 +37,8 @@ in {
   services.gnome.gnome-keyring.enable = true;
   # services.dbus.enable = true;
   services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  services.devmon.enable = true;
 
   programs.dconf.enable = true;
   programs.sway.enable = true;
