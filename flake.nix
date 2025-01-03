@@ -10,6 +10,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mysecrets = {
+        url = "git+ssh://git@github.com/JonaWe/nix-secrets.git?shallow=1";
+        flake = false;
+      };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
   outputs = inputs @ {
