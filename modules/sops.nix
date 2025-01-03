@@ -19,7 +19,9 @@
 
   users.users.duckdns = {
     isSystemUser = true;
+    group = "duckdns";
   };
+  users.groups.duckdns = {};
 
   systemd.services."sometestservice" = {
     path = [
@@ -28,11 +30,11 @@
     script = ''
       echo "
       Hey bro! I'm a service, and imma send this secure password:
-      $(cat ${config.sops.secrets."myservice/my_subdir/my_secret".path})
+      $(cat ${config.sops.secrets."duckdns/token".path})
       located in:
-      ${config.sops.secrets."myservice/my_subdir/my_secret".path}
+      ${config.sops.secrets."duckdns/token".path}
       to database and hack the mainframe
-      " > /var/lib/sometestservice/testfile
+      " > /var/lib/duckdns/testfile
     '';
     startAt = "hourly";
     serviceConfig = {
