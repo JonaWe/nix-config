@@ -33,17 +33,11 @@
     openFirewall = true;
   };
 
-  users.users.duckdns = {
-    isSystemUser = true;
-    group = "duckdns";
-  };
-  users.groups.duckdns = {};
   systemd.services.duckdns-updater = {
-    serviceConfig.User = "duckdns";
     path = [
       pkgs.curl
     ];
-    script = "curl 'https://www.duckdns.org/update?domains=jonawe&token=$(cat /homa/jona/duckdns.token)&ip='";
+    script = "/home/jona/duckdns.sh";
     startAt = "hourly";
   };
 
