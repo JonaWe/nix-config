@@ -28,7 +28,10 @@
     fsType = "zfs";
   };
 
-  services.teamspeak3.enable = true;
+  services.teamspeak3 = {
+    enable = true;
+    openFirewall = true;
+  };
 
   users.users.duckdns = {
     isSystemUser = true;
