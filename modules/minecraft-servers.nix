@@ -19,11 +19,32 @@
           level-name = "world";
           gamemode = "survival";
           difficulty = "hard";
-          view-distance = 10;
+          view-distance = 16;
           max-players = 666;
           simulation-distance = 10;
         };
+        jvmOpts = "-Xms6144M -Xmx8192M";
         symlinks = {
+          # "ops.json" = {[
+          #   {
+          #     uuid = "5e3a00aa-a56a-480d-bbd4-48be7e90f274";
+          #     name = "TheKos";
+          #     level = 4;
+          #     bypassesPlayerLimit = false;
+          #   }
+          #   {
+          #     uuid = "8977a987-8222-4eaf-8adf-720f34bc32c6";
+          #     name = "Jonaaaaaaaaa";
+          #     level = 4;
+          #     bypassesPlayerLimit = false;
+          #   }
+          #   {
+          #     uuid = "cdf47971-a41a-4ff5-bcb3-ad6b048d7da1";
+          #     name = "QuintusV";
+          #     level = 4;
+          #     bypassesPlayerLimit = false;
+          #   }
+          # ]};
           "mods" = pkgs.linkFarmFromDrvs "mods" (builtins.attrValues {
             fabric-api = pkgs.fetchurl {
               url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/5tj7y3PJ/fabric-api-0.114.0%2B1.21.4.jar";
