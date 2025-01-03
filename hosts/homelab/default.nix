@@ -28,6 +28,22 @@
     fsType = "zfs";
   };
 
+  services.teamspeak3.enable = true;
+
+  users.users.duckdns = {
+    isSystemUser = true;
+    group = "duckdns";
+  };
+  users.groups.duckdns = {};
+  systemd.services.duckdns-updater = {
+    serviceConfig.User = "duckdns";
+    path = [
+      pkgs.curl
+    ];
+    script = "echo url='https://www.duckdns.org/update?domains=jonawe&token=$(cat /homa/jona/duckdns.token)&ip=' | curl -k -o ~/duckdns/duck.log -K -";
+    startAt = "hourly";
+  };
+
   networking.hostName = "homelab";
 
   networking.firewall = {

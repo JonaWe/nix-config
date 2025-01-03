@@ -49,6 +49,7 @@
     ncdu
     mangohud
     texlive.combined.scheme-full
+    teamspeak3
   ];
 
   services.syncthing = {
