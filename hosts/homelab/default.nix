@@ -12,6 +12,7 @@
     ../../modules/samba.nix
     ../../modules/jellyfin.nix
     ../../modules/fonts.nix
+    ../../modules/minecraft-servers.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
