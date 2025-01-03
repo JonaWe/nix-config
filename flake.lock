@@ -55,6 +55,23 @@
         "type": "github"
       }
     },
+    "mysecrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1735922609,
+        "narHash": "sha256-z3+7KrQTboIOPjkqA/87nvPXWAarO7cgjxcW2//44AY=",
+        "ref": "refs/heads/main",
+        "rev": "a7d893f7d83080d0ae7471ba70c37978b61685cc",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/JonaWe/nix-secrets.git"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/JonaWe/nix-secrets.git"
+      }
+    },
     "nix-minecraft": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -110,6 +127,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "mysecrets": "mysecrets",
         "nix-minecraft": "nix-minecraft",
         "nixpkgs": "nixpkgs_2",
         "sops-nix": "sops-nix"
