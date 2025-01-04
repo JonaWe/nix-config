@@ -4,7 +4,7 @@
     settings = {
       # PasswordAuthentication = false;
       PermitRootLogin = "yes";
-      PasswordAuthentication = "yes";
+      PasswordAuthentication = true;
     };
   };
   # services.fail2ban.enable = true;
