@@ -14,6 +14,7 @@
     ../../modules/fonts.nix
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
+    ../../modules/ddclient.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
