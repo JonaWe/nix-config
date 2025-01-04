@@ -34,14 +34,6 @@
     openFirewall = true;
   };
 
-  systemd.services.duckdns-updater = {
-    path = [
-      pkgs.curl
-    ];
-    script = "/home/jona/duckdns.sh";
-    startAt = "hourly";
-  };
-
   networking.hostName = "homelab";
 
   networking.firewall = {

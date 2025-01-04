@@ -23,7 +23,7 @@
   };
   users.groups.duckdns = {};
 
-  systemd.services."sometestservice" = {
+  systemd.services."duckdns-updater" = {
     path = [
       pkgs.curl
     ];
@@ -33,7 +33,6 @@
     startAt = "hourly";
     serviceConfig = {
       User = "duckdns";
-      WorkingDirectory = "/var/lib/duckdns";
     };
   };
 
