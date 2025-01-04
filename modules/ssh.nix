@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      PermitRootLogin = "no";
+      PermitRootLogin = "yes";
     };
   };
   # services.fail2ban.enable = true;
