@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -13,42 +14,40 @@
 
   sops.age.keyFile = "/home/jona/.config/sops/age/keys.txt";
 
-  sops.secrets."duckdns/token" = {
-    owner = "duckdns";
-  };
+  # sops.secrets."duckdns/token" = {
+  #   # owner = "duckdns";
+  # };
 
-  users.users.duckdns = {
-    isSystemUser = true;
-    group = "duckdns";
-  };
-  users.groups.duckdns = {};
-
-  systemd.services."duckdns-updater" = {
-    path = [
-      pkgs.curl
-    ];
-    script = ''
-      curl "https://www.duckdns.org/update?domains=jonawe&token=$(cat ${config.sops.secrets."duckdns/token".path})&ip="
+  services.ddclient = {
+    enable = true;
+    configFile = builtins.toFile "ddclient.conf" ''
+      daemon=300
+      use=web
+      protocol=porkbun
+      home.pinkorca.de
     '';
-    startAt = "hourly";
-    serviceConfig = {
-      User = "duckdns";
-    };
+# apikey_env=${sops}
+# secretapikey_env=${}
   };
 
-  # sops.secrets.example_key = {};
-  # sops.secrets."myservice/my_subdir/my_secret" = {
-  #   owner = "sometestservice";
-  # };
-  #
-  #
-  # users.users.sometestservice = {
-  #   home = "/var/lib/sometestservice";
-  #   createHome = true;
+  # users.users.duckdns = {
   #   isSystemUser = true;
-  #   group = "sometestservice";
+  #   group = "duckdns";
   # };
-  # users.groups.sometestservice = {};
+  # users.groups.duckdns = {};
+  #
+  # systemd.services."duckdns-updater" = {
+  #   path = [
+  #     pkgs.curl
+  #   ];
+  #   script = ''
+  #     curl "https://www.duckdns.org/update?domains=jonawe&token=$(cat ${config.sops.secrets."duckdns/token".path})&ip="
+  #   '';
+  #   startAt = "hourly";
+  #   serviceConfig = {
+  #     User = "duckdns";
+  #   };
+  # };
 
   environment.systemPackages = with pkgs; [
     sops
