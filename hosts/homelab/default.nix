@@ -14,6 +14,7 @@
     ../../modules/fonts.nix
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
+    ../../modules/ddclient.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -32,14 +33,6 @@
   services.teamspeak3 = {
     enable = true;
     openFirewall = true;
-  };
-
-  systemd.services.duckdns-updater = {
-    path = [
-      pkgs.curl
-    ];
-    script = "/home/jona/duckdns.sh";
-    startAt = "hourly";
   };
 
   networking.hostName = "homelab";
