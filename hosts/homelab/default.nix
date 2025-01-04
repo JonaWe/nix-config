@@ -1,4 +1,5 @@
 {
+    inputs,
   config,
   pkgs,
   ...
@@ -15,6 +16,8 @@
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
     ../../modules/ddclient.nix
+
+    inputs.disko.nixosModules.disko
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
