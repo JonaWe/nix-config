@@ -28,13 +28,7 @@
       pkgs.curl
     ];
     script = ''
-      echo "
-      Hey bro! I'm a service, and imma send this secure password:
-      $(cat ${config.sops.secrets."duckdns/token".path})
-      located in:
-      ${config.sops.secrets."duckdns/token".path}
-      to database and hack the mainframe
-      " > /var/lib/duckdns/testfile
+      curl "https://www.duckdns.org/update?domains=jonawe&token=$(cat ${config.sops.secrets."duckdns/token".path})&ip="
     '';
     startAt = "hourly";
     serviceConfig = {
