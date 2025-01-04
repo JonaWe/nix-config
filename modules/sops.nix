@@ -14,9 +14,8 @@
 
   sops.age.keyFile = "/home/jona/.config/sops/age/keys.txt";
 
-  # sops.secrets."duckdns/token" = {
-  #   # owner = "duckdns";
-  # };
+  sops.secrets."porkbun/api-key" = { };
+  sops.secrets."porkbun/secret-api-key" = { };
 
   services.ddclient = {
     enable = true;
@@ -24,10 +23,10 @@
       daemon=300
       use=web
       protocol=porkbun
+      apikey_env=${config.sops.secrets."porkbun/api-key"}
+      secretapikey_env=${config.sops.secrets."porkbun/secret-api-key"}
       home.pinkorca.de
     '';
-# apikey_env=${sops}
-# secretapikey_env=${}
   };
 
   # users.users.duckdns = {
