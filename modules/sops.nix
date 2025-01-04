@@ -28,7 +28,7 @@
       pkgs.curl
     ];
     script = ''
-      curl "https://www.duckdns.org/update?domains=jonawe&token=$(cat ${config.sops.secrets."duckdns/token".path})&ip="
+      echo "https://www.duckdns.org/update?domains=jonawe&token=$(cat ${config.sops.secrets."duckdns/token".path})&ip="
     '';
     startAt = "hourly";
     serviceConfig = {
