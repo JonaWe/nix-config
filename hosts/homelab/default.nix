@@ -16,6 +16,7 @@
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
     ../../modules/ddclient.nix
+    ./disko-config.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
