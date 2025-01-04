@@ -19,9 +19,8 @@
 
   sops.templates."ddclient.conf" = {
     content = ''
-      daemon=300
+      daemon=600
       use=web
-
       protocol=porkbun
       apikey=${config.sops.placeholder."porkbun/api-key"}
       secretapikey=${config.sops.placeholder."porkbun/secret-api-key"}
