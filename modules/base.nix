@@ -7,8 +7,10 @@
   users.users.${username} = {
     isNormalUser = true;
     description = username;
+    initialPassword = "changeme";
     extraGroups = ["networkmanager" "wheel" "input" "video"];
   };
+  users.users.root.initialPassword = "changeme";
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
