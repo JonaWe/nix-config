@@ -14,7 +14,7 @@
         "map to guest" = "bad user";
       };
       public = {
-        path = "/mnt/media";
+        path = "/data/samba";
         "read only" = "no";
         browsable = "yes";
         "guest ok" = "yes";
