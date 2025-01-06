@@ -1,7 +1,9 @@
 {...}: {
   users.users.samba-data = {
     isSystemUser = true;
+    group = "samba-data";
   };
+  users.groups.samba-data = {};
   services.samba = {
     openFirewall = true;
     enable = true;
