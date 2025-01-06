@@ -25,7 +25,7 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-f" ]; # Override existing partition
+                extraArgs = ["-f"]; # Override existing partition
                 subvolumes = {
                   # Subvolume name is different from mountpoint
                   "@" = {
@@ -33,23 +33,52 @@
                   };
                   # Subvolume name is the same as the mountpoint
                   "@home" = {
-                    mountOptions = [ "compress=zstd" ];
+                    mountOptions = ["compress=zstd"];
                     mountpoint = "/home";
                   };
                   # Parent is not mounted so the mountpoint must be set
                   "@nix" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = ["compress=zstd" "noatime"];
                     mountpoint = "/nix";
-                  };
-                  # Subvolume for the swapfile
-                  "@swap" = {
-                    mountpoint = "/.swapvol";
-                    swap = {
-                      swapfile.size = "4G";
-                    };
                   };
                 };
               };
+            };
+          };
+        };
+      };
+      data = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-SanDisk_SDSSDA240G_163623441801";
+        content = {
+          type = "gpt";
+          partitions = {
+            files = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zdata";
+              };
+            };
+          };
+        };
+      };
+      zpool = {
+        zdata = {
+          type = "zpool";
+          rootFsOptions = {
+            canmount = "off";
+          };
+          datasets = {
+            samba = {
+              type = "zfs_fs";
+              mountpoint = "/data/samba";
+              options.mountpoint = "legacy";
+            };
+            media = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/data/media";
             };
           };
         };
