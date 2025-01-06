@@ -22,6 +22,17 @@
   services.fprintd.tod.enable = true;
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
+  environment.systemPackages = [pkgs.cifs-utils];
+  fileSystems."/mnt/share" = {
+    device = "//192.168.188.133/winkelsheim";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users,uid=1000,gid=100";
+    # in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+    in ["${automount_opts}"];
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
