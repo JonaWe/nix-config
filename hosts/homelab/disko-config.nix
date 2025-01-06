@@ -57,19 +57,24 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zdata";
+                pool = "zroot";
               };
             };
           };
         };
       };
       zpool = {
-        zdata = {
+        zroot = {
           type = "zpool";
           rootFsOptions = {
             canmount = "off";
           };
           datasets = {
+            zfs_snapshot = {
+              type = "zfs_fs";
+              mountpoint = "/zfs_snapshot";
+              options."com.sun:auto-snapshot" = "true";
+            };
             samba = {
               type = "zfs_fs";
               mountpoint = "/data/samba";
