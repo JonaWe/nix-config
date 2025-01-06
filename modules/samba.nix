@@ -1,4 +1,7 @@
 {...}: {
+  users.users.samba-data = {
+    isSystemUser = true;
+  };
   services.samba = {
     openFirewall = true;
     enable = true;
@@ -8,16 +11,18 @@
         "netbios name" = "smbnix";
         security = "user";
         "hosts allow" = "192.168.188. 127.0.0.1 localhost";
-        # this seems to be an unknown parameter
-        # "host deny" = "0.0.0.0/0";
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
-      public = {
-        path = "/data/samba";
+      winkelsheim = {
+        path = "/data/samba/winkelsheim";
         "read only" = "no";
         browsable = "yes";
+        writable = "yes";
         "guest ok" = "yes";
+        "create mask" = 0644;
+        "directory mask" = 0755;
+        "force user" = "samba-data";
         comment = "public samba share";
       };
     };
