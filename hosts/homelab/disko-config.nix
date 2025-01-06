@@ -79,12 +79,12 @@
           samba = {
             type = "zfs_fs";
             mountpoint = "/data/samba";
-            options.mountpoint = "legacy";
+            # options.mountpoint = "legacy";
           };
           media = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
-            mountpoint = "/data/media";
+            # mountpoint = "/data/media";
           };
         };
       };
