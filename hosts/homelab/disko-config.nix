@@ -57,34 +57,34 @@
               size = "100%";
               content = {
                 type = "zfs";
-                pool = "zroot";
+                pool = "zdata";
               };
             };
           };
         };
       };
-      zpool = {
-        zroot = {
-          type = "zpool";
-          rootFsOptions = {
-            canmount = "off";
+    };
+    zpool = {
+      zdata = {
+        type = "zpool";
+        rootFsOptions = {
+          canmount = "off";
+        };
+        datasets = {
+          zfs_snapshot = {
+            type = "zfs_fs";
+            mountpoint = "/zfs_snapshot";
+            options."com.sun:auto-snapshot" = "true";
           };
-          datasets = {
-            zfs_snapshot = {
-              type = "zfs_fs";
-              mountpoint = "/zfs_snapshot";
-              options."com.sun:auto-snapshot" = "true";
-            };
-            samba = {
-              type = "zfs_fs";
-              mountpoint = "/data/samba";
-              options.mountpoint = "legacy";
-            };
-            media = {
-              type = "zfs_fs";
-              options.mountpoint = "legacy";
-              mountpoint = "/data/media";
-            };
+          samba = {
+            type = "zfs_fs";
+            mountpoint = "/data/samba";
+            options.mountpoint = "legacy";
+          };
+          media = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/data/media";
           };
         };
       };
