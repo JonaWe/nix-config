@@ -50,6 +50,8 @@
     mangohud
     texlive.combined.scheme-full
     teamspeak3
+    python3
+    python3Packages.dbus-python
   ];
 
   services.syncthing = {
