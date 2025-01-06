@@ -33,14 +33,16 @@
   # };
   services.sanoid = {
     enable = true;
-
-    datasets = {
-      "zdata/samba" = {
+    templates = {
+      default = {
         daily = 7;
         hourly = 23;
         weekly = 4;
         monthly = 3;
       };
+    };
+    datasets = {
+      "zdata/samba".useTemplate = ["default"];
     };
   };
 
