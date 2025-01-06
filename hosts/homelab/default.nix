@@ -1,5 +1,5 @@
 {
-    inputs,
+  inputs,
   config,
   pkgs,
   ...
@@ -31,6 +31,18 @@
   #   device = "unraidedpool/media";
   #   fsType = "zfs";
   # };
+  services.sanoid = {
+    enable = true;
+
+    datasets = {
+      "zdata/samba" = {
+        daily = 7;
+        hourly = 23;
+        weekly = 4;
+        monthly = 3;
+      };
+    };
+  };
 
   services.teamspeak3 = {
     enable = true;
