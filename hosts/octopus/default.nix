@@ -41,6 +41,10 @@
     enable = true;
   };
 
+  networking.hosts = {
+    "192.168.188.133" = ["home.lab"];
+  };
+
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {

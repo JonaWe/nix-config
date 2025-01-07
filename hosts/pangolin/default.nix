@@ -19,6 +19,10 @@
   ];
   boot.supportedFilesystems = [ "ntfs" ];
 
+  networking.hosts = {
+    "192.168.188.133" = ["home.lab"];
+  };
+
   networking.hostName = "pangolin";
   services.fprintd.enable = true;
   services.fprintd.tod.enable = true;
