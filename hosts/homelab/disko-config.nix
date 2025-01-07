@@ -101,17 +101,12 @@
           };
           "encrypted/samba" = {
             type = "zfs_fs";
-            # mountpoint = "/data/samba";
+            mountpoint = "/data/samba";
             options.mountpoint = "legacy";
           };
           "encrypted/media" = {
             type = "zfs_fs";
-            # mountpoint = "/data/media";
-            options.mountpoint = "legacy";
-          };
-          test = {
-            type = "zfs_fs";
-            mountpoint = "/data/test";
+            mountpoint = "/data/media";
             options.mountpoint = "legacy";
           };
         };
