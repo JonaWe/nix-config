@@ -106,6 +106,7 @@
     oh-my-zsh.enable = true;
     shellAliases = {
       v = "nvim";
+      nrs = "sudo nixos-rebuild switch --flake /home/jona/nix-config";
     };
   };
 
