@@ -17,6 +17,8 @@
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
   ];
+  boot.supportedFilesystems = [ "ntfs" ];
+
   networking.hostName = "pangolin";
   services.fprintd.enable = true;
   services.fprintd.tod.enable = true;
