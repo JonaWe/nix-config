@@ -19,4 +19,8 @@
     enable = true;
     openFirewall = true;
   };
+
+  systemd.tmpfiles.rules = [
+    "d /data/media/jellyfin 0700 jellyfin jellyfin -"
+  ];
 }

@@ -33,4 +33,7 @@
     enable = true;
     openFirewall = true;
   };
+  systemd.tmpfiles.rules = [
+    "d /data/samba/winkelsheim 0700 samba-data samba-data -"
+  ];
 }
