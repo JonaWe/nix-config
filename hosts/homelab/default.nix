@@ -21,16 +21,10 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # boot.supportedFilesystems = ["zfs" "ntfs"];
-  # boot.zfs.forceImportRoot = false;
+  boot.supportedFilesystems = ["zfs" "ntfs"];
+
   networking.hostId = "37dff6a3";
-  # create the pool
-  # zpool create -f -o ashift=12 -o compression=lz4 unraidedpool deviceid
-  # zfs create -o mount=legacy unraided/media
-  # fileSystems."/mnt/media" = {
-  #   device = "unraidedpool/media";
-  #   fsType = "zfs";
-  # };
+
   services.sanoid = {
     enable = true;
     templates = {
