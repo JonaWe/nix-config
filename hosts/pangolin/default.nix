@@ -17,7 +17,13 @@
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
   ];
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = ["ntfs"];
+
+  services.gnome = {
+    evolution-data-server.enable = true;
+    gnome-online-accounts.enable = true;
+    gnome-keyring.enable = true;
+  };
 
   networking.hosts = {
     "192.168.188.133" = ["home.lab"];
@@ -36,7 +42,7 @@
       # this line prevents hanging on network split
       # TODO: replace uid and gid with variables
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,user,users,uid=1000,gid=100";
-    # in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+      # in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
     in ["${automount_opts}"];
   };
 
