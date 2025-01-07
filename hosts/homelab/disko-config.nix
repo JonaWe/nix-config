@@ -98,20 +98,16 @@
               keyformat = "passphrase";
               keylocation = "prompt";
             };
-            # use this to read the key during boot
-            #postCreateHook = ''
-            #  zfs set keylocation="prompt" "rpool/$name";
-            #'';
           };
           "encrypted/samba" = {
             type = "zfs_fs";
-            mountpoint = "/data/samba";
+            # mountpoint = "/data/samba";
             options.mountpoint = "legacy";
           };
           "encrypted/media" = {
             type = "zfs_fs";
+            # mountpoint = "/data/media";
             options.mountpoint = "legacy";
-            mountpoint = "/data/media";
           };
         };
       };
