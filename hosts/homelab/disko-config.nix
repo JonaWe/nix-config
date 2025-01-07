@@ -1,5 +1,6 @@
 # /dev/disk/by-id/ata-SanDisk_SDSSDA240G_163623441801
 # /dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T
+# /dev/disk/by-id/wwn-0x50004cf206c95bfa
 {
   disko.devices = {
     disk = {
@@ -63,6 +64,22 @@
           };
         };
       };
+      data2 = {
+        type = "disk";
+        device = "/dev/disk/by-id/wwn-0x50004cf206c95bfa";
+        content = {
+          type = "gpt";
+          partitions = {
+            files = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zdata";
+              };
+            };
+          };
+        };
+      };
     };
     zpool = {
       zdata = {
@@ -71,11 +88,6 @@
           canmount = "off";
         };
         datasets = {
-          zfs_snapshot = {
-            type = "zfs_fs";
-            mountpoint = "/zfs_snapshot";
-            options."com.sun:auto-snapshot" = "true";
-          };
           samba = {
             type = "zfs_fs";
             mountpoint = "/data/samba";
