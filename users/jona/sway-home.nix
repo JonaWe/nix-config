@@ -54,6 +54,7 @@
     texlive.combined.scheme-full
     teamspeak3
     zoom-us
+    gnome-calendar
   ];
 
   services.syncthing = {
