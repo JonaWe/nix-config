@@ -16,6 +16,6 @@ in {
 
   systemd.tmpfiles.rules = [
     "d ${path} 0700 radicale radicale -"
-    "Z ${path} 0700 radicale radicale - -"
+    "d ${path}/collections 0700 radicale radicale -"
   ];
 }
