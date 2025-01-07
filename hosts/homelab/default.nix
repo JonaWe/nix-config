@@ -17,6 +17,7 @@
     ../../modules/sops.nix
     ../../modules/ddclient.nix
     ../../modules/radicale.nix
+    ../../modules/immich.nix
     ./disko-config.nix
   ];
   # Bootloader.
