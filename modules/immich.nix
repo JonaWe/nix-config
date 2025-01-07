@@ -9,13 +9,10 @@
   users.groups.samba-data = {};
   services.immich = {
     enable = true;
-    # openFireWall = true;
-    port = 2283;
+    openFirewall = true;
     user = "immich";
     group = "immich";
   };
-
-  networking.firewall.allowedTCPPorts = [ 2283 ];
 
   systemd.tmpfiles.rules = [
     "d /data/media/immich 0700 ${toString config.services.immich.user} ${toString config.services.immich.group} -"
