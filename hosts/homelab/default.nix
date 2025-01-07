@@ -16,6 +16,7 @@
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
     ../../modules/ddclient.nix
+    ../../modules/radicale.nix
     ./disko-config.nix
   ];
   # Bootloader.
