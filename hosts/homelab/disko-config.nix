@@ -109,6 +109,11 @@
             # mountpoint = "/data/media";
             options.mountpoint = "legacy";
           };
+          test = {
+            type = "zfs_fs";
+            mountpoint = "/data/test";
+            options.mountpoint = "legacy";
+          };
         };
       };
     };
