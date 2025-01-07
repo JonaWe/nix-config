@@ -18,6 +18,8 @@
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+    dataDir = "/data/media/jellyfin";
+    cacheDir = "/data/media/jellyfin/cache";
   };
 
   systemd.tmpfiles.rules = [
