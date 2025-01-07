@@ -86,14 +86,29 @@
         type = "zpool";
         rootFsOptions = {
           canmount = "off";
+          "com.sun:auto-snapshot" = "false";
         };
         datasets = {
-          samba = {
+          encrypted = {
+            type = "zfs_fs";
+            options = {
+              mountpoint = "none";
+              canmount = "off";
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "prompt";
+            };
+            # use this to read the key during boot
+            #postCreateHook = ''
+            #  zfs set keylocation="prompt" "rpool/$name";
+            #'';
+          };
+          "encrypted/samba" = {
             type = "zfs_fs";
             mountpoint = "/data/samba";
             options.mountpoint = "legacy";
           };
-          media = {
+          "encrypted/media" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
             mountpoint = "/data/media";
