@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   networking.firewall.allowedTCPPorts = [80 443];
   services.nginx = {
     enable = true;
@@ -11,9 +15,34 @@
       useACMEHost = "pinkorca.de";
       addSSL = true;
       default = true;
-      # locations."/" = {
-      #   proxyPass = "http://localhost:8096";
-      # };
+      locations."/" = {
+        root = pkgs.writeTextDir "index.html" ''
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>home.pinkorca.de</title>
+              <style>
+                  body {
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100vh;
+                      margin: 0;
+                      background-color: black;
+                      color: white;
+                      font-size: 2em;
+                  }
+              </style>
+          </head>
+          <body>
+              Hello!
+          </body>
+          </html>
+        '';
+        index = "index.html";
+      };
     };
   };
 
