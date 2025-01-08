@@ -9,7 +9,7 @@
   services.immich = {
     enable = true;
     openFirewall = true;
-    host = "192.168.188.133";
+    host = "0.0.0.0";
     port = 2283;
     user = "immich";
     group = "immich";
