@@ -18,6 +18,7 @@
     ../../modules/ddclient.nix
     ../../modules/radicale.nix
     ../../modules/immich.nix
+    ../../modules/nginx.nix
     ./disko-config.nix
   ];
   # Bootloader.
