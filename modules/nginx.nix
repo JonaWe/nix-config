@@ -10,11 +10,10 @@
     virtualHosts."_" = {
       useACMEHost = "pinkorca.de";
       addSSL = true;
-      # forceSSL = true;
       default = true;
-      locations."/" = {
-        proxyPass = "http://localhost:8096";
-      };
+      # locations."/" = {
+      #   proxyPass = "http://localhost:8096";
+      # };
     };
   };
 
