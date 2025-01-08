@@ -6,7 +6,6 @@
   };
   users.groups.immich = {};
 
-  users.groups.samba-data = {};
   services.immich = {
     enable = true;
     openFirewall = true;
