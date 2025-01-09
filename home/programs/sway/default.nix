@@ -1,9 +1,4 @@
 {pkgs, ...}: {
-  # home.file.".config/sway" = {
-  #   source = ./sway;
-  #   recursive = true;
-  #   executable = true;
-  # };
   imports = [
     ./swaync.nix
   ];
