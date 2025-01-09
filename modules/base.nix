@@ -60,6 +60,5 @@
     wget
     curl
     tmux
-    wireguard-tools
   ];
 }
