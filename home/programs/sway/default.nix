@@ -19,6 +19,10 @@
     source = ./rofi;
     recursive = true;
   };
+  home.file.".config/swaylock" = {
+    source = ./swaylock;
+    recursive = true;
+  };
   programs.waybar.enable = true;
   home.packages = with pkgs; [
     rofi-wayland
