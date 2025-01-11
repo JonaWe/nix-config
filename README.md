@@ -17,7 +17,7 @@ Copy over the secrets.
 Rebuild the system:
 
 ```nix
-sudo nixos-rebuild switch --flake ~/nixos-confif
+sudo nixos-rebuild switch --flake ~/nixos-config
 ```
 
 ### NixOS Installer
@@ -43,5 +43,5 @@ git clone git@github.com:JonaWe/nix-config.git
 Rebuild the system:
 
 ```nix
-sudo nixos-rebuild switch --flake ~/nixos-confif
+sudo nixos-rebuild switch --flake ~/nixos-config
 
