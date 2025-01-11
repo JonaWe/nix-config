@@ -1,23 +1,47 @@
 # NixOS Configurations
 
-This repository ocntains the configuration for my nixos systems.
+This repository contains the configuration for my nixos systems. This readme is also a collection of some important commands.
+
+## Install
+
+Either use nixos anywhere or the NixOS Installer and clone the repo afterwards.
+
+### nixos-anywhere
+
+```bash
+nix run github:nix-community/nixos-anywhere -- --generate-hardware-config nixos-generate-config ./hosts/<hostname>/hardware-configuration.nix --flake .#<hostname> --target-host root@<ip address>
+```
+
+Copy over the secrets.
+
+Rebuild the system:
+
+```nix
+sudo nixos-rebuild switch --flake ~/nixos-confif
+```
+
+### NixOS Installer
+
+Use the installer for the installation if you want to configure the disk layout that way.
+
+Then enable the following option:
 
 ```nix
 nix.settings.experimental-features = ["nix-command" "flakes"];
-add git to packages
 ```
+
+Additionally add `git` to the system packages.
+
+Copy over the secrets.
+
+Clone the repo:
 
 ```bash
-git clone https://github.com/JonaWe/nix-config.git
+git clone git@github.com:JonaWe/nix-config.git
 ```
 
-## Setup on a new system
+Rebuild the system:
 
 ```nix
-sudo mv /etc/nixos /etc/nixos.bak  # Backup the original configuration
-sudo ln -s ~/nixos-config /etc/nixos
-
-# Deploy the flake.nix located at the default location (/etc/nixos)
-sudo nixos-rebuild switch
-```
+sudo nixos-rebuild switch --flake ~/nixos-confif
 
