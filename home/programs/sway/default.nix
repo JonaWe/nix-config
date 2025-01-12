@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./swaync.nix
+    ./mimeapps.nix
   ];
   home.file.".config/xkb" = {
     source = ./xkb;
