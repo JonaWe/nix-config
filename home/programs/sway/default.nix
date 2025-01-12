@@ -27,6 +27,7 @@
     blueman
     cliphist
     vlc
+    swww
   ];
   services.blueman-applet.enable = true;
 
@@ -114,7 +115,6 @@
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun -show-icons";
         "${mod}+v" = "exec rofi -modi clipboard:/home/jona/.config/rofi/modis/clipboard-history-modi.sh -show clipboard -show-icons -theme clipboard";
-
 
         "${mod}+Shift+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show calc -modi calc -no-show-match -no-sort";
         "${mod}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
@@ -250,6 +250,10 @@
           command = "wl-paste --watch cliphist store";
           always = true;
         }
+
+        # wallpaper
+        {command = "swww-daemon";}
+        {command = "swww img /home/jona/bg.jpg";}
 
         # other stuff
         {command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'";}
