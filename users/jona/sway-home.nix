@@ -56,7 +56,7 @@
     zoom-us
     gnome-calendar
     jellyfin-media-player
-    vimiv-qt
+    imv
   ];
 
   services.syncthing = {
