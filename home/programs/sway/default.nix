@@ -31,6 +31,17 @@
   ];
   services.blueman-applet.enable = true;
 
+  xdg = {
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      documents = "\$HOME/documents";
+      download = "\$HOME/downloads";
+      pictures = "\$HOME/pictures";
+      videos = "\$HOME/videos";
+    };
+  };
+
   gtk = {
     enable = true;
     theme = {
