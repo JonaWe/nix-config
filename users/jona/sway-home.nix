@@ -55,7 +55,7 @@
     teamspeak3
     zoom-us
     gnome-calendar
-    jellyfin-web
+    jellyfin-media-player
   ];
 
   services.syncthing = {
