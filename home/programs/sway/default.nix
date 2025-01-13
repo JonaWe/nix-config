@@ -29,6 +29,10 @@
     cliphist
     vlc
     swww
+    libreoffice
+    hunspell
+    hunspellDicts.de_DE
+    hunspellDicts.en_US-large
   ];
   services.blueman-applet.enable = true;
 
