@@ -9,7 +9,7 @@
   services.immich = {
     enable = true;
     openFirewall = true;
-    host = "0.0.0.0";
+    host = "127.0.0.1";
     port = 2283;
     mediaLocation = "/data/media/immich";
     user = "immich";
@@ -29,7 +29,7 @@
     useACMEHost = "pinkorca.de";
     forceSSL = true;
     locations."/" = {
-      proxyPass = "${builtins.toString config.services.immich.host}:${builtins.toString config.services.immich.port}/";
+      proxyPass = "${toString config.services.immich.host}:${toString config.services.immich.port}/";
     };
   };
 }
