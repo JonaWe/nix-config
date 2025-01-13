@@ -25,82 +25,64 @@
     nixpkgs,
     home-manager,
     ...
-  }: {
+  }: let
+    username = "jona";
+    specialArgs = {inherit username inputs;};
+  in {
     nixosConfigurations = {
-      homelab = let
-        username = "jona";
-        specialArgs = {
-          inherit username;
-          inherit inputs;
-        };
-      in
-        nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          system = "x86_64-linux";
+      homelab = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
 
-          modules = [
-            ./hosts/homelab
-            ./users/jona/nixos.nix
+        modules = [
+          ./hosts/homelab
+          ./users/jona/nixos.nix
 
-            inputs.disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.backupFileExtension = ".hm.bak";
-              home-manager.users.${username} = import ./users/${username}/base-home.nix;
-            }
-          ];
-        };
-      octopus = let
-        username = "jona";
-        specialArgs = {
-          inherit username;
-          inherit inputs;
-        };
-      in
-        nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          system = "x86_64-linux";
+          inputs.disko.nixosModules.disko
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = specialArgs;
+            home-manager.backupFileExtension = ".hm.bak";
+            home-manager.users.${username} = import ./users/${username}/base-home.nix;
+          }
+        ];
+      };
+      octopus = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
 
-          modules = [
-            ./hosts/octopus
-            ./users/jona/nixos.nix
+        modules = [
+          ./hosts/octopus
+          ./users/jona/nixos.nix
 
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.backupFileExtension = ".hm.bak";
-              home-manager.users.${username} = import ./users/${username}/sway-home.nix;
-            }
-          ];
-        };
-      pangolin = let
-        username = "jona";
-        specialArgs = {
-          inherit username;
-          inherit inputs;
-        };
-      in
-        nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/pangolin
-            ./users/jona/nixos.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.backupFileExtension = ".hm.bak";
-              home-manager.users.${username} = import ./users/${username}/sway-home.nix;
-            }
-          ];
-        };
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = specialArgs;
+            home-manager.backupFileExtension = ".hm.bak";
+            home-manager.users.${username} = import ./users/${username}/sway-home.nix;
+          }
+        ];
+      };
+      pangolin = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/pangolin
+          ./users/jona/nixos.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = specialArgs;
+            home-manager.backupFileExtension = ".hm.bak";
+            home-manager.users.${username} = import ./users/${username}/sway-home.nix;
+          }
+        ];
+      };
     };
   };
 }
