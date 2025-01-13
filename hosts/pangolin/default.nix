@@ -9,8 +9,6 @@
     ../../modules/base.nix
     ../../modules/ssh.nix
     ../../modules/docker.nix
-    # ../../modules/samba.nix
-    ../../modules/jellyfin.nix
     ../../modules/fonts.nix
     ../../modules/sway.nix
     ../../modules/steam.nix
