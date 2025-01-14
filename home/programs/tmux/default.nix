@@ -13,8 +13,8 @@
     keyMode = "vi";
     prefix = "C-s";
     mouse = true;
-    clipboard = true;
     plugins = [
+      pkgs.tmuxPlugins.extrakto
       {
         plugin = pkgs.tmuxPlugins.session-wizard;
         extraConfig = ''
