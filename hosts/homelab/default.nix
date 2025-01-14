@@ -16,6 +16,7 @@
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
     ../../modules/ddclient.nix
+    ../../modules/gitea.nix
     ../../modules/radicale.nix
     ../../modules/immich.nix
     ../../modules/nginx.nix

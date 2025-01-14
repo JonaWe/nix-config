@@ -86,6 +86,7 @@
         type = "zpool";
         rootFsOptions = {
           canmount = "off";
+          # ashift = 12;
           "com.sun:auto-snapshot" = "false";
         };
         datasets = {
