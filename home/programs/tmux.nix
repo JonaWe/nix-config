@@ -13,7 +13,14 @@
     prefix = "C-s";
     mouse = true;
     plugins = [
+      # space is the default keybinding
       pkgs.tmuxPlugins.extrakto
+      {
+        plugin = pkgs.tmuxPlugins.fzf-tmux-url;
+        extraConfig = ''
+          set -g @fzf-url-bind 'o'
+        '';
+      }
       {
         plugin = pkgs.tmuxPlugins.session-wizard;
         extraConfig = ''
