@@ -15,6 +15,7 @@
     mouse = true;
     plugins = [
       pkgs.tmuxPlugins.extrakto
+      pkgs.tmuxPlugins.extrakto
       {
         plugin = pkgs.tmuxPlugins.session-wizard;
         extraConfig = ''
@@ -37,6 +38,7 @@
       bind S split-window -v -b
       bind v  split-window -h
       bind V split-window -h -b
+      bind -r g popup -d '#{pane_current_path}' -E -w 90% -h 90% lazygit
 
       set -g status-position bottom
       set -g status-style bg=default,fg=white
