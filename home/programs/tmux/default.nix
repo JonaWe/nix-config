@@ -12,28 +12,31 @@
     escapeTime = 0;
     keyMode = "vi";
     prefix = "C-s";
+    mouse = true;
+    clipboard = true;
     plugins = [
       {
         plugin = pkgs.tmuxPlugins.session-wizard;
         extraConfig = ''
-          set -g @session-wizard 'T K' # for multiple key bindings
+          set -g @session-wizard 'Space'
         '';
       }
     ];
     extraConfig = ''
-            bind q kill-pane
+      bind q kill-pane
+      bind-key -n C-b send-prefix
 
-            # move between panes
-            bind h select-pane -L
-            bind l select-pane -R
-            bind k select-pane -U
-            bind j select-pane -D
+      # move between panes
+      bind h select-pane -L
+      bind l select-pane -R
+      bind k select-pane -U
+      bind j select-pane -D
 
-            # create new panes
-            bind s split-window -v
-            bind S split-window -v -b
-            bind v  split-window -h
-            bind V split-window -h -b
+      # create new panes
+      bind s split-window -v
+      bind S split-window -v -b
+      bind v  split-window -h
+      bind V split-window -h -b
 
       set -g status-position bottom
       set -g status-style bg=default,fg=white
