@@ -20,5 +20,22 @@
         '';
       }
     ];
+    shortcut = "s";
+    extraConfig = ''
+      bind q kill-pane
+
+      # move between panes
+      bind h select-pane -L
+      bind l select-pane -R
+      bind k select-pane -U
+      bind j select-pane -D
+
+      # create new panes
+      bind s split-window -v
+      bind S split-window -v -b
+      bind v  split-window -h
+      bind V split-window -h -b
+
+    '';
   };
 }
