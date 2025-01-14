@@ -45,3 +45,12 @@ Rebuild the system:
 ```nix
 sudo nixos-rebuild switch --flake ~/nixos-config
 
+## Reformat disk
+
+This is an experimental feature and should not be used if you have important data on your drive.
+
+```bash
+disko --mode format --dry-run ./hosts/homelab/disko-config.nix
+
+```
+
