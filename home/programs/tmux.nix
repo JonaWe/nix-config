@@ -1,9 +1,8 @@
 {pkgs, ...}: {
-  # home.file.".config/tmux/tmux.conf".source = ./tmux.conf;
-  # home.packages = with pkgs; [
-  #   tmux
-  #   tmuxPlugins.session-wizard
-  # ];
+  home.packages = with pkgs; [
+    fzf
+    zoxide
+  ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -14,7 +13,6 @@
     prefix = "C-s";
     mouse = true;
     plugins = [
-      pkgs.tmuxPlugins.extrakto
       pkgs.tmuxPlugins.extrakto
       {
         plugin = pkgs.tmuxPlugins.session-wizard;
