@@ -9,5 +9,16 @@
     baseIndex = 1;
     clock24 = true;
     disableConfirmationPrompt = true;
+    escapeTime = 0;
+    keyMode = "vi";
+    prefix = "C-s";
+    plugins = [
+      {
+        plugin = pkgs.tmuxPlugins.session-wizard;
+        extraConfig = ''
+          set -g @session-wizard 'T K' # for multiple key bindings
+        '';
+      }
+    ];
   };
 }
