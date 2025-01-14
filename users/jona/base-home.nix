@@ -5,7 +5,7 @@
 }: {
   imports = [
     ../../home/programs/neovim
-    ../../home/programs/tmux
+    ../../home/programs/tmux.nix
   ];
 
   home.username = "jona";

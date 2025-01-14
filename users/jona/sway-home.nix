@@ -5,14 +5,12 @@
   ...
 }: {
   imports = [
-    ../../home/programs/neovim
-    ../../home/programs/tmux
+    ./base-home.nix
     ../../home/programs/sway
     ../../home/programs/kitty
     ../../home/programs/zathura
     ../../home/programs/browser
     ../../home/programs/discord
-    ./base-home.nix
   ];
 
   xdg.portal = {
