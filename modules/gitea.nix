@@ -7,15 +7,15 @@
 }: let
   cfg = config.services.gitea;
 in {
-  options.networking = {
-    domain = lib.mkOption {
-      type = lib.types.str;
-      default = "example.com";
-      description = "base domain";
-    };
-  };
+  # options.networking = {
+  #   domain = lib.mkOption {
+  #     type = lib.types.str;
+  #     default = "example.com";
+  #     description = "base domain";
+  #   };
+  # };
   config = {
-    networking.domain = "pinkorca.de";
+    # networking.domain = "pinkorca.de";
 
     services.gitea = rec {
       enable = true;
