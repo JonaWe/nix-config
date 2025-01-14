@@ -16,6 +16,12 @@
       # space is the default keybinding
       pkgs.tmuxPlugins.extrakto
       {
+        plugin = pkgs.tmuxPlugins.continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+        '';
+      }
+      {
         plugin = pkgs.tmuxPlugins.fzf-tmux-url;
         extraConfig = ''
           set -g @fzf-url-bind 'o'
