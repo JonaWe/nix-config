@@ -20,26 +20,26 @@ in {
     services.gitea = rec {
       enable = true;
       # rootUrl = "https://git.${domain}/";
-      # user = "git";
+      user = "git";
       # appName = "Gitea";
       # disableRegistration = true;
-      # inherit (config.networking) domain;
-      # stateDir = "/srv/gitea";
-      # repositoryRoot = "${stateDir}/repositories";
-      # database = {
+      # domain = "home.pinkorca.de";
+      stateDir = "/srv/gitea";
+      repositoryRoot = "${stateDir}/repositories";
+      database = {
       #   type = "sqlite3";
-      #   inherit user;
+        user = "git";
       #   path = "${stateDir}/gitea.db";
-      # };
+      };
+      cookieSecure = true;
       # enableUnixSocket = true;
       # ssh = {
       #   clonePort = lib.head config.services.openssh.ports;
       # };
-      # lfs = {
-      #   enable = true;
-      #   contentDir = "${stateDir}/lfs";
-      # };
-      # cookieSecure = true;
+      lfs = {
+        enable = true;
+        # contentDir = "${stateDir}/lfs";
+      };
       # settings = {
       #   server = {
       #     SSH_USER = "git";
@@ -50,18 +50,20 @@ in {
       #     OFFLINE_MODE = true;
       #   };
       # };
-      # log.rootPath = "${stateDir}/log";
+      settings = {
+        log.ROOT_PATH = "${stateDir}/log";
+      };
     };
 
-    # users.users.git = {
-    #   isSystemUser = true;
-    #   useDefaultShell = true;
-    #   group = "git";
-    #   extraGroups = ["gitea"];
-    #   home = cfg.stateDir;
-    # };
-    # users.groups.git = {};
-    #
+    users.users.git = {
+      isSystemUser = true;
+      useDefaultShell = true;
+      group = "git";
+      extraGroups = ["gitea"];
+      home = cfg.stateDir;
+    };
+    users.groups.git = {};
+
     # services.nginx.upstreams.gitea = with config.services.gitea;
     #   lib.mkIf enable {
     #     servers = {
@@ -70,7 +72,7 @@ in {
     #   };
     # services.nginx.virtualHosts."git.${config.services.gitea.domain}" = {
     #   forceSSL = true;
-    #   useACMEHost = config.services.gitea.domain;
+    #   useACMEHost = "home.pinkorca.de";
     #   locations."/".proxyPass = "http://gitea";
     # };
   };
