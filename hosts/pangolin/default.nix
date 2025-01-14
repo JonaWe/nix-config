@@ -15,7 +15,7 @@
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
     ../../modules/sops.nix
-    ../../modules/wireguard-client.nix
+    # ../../modules/wireguard-client.nix
   ];
   boot.supportedFilesystems = ["ntfs"];
 
