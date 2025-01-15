@@ -21,7 +21,7 @@
     owner = "jona";
     group = "users";
   };
-  sops.secrets.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
+  sops.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
   services = {
     syncthing = {
       enable = true;
@@ -31,12 +31,14 @@
       configDir = "/home/jona/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
+      # settings.gui = {
+      #   user = "jona";
+      #   password = "$6$vcG1IuT4zuUQj/g3$A8qfB.0BN0Ue.0.PE7ZKIMolMJoQpTRrbXErVoQaGrJ7LWud9i3Fh3X4RlPOw2bsLJPkTNIKixCa9gepShnE4.";
+        # password = config.sops.templates."syncthing-user-password".content;
+        # password = "test";
+      # };
       settings = {
-        gui = {
-            user = "jona";
-            password = config.sops.templates."syncthing-user-password".content;
-        };
-        devices = {};
+        # devices = {};
         # folders = {
         #   "test-folder" = {
         #     path = "/home/jona/test-folder";
