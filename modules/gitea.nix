@@ -18,13 +18,10 @@ in {
     # networking.domain = "pinkorca.de";
 
     services.gitea = rec {
-      openFirewall = true;
       enable = true;
-      # rootUrl = "https://git.${domain}/";
       user = "git";
-      # appName = "Gitea";
+      appName = "Gitea";
       # disableRegistration = true;
-      # domain = "home.pinkorca.de";
       stateDir = "/srv/gitea";
       repositoryRoot = "${stateDir}/repositories";
       database = {
@@ -32,7 +29,6 @@ in {
         user = "git";
         #   path = "${stateDir}/gitea.db";
       };
-      cookieSecure = true;
       # enableUnixSocket = true;
       # ssh = {
       #   clonePort = lib.head config.services.openssh.ports;
@@ -41,18 +37,21 @@ in {
         enable = true;
         # contentDir = "${stateDir}/lfs";
       };
-      # settings = {
-      #   server = {
+      settings = {
+        log.ROOT_PATH = "${stateDir}/log";
+        session = {
+            COOKIE_SECURE = true;
+        };
+        server = {
+            ROOT_URL = "https://git.home.pinkorca.de/";
+            DOMAIN = "home.pinkorca.de";
       #     SSH_USER = "git";
       #     SSH_DOMAIN = "git.${domain}";
       #     SSH_TRUSTED_USER_CA_KEYS = lib.concatStringsSep "," [
       #       (builtins.readFile "${inputs.ssh}/ca.pub")
       #     ];
       #     OFFLINE_MODE = true;
-      #   };
-      # };
-      settings = {
-        log.ROOT_PATH = "${stateDir}/log";
+        };
       };
     };
 
@@ -71,10 +70,19 @@ in {
     #       "unix:${config.services.gitea.settings.server.HTTP_ADDR}" = {};
     #     };
     #   };
-    # services.nginx.virtualHosts."git.${config.services.gitea.domain}" = {
-    #   forceSSL = true;
-    #   useACMEHost = "home.pinkorca.de";
-    #   locations."/".proxyPass = "http://gitea";
+    #   services.nginx.virtualHosts."git.${config.services.gitea.domain}" = {
+    #     forceSSL = true;
+    #     useACMEHost = "home.pinkorca.de";
+    #     locations."/".proxyPass = "http://gitea";
+    #   };
     # };
+
+    services.nginx.virtualHosts."git.home.pinkorca.de" = {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://gitea";
+      };
+    };
   };
 }
