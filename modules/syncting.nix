@@ -17,6 +17,11 @@
   # environment.systemPackages = with pkgs; [
   #   sops
   # ];
+  sops.secrets."syncthing/user-password" = {
+    owner = "jona";
+    group = "users";
+  };
+  sops.secrets.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
   services = {
     syncthing = {
       enable = true;
@@ -27,6 +32,10 @@
       overrideDevices = true;
       overrideFolders = true;
       settings = {
+        gui = {
+            user = "jona";
+            password = config.sops.templates."syncthing-user-password".content;
+        };
         devices = {};
         # folders = {
         #   "test-folder" = {
@@ -37,5 +46,5 @@
       };
     };
   };
-  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 }
