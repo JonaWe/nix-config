@@ -21,10 +21,20 @@
     syncthing = {
       enable = true;
       user = "jona";
+      group = "users";
       dataDir = "/home/jona";
       configDir = "/home/jona/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
+      settings = {
+        devices = {};
+        # folders = {
+        #   "test-folder" = {
+        #     path = "/home/jona/test-folder";
+        #     devices = [];
+        #   };
+        # };
+      };
     };
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
