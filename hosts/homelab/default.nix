@@ -18,7 +18,7 @@
     ../../modules/ddclient.nix
     ../../modules/gitea.nix
     ../../modules/radicale.nix
-    ../../modules/immich.nix
+    # ../../modules/immich.nix
     ../../modules/nginx.nix
     ../../modules/wireguard-server.nix
     ./disko-config.nix
