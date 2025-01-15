@@ -40,17 +40,18 @@ in {
       settings = {
         log.ROOT_PATH = "${stateDir}/log";
         session = {
-            COOKIE_SECURE = true;
+          COOKIE_SECURE = true;
         };
         server = {
-            ROOT_URL = "https://git.home.pinkorca.de/";
-            DOMAIN = "home.pinkorca.de";
-      #     SSH_USER = "git";
-      #     SSH_DOMAIN = "git.${domain}";
-      #     SSH_TRUSTED_USER_CA_KEYS = lib.concatStringsSep "," [
-      #       (builtins.readFile "${inputs.ssh}/ca.pub")
-      #     ];
-      #     OFFLINE_MODE = true;
+          HTTP_PORT = 3002;
+          ROOT_URL = "https://git.home.pinkorca.de/";
+          DOMAIN = "home.pinkorca.de";
+          #     SSH_USER = "git";
+          #     SSH_DOMAIN = "git.${domain}";
+          #     SSH_TRUSTED_USER_CA_KEYS = lib.concatStringsSep "," [
+          #       (builtins.readFile "${inputs.ssh}/ca.pub")
+          #     ];
+          #     OFFLINE_MODE = true;
         };
       };
     };
@@ -76,13 +77,15 @@ in {
     #     locations."/".proxyPass = "http://gitea";
     #   };
     # };
+    #
+    networking.firewall.allowedTCPPorts = [3002];
 
-    # services.nginx.virtualHosts."git.home.pinkorca.de" = {
-    #   useACMEHost = "pinkorca.de";
-    #   forceSSL = true;
-    #   locations."/" = {
-    #     proxyPass = "http://gitea";
-    #   };
-    # };
+    services.nginx.virtualHosts."git.home.pinkorca.de" = {
+      useACMEHost = "pinkorca.de";
+      addSSL = true;
+      locations."/" = {
+        proxyPass = "http://0.0.0.0:3002/";
+      };
+    };
   };
 }
