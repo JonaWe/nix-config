@@ -18,6 +18,7 @@ in {
     # networking.domain = "pinkorca.de";
 
     services.gitea = rec {
+      openFirewall = true;
       enable = true;
       # rootUrl = "https://git.${domain}/";
       user = "git";
@@ -27,9 +28,9 @@ in {
       stateDir = "/srv/gitea";
       repositoryRoot = "${stateDir}/repositories";
       database = {
-      #   type = "sqlite3";
+        #   type = "sqlite3";
         user = "git";
-      #   path = "${stateDir}/gitea.db";
+        #   path = "${stateDir}/gitea.db";
       };
       cookieSecure = true;
       # enableUnixSocket = true;
