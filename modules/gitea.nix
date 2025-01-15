@@ -77,12 +77,12 @@ in {
     #   };
     # };
 
-    services.nginx.virtualHosts."git.home.pinkorca.de" = {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://gitea";
-      };
-    };
+    # services.nginx.virtualHosts."git.home.pinkorca.de" = {
+    #   useACMEHost = "pinkorca.de";
+    #   forceSSL = true;
+    #   locations."/" = {
+    #     proxyPass = "http://gitea";
+    #   };
+    # };
   };
 }
