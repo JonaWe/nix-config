@@ -25,11 +25,11 @@
     "d /data/media/immich 0700 ${toString config.services.immich.user} ${toString config.services.immich.group} -"
   ];
 
-  services.nginx.virtualHosts."photos.home.pinkorca.de" = {
-    useACMEHost = "pinkorca.de";
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = "${toString config.services.immich.host}:${toString config.services.immich.port}/";
-    };
-  };
+  # services.nginx.virtualHosts."photos.home.pinkorca.de" = {
+  #   useACMEHost = "pinkorca.de";
+  #   forceSSL = true;
+  #   locations."/" = {
+  #     proxyPass = "${toString config.services.immich.host}:${toString config.services.immich.port}/";
+  #   };
+  # };
 }
