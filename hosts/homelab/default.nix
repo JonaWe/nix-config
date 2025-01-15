@@ -20,7 +20,7 @@
     ../../modules/radicale.nix
     # ../../modules/immich.nix
     ../../modules/nginx.nix
-    ../../modules/wireguard-server.nix
+    # ../../modules/wireguard-server.nix
     ./disko-config.nix
   ];
   # Bootloader.
