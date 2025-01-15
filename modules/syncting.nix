@@ -25,4 +25,5 @@
       configDir = "/home/jona/.config/syncthing";
     };
   };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
 }
