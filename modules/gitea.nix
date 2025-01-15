@@ -35,7 +35,7 @@ in {
       # };
       lfs = {
         enable = true;
-        # contentDir = "${stateDir}/lfs";
+        contentDir = "${stateDir}/lfs";
       };
       settings = {
         log.ROOT_PATH = "${stateDir}/log";
@@ -46,8 +46,8 @@ in {
           HTTP_PORT = 3002;
           ROOT_URL = "https://git.home.pinkorca.de/";
           DOMAIN = "home.pinkorca.de";
-          #     SSH_USER = "git";
-          #     SSH_DOMAIN = "git.${domain}";
+          SSH_USER = "git";
+          SSH_DOMAIN = "git.home.pinkorca.de";
           #     SSH_TRUSTED_USER_CA_KEYS = lib.concatStringsSep "," [
           #       (builtins.readFile "${inputs.ssh}/ca.pub")
           #     ];
