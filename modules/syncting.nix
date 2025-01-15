@@ -23,6 +23,8 @@
       user = "jona";
       dataDir = "/home/jona";
       configDir = "/home/jona/.config/syncthing";
+      overrideDevices = true;
+      overrideFolders = true;
     };
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
