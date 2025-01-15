@@ -56,9 +56,4 @@
     jellyfin-media-player
     imv
   ];
-
-  services.syncthing = {
-    enable = true;
-    # tray.enable = true;
-  };
 }
