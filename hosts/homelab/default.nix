@@ -29,8 +29,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = ["zfs" "ntfs"];
 
-  # networking.hostId = "37dff6a3";
-  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
+  networking.hostId = "37dff6a3";
+  # networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
 
   services.sanoid = {
     enable = true;
