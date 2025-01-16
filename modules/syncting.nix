@@ -29,12 +29,7 @@
     owner = "jona";
     group = "users";
   };
-  sops.secrets."syncthing/devices/homelab/id" = {
-    owner = "jona";
-    group = "users";
-  };
   sops.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
-  sops.templates."syncthing-homelab-id".content = ''${config.sops.placeholder."syncthing/devices/homelab/id"}'';
   services = {
     syncthing = {
       enable = true;
@@ -55,7 +50,7 @@
       settings = {
         devices = {
             homelab = {
-                id = config.sops.templates."syncthing-homelab-id".content;
+                id = "DP6G2PA-QLRCJRJ-SZ644M2-LVX2T47-33KGVYT-2QJXS7N-JFXGNZ5-IIVC5Q5";
             };
         };
         folders = {
