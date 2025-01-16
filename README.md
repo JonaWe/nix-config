@@ -54,3 +54,9 @@ disko --mode format --dry-run ./hosts/homelab/disko-config.nix
 
 ```
 
+Forward port via ssh for syncthing setup
+
+```bash
+ssh -L 9998:localhost:8384 home.lab
+```
+
