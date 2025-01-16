@@ -19,7 +19,7 @@
       user = "jona";
       group = "users";
       dataDir = "/data/syncthing";
-      configDir = "/home/jona/.config/syncthing";
+      configDir = "/data/syncthing/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
       key = config.sops.secrets."syncthing/devices/homelab/key".path;
