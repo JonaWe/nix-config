@@ -27,6 +27,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 1;
   boot.supportedFilesystems = ["zfs" "ntfs"];
 
   networking.hostId = "37dff6a3";
