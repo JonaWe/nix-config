@@ -18,13 +18,13 @@
       enable = true;
       user = "jona";
       group = "users";
-      dataDir = "/home/jona";
+      dataDir = "/data/syncthing/";
       configDir = "/home/jona/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
       key = config.sops.secrets."syncthing/devices/homelab/key".path;
       cert = config.sops.secrets."syncthing/devices/homelab/cert".path;
-      settings = import ./syncthing-settings.nix;
+      settings = import ./syncthing-settings.nix {base-dir = "/data/syncthing";};
     };
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
