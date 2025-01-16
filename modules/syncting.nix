@@ -44,22 +44,25 @@
       # settings.gui = {
       #   user = "jona";
       #   password = "$6$vcG1IuT4zuUQj/g3$A8qfB.0BN0Ue.0.PE7ZKIMolMJoQpTRrbXErVoQaGrJ7LWud9i3Fh3X4RlPOw2bsLJPkTNIKixCa9gepShnE4.";
-        # password = config.sops.templates."syncthing-user-password".content;
-        # password = "test";
+      # password = config.sops.templates."syncthing-user-password".content;
+      # password = "test";
       # };
       settings.gui.insecureSkipHostcheck = true;
       settings = {
         devices = {
-            homelab = {
-                id = "DP6G2PA-QLRCJRJ-SZ644M2-LVX2T47-33KGVYT-2QJXS7N-JFXGNZ5-IIVC5Q5";
-            };
+          homelab = {
+            id = "DP6G2PA-QLRCJRJ-SZ644M2-LVX2T47-33KGVYT-2QJXS7N-JFXGNZ5-IIVC5Q5";
+          };
+          phone = {
+            id = "NWDFWNP-J265KD5-TG6JSA6-5VWRPIN-PN3IBIW-2TUWQ2D-WCKAZ3Q-ZGQ7LAN";
+          };
         };
         folders = {
           "test-folder" = {
             id = "test-folder";
             label = "Test Folder";
             path = "/home/jona/test-folder";
-            devices = [ "homelab" ];
+            devices = ["homelab" "phone"];
           };
         };
       };
