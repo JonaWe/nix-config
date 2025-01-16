@@ -49,12 +49,12 @@
       # };
       settings = {
         # devices = {};
-        # folders = {
-        #   "test-folder" = {
-        #     path = "/home/jona/test-folder";
-        #     devices = [];
-        #   };
-        # };
+        folders = {
+          "test-folder" = {
+            path = "/home/jona/test-folder";
+            devices = [];
+          };
+        };
       };
     };
   };
