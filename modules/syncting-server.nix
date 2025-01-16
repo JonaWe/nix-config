@@ -34,7 +34,6 @@
     group = "users";
   };
   sops.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
-  sops.templates."syncthing-pangolin-id".content = ''${config.sops.placeholder."syncthing/devices/pangolin/id"}'';
   services = {
     syncthing = {
       enable = true;
@@ -55,7 +54,7 @@
       settings = {
         devices = {
             pangolin = {
-                id = config.sops.templates."syncthing-pangolin-id".content;
+                id = "SCRTM6K-4YE5FGZ-HP27RDE-Z4PUUNQ-WUVCGF6-633QWR5-X6XYMPS-V72OFQ";
             };
         };
         folders = {
