@@ -21,6 +21,14 @@
     owner = "jona";
     group = "users";
   };
+  sops.secrets."syncthing/key" = {
+    owner = "jona";
+    group = "users";
+  };
+  sops.secrets."syncthing/cert" = {
+    owner = "jona";
+    group = "users";
+  };
   sops.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
   services = {
     syncthing = {
@@ -31,6 +39,8 @@
       configDir = "/home/jona/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
+      key = config.sops.secrets."syncthing/key".path;
+      cert = config.sops.secrets."syncthing/cert".path;
       # settings.gui = {
       #   user = "jona";
       #   password = "$6$vcG1IuT4zuUQj/g3$A8qfB.0BN0Ue.0.PE7ZKIMolMJoQpTRrbXErVoQaGrJ7LWud9i3Fh3X4RlPOw2bsLJPkTNIKixCa9gepShnE4.";
