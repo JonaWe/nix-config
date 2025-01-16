@@ -18,7 +18,7 @@
     ../../modules/syncthing-pangolin.nix
     # ../../modules/wireguard-client.nix
   ];
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = ["ntfs" "zfs"];
 
   services.gnome = {
     evolution-data-server.enable = true;
@@ -31,6 +31,8 @@
   };
 
   networking.hostName = "pangolin";
+  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
+
   services.fprintd.enable = true;
   services.fprintd.tod.enable = true;
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
