@@ -28,4 +28,8 @@
     };
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+
+  systemd.tmpfiles.rules = [
+    "d /data/syncthing 0700 jona users -"
+  ];
 }
