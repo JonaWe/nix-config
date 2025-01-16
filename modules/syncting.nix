@@ -53,7 +53,11 @@
         # password = "test";
       # };
       settings = {
-        # devices = {};
+        devices = {
+            homelab = {
+                id = config.sops.templates."syncthing-homelab-id".content;
+            };
+        };
         folders = {
           "test-folder" = {
             path = "/home/jona/test-folder";
