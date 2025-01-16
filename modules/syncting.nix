@@ -47,6 +47,7 @@
         # password = config.sops.templates."syncthing-user-password".content;
         # password = "test";
       # };
+      settings.gui.insecureSkipHostcheck = true;
       settings = {
         devices = {
             homelab = {
@@ -55,6 +56,8 @@
         };
         folders = {
           "test-folder" = {
+            id = "test-folder";
+            label = "Test Folder";
             path = "/home/jona/test-folder";
             devices = [ "homelab" ];
           };
