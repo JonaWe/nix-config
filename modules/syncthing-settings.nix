@@ -3,8 +3,6 @@
   device-name,
   ...
 }: let
-  devices = {};
-in {
   devices = {
     pangolin = {
       id = "SCRTM6K-4YE5FGZ-HP27RDE-Z4PUUNQ-WUVCGF6-633QWR5-X6XYMPS-V72OFQB";
@@ -16,6 +14,8 @@ in {
       id = "DP6G2PA-QLRCJRJ-SZ644M2-LVX2T47-33KGVYT-2QJXS7N-JFXGNZ5-IIVC5Q5";
     };
   };
+in {
+  devices = devices;
   folders = let
     device-names = builtins.attrNames devices;
   in {
