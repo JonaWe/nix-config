@@ -18,7 +18,7 @@
       enable = true;
       user = "jona";
       group = "users";
-      dataDir = "/data/syncthing/";
+      dataDir = "/data/syncthing";
       configDir = "/home/jona/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
