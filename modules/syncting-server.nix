@@ -24,7 +24,10 @@
       overrideFolders = true;
       key = config.sops.secrets."syncthing/devices/homelab/key".path;
       cert = config.sops.secrets."syncthing/devices/homelab/cert".path;
-      settings = import ./syncthing-settings.nix {base-dir = "/data/syncthing";};
+      settings = import ./syncthing-settings.nix {
+        base-dir = "/data/syncthing";
+        device-name = "homelab";
+      };
     };
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
