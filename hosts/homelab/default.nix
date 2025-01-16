@@ -18,6 +18,7 @@
     ../../modules/ddclient.nix
     ../../modules/gitea.nix
     ../../modules/radicale.nix
+    ../../modules/syncting-server.nix
     # ../../modules/immich.nix
     ../../modules/nginx.nix
     # ../../modules/wireguard-server.nix

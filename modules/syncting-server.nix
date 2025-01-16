@@ -21,20 +21,20 @@
     owner = "jona";
     group = "users";
   };
-  sops.secrets."syncthing/devices/pangolin/key" = {
+  sops.secrets."syncthing/devices/homelab/key" = {
     owner = "jona";
     group = "users";
   };
-  sops.secrets."syncthing/devices/pangolin/cert" = {
+  sops.secrets."syncthing/devices/homelab/cert" = {
     owner = "jona";
     group = "users";
   };
-  sops.secrets."syncthing/devices/homelab/id" = {
+  sops.secrets."syncthing/devices/pangolin/id" = {
     owner = "jona";
     group = "users";
   };
   sops.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
-  sops.templates."syncthing-homelab-id".content = ''${config.sops.placeholder."syncthing/devices/homelab/id"}'';
+  sops.templates."syncthing-panglin-id".content = ''${config.sops.placeholder."syncthing/devices/pangolin/id"}'';
   services = {
     syncthing = {
       enable = true;
@@ -44,8 +44,8 @@
       configDir = "/home/jona/.config/syncthing";
       overrideDevices = true;
       overrideFolders = true;
-      key = config.sops.secrets."syncthing/devices/pangolin/key".path;
-      cert = config.sops.secrets."syncthing/devices/pangolin/cert".path;
+      key = config.sops.secrets."syncthing/devices/homelab/key".path;
+      cert = config.sops.secrets."syncthing/devices/homelab/cert".path;
       # settings.gui = {
       #   user = "jona";
       #   password = "$6$vcG1IuT4zuUQj/g3$A8qfB.0BN0Ue.0.PE7ZKIMolMJoQpTRrbXErVoQaGrJ7LWud9i3Fh3X4RlPOw2bsLJPkTNIKixCa9gepShnE4.";
@@ -54,14 +54,14 @@
       # };
       settings = {
         devices = {
-            homelab = {
-                id = config.sops.templates."syncthing-homelab-id".content;
+            pangolin = {
+                id = config.sops.templates."syncthing-pangolin-id".content;
             };
         };
         folders = {
           "test-folder" = {
             path = "/home/jona/test-folder";
-            devices = [ "homelab" ];
+            devices = [ "pangolin" ];
           };
         };
       };
