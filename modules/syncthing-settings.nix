@@ -37,5 +37,11 @@ in {
       path = "${base-dir}/pictures/wallpapers";
       devices = device-names;
     };
+    "android-camera" = {
+      id = "android-camera";
+      label = "Android Camera";
+      path = "${base-dir}/pictures/android-camera";
+      devices = device-names;
+    };
   };
 }
