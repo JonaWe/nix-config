@@ -34,7 +34,7 @@
     group = "users";
   };
   sops.templates."syncthing-user-password".content = ''${config.sops.placeholder."syncthing/user-password"}'';
-  sops.templates."syncthing-panglin-id".content = ''${config.sops.placeholder."syncthing/devices/pangolin/id"}'';
+  sops.templates."syncthing-pangolin-id".content = ''${config.sops.placeholder."syncthing/devices/pangolin/id"}'';
   services = {
     syncthing = {
       enable = true;
