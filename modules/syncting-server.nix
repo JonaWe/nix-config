@@ -65,7 +65,7 @@
             id = "test-folder";
             label = "Test Folder";
             path = "/home/jona/test-folder";
-            devices = ["homelab" "phone"];
+            devices = ["pangolin" "phone"];
           };
         };
       };
