@@ -110,6 +110,11 @@
             mountpoint = "/data/media";
             options.mountpoint = "legacy";
           };
+          "encrypted/syncthing" = {
+            type = "zfs_fs";
+            mountpoint = "/data/syncthing";
+            options.mountpoint = "legacy";
+          };
         };
       };
     };
