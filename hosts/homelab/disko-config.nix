@@ -71,7 +71,7 @@
         options.cachefile = "none";
         mode = "";
         options = {
-          ashift = 12;
+          ashift = "12";
           autotrim = "on";
         };
         rootFsOptions = {
