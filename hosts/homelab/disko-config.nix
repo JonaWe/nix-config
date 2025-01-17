@@ -32,38 +32,54 @@
           };
         };
       };
-      # data = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-id/ata-SanDisk_SDSSDA240G_163623441801";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       files = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zdata";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
-      # data2 = {
-      #   type = "disk";
-      #   device = "/dev/disk/by-id/wwn-0x50004cf206c95bfa";
-      #   content = {
-      #     type = "gpt";
-      #     partitions = {
-      #       files = {
-      #         size = "100%";
-      #         content = {
-      #           type = "zfs";
-      #           pool = "zdata";
-      #         };
-      #       };
-      #     };
-      #   };
-      # };
+      data = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20TJNQ";
+        content = {
+          type = "gpt";
+          partitions = {
+            files = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zdata";
+              };
+            };
+          };
+        };
+      };
+      data2 = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20VP3M";
+        content = {
+          type = "gpt";
+          partitions = {
+            files = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zdata";
+              };
+            };
+          };
+        };
+      };
+      data3 = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-ST16000NM001G-2KK103_ZL2NZAQ8";
+        content = {
+          type = "gpt";
+          partitions = {
+            files = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zdata";
+              };
+            };
+          };
+        };
+      };
     };
     zpool = {
       zroot = {
@@ -113,40 +129,61 @@
           };
         };
       };
-      # zdata = {
-      #   type = "zpool";
-      #   rootFsOptions = {
-      #     canmount = "off";
-      #     "com.sun:auto-snapshot" = "false";
-      #   };
-      #   datasets = {
-      #     encrypted = {
-      #       type = "zfs_fs";
-      #       options = {
-      #         mountpoint = "none";
-      #         canmount = "off";
-      #         encryption = "aes-256-gcm";
-      #         keyformat = "passphrase";
-      #         keylocation = "prompt";
-      #       };
-      #     };
-      #     "encrypted/samba" = {
-      #       type = "zfs_fs";
-      #       mountpoint = "/data/samba";
-      #       options.mountpoint = "legacy";
-      #     };
-      #     "encrypted/media" = {
-      #       type = "zfs_fs";
-      #       mountpoint = "/data/media";
-      #       options.mountpoint = "legacy";
-      #     };
-      #     "encrypted/syncthing" = {
-      #       type = "zfs_fs";
-      #       mountpoint = "/data/syncthing";
-      #       options.mountpoint = "legacy";
-      #     };
-      #   };
-      # };
+      zdata = {
+        mode = "";
+        options = {
+          ashift = "12";
+          autotrim = "on";
+        };
+        rootFsOptions = {
+          acltype = "posixacl";
+          atime = "off";
+          canmount = "off";
+          compression = "zstd";
+          "com.sun:auto-snapshot" = "false";
+          dnodesize = "auto";
+          normalization = "formD";
+          relatime = "on";
+          xattr = "sa";
+        };
+        datasets = {
+          encrypted = {
+            type = "zfs_fs";
+            options = {
+              mountpoint = "none";
+              canmount = "off";
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "prompt";
+            };
+          };
+          "encrypted/samba" = {
+            type = "zfs_fs";
+            mountpoint = "/data/samba";
+            options.mountpoint = "legacy";
+          };
+          "encrypted/media" = {
+            type = "zfs_fs";
+            mountpoint = "/data/media";
+            options.mountpoint = "legacy";
+          };
+          "encrypted/syncthing" = {
+            type = "zfs_fs";
+            mountpoint = "/data/syncthing";
+            options.mountpoint = "legacy";
+          };
+          "encrypted/test" = {
+            type = "zfs_fs";
+            mountpoint = "/data/encrypted-test";
+            options.mountpoint = "legacy";
+          };
+          "test" = {
+            type = "zfs_fs";
+            mountpoint = "/data/test";
+            options.mountpoint = "legacy";
+          };
+        };
+      };
     };
   };
 }
