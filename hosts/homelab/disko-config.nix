@@ -4,7 +4,7 @@
 {
   disko.devices = {
     disk = {
-      main = {
+      nvme = {
         type = "disk";
         device = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T";
         content = {
@@ -14,7 +14,7 @@
               priority = 1;
               name = "ESP";
               start = "1M";
-              end = "512M";
+              end = "1024M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -25,24 +25,8 @@
             root = {
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = ["-f"]; # Override existing partition
-                subvolumes = {
-                  # Subvolume name is different from mountpoint
-                  "@" = {
-                    mountpoint = "/";
-                  };
-                  # Subvolume name is the same as the mountpoint
-                  "@home" = {
-                    mountOptions = ["compress=zstd"];
-                    mountpoint = "/home";
-                  };
-                  # Parent is not mounted so the mountpoint must be set
-                  "@nix" = {
-                    mountOptions = ["compress=zstd" "noatime"];
-                    mountpoint = "/nix";
-                  };
-                };
+                type = "zfs";
+                pool = "zroot";
               };
             };
           };
@@ -82,11 +66,57 @@
       };
     };
     zpool = {
+      zroot = {
+        type = "zpool";
+        options.cachefile = "none";
+        mode = "";
+        options = {
+          ashift = 12;
+          autotrim = "on";
+        };
+        rootFsOptions = {
+          acltype = "posixacl";
+          atime = "off";
+          canmount = "off";
+          compression = "zstd";
+          "com.sun:auto-snapshot" = "false";
+          dnodesize = "auto";
+          normalization = "formD";
+          relatime = "on";
+          xattr = "sa";
+        };
+        datasets = {
+          "root" = {
+            mountpoint = "/";
+            options.mountpoint = "legacy";
+            type = "zfs_fs";
+          };
+
+          "root/nix" = {
+            mountpoint = "/nix";
+            options.mountpoint = "legacy";
+            type = "zfs_fs";
+          };
+          "root/home" = {
+            mountpoint = "/home";
+            options.mountpoint = "legacy";
+            type = "zfs_fs";
+          };
+          "root/var-log" = {
+            mountpoint = "/var/log";
+            options.mountpoint = "legacy";
+            type = "zfs_fs";
+          };
+          reserved = {
+            type = "zfs_fs";
+            options.refreservation = "10G";
+          };
+        };
+      };
       zdata = {
         type = "zpool";
         rootFsOptions = {
           canmount = "off";
-          # ashift = 12;
           "com.sun:auto-snapshot" = "false";
         };
         datasets = {
