@@ -130,7 +130,7 @@
         };
       };
       zdata = {
-        mode = "";
+        mode = "raidz1";
         options = {
           ashift = "12";
           autotrim = "on";
