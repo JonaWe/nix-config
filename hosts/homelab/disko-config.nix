@@ -135,6 +135,7 @@
             type = "zfs_fs";
             mountpoint = "/data/media";
             options.mountpoint = "legacy";
+            options.recordsize = "1M";
           };
           "encrypted/syncthing" = {
             type = "zfs_fs";
