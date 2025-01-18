@@ -173,15 +173,10 @@
             mountpoint = "/data/syncthing";
             options.mountpoint = "legacy";
           };
-          "encrypted/test" = {
+          reserved = {
             type = "zfs_fs";
-            mountpoint = "/data/encrypted-test";
-            options.mountpoint = "legacy";
-          };
-          "test" = {
-            type = "zfs_fs";
-            mountpoint = "/data/test";
-            options.mountpoint = "legacy";
+            options.mountpoint = "none";
+            options.refreservation = "10G";
           };
         };
       };
