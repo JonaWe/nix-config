@@ -112,7 +112,7 @@
         inherit options;
         inherit rootFsOptions;
         datasets = {
-          encrypted = {
+          enc = {
             type = "zfs_fs";
             options = {
               mountpoint = "none";
@@ -122,25 +122,25 @@
               keylocation = "prompt";
             };
           };
-          unencrypted = {
+          unenc = {
             type = "zfs_fs";
             options = {
               mountpoint = "none";
               canmount = "off";
             };
           };
-          "encrypted/samba" = {
+          "enc/samba" = {
             type = "zfs_fs";
             mountpoint = "/data/samba";
             options.mountpoint = "legacy";
           };
-          "encrypted/media" = {
+          "enc/media" = {
             type = "zfs_fs";
             mountpoint = "/data/media";
             options.mountpoint = "legacy";
             options.recordsize = "1M";
           };
-          "encrypted/syncthing" = {
+          "enc/syncthing" = {
             type = "zfs_fs";
             mountpoint = "/data/syncthing";
             options.mountpoint = "legacy";
