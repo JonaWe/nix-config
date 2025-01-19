@@ -36,6 +36,10 @@
       relatime = "on";
       xattr = "sa";
     };
+    options = {
+      ashift = "12";
+      autotrim = "on";
+    };
   in {
     disk =
       {
@@ -73,11 +77,11 @@
       zroot = {
         type = "zpool";
         mode = "";
-        options = {
-          ashift = "12";
-          autotrim = "on";
-          cachefile = "none";
-        };
+        options =
+          options
+          // {
+            cachefile = "none";
+          };
         inherit rootFsOptions;
         datasets = {
           "root" = {
@@ -101,19 +105,11 @@
             options.mountpoint = "legacy";
             type = "zfs_fs";
           };
-          reserved = {
-            type = "zfs_fs";
-            options.mountpoint = "none";
-            options.refreservation = "10G";
-          };
         };
       };
       zdata = {
         mode = "raidz1";
-        options = {
-          ashift = "12";
-          autotrim = "on";
-        };
+        inherit options;
         inherit rootFsOptions;
         datasets = {
           encrypted = {
@@ -124,6 +120,13 @@
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
               keylocation = "prompt";
+            };
+          };
+          unencrypted = {
+            type = "zfs_fs";
+            options = {
+              mountpoint = "none";
+              canmount = "off";
             };
           };
           "encrypted/samba" = {
@@ -141,11 +144,6 @@
             type = "zfs_fs";
             mountpoint = "/data/syncthing";
             options.mountpoint = "legacy";
-          };
-          reserved = {
-            type = "zfs_fs";
-            options.mountpoint = "none";
-            options.refreservation = "10G";
           };
         };
       };
