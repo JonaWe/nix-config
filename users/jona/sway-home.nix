@@ -55,5 +55,6 @@
     gnome-calendar
     jellyfin-media-player
     imv
+    mongodb-compass
   ];
 }
