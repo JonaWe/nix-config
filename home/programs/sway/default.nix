@@ -34,6 +34,7 @@
     vlc
     swww
     libreoffice
+    nautilus
     hunspell
     hunspellDicts.de_DE
     hunspellDicts.en_US-large
@@ -172,7 +173,8 @@
         "${mod}+v" = "exec rofi -modi clipboard:/home/jona/.config/rofi/modis/clipboard-history-modi.sh -show clipboard -show-icons -theme clipboard";
 
         "${mod}+Shift+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show calc -modi calc -no-show-match -no-sort";
-        "${mod}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
+        "${mod}+e" = "exec ${pkgs.nautilus}/bin/nautilus";
+        # "${mod}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${mod}+g" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
 
         "${mod}+${left}" = "focus left";
