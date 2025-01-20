@@ -70,8 +70,37 @@
     enable = true;
     theme.name = "Adwaita-dark";
     theme.package = pkgs.gnome-themes-extra;
+    iconTheme.package = pkgs.adwaita-icon-theme;
+    iconTheme.name = "Adwaita";
     cursorTheme.name = config.home.pointerCursor.name;
     cursorTheme.size = config.home.pointerCursor.size;
+    gtk2.extraConfig = ''
+      gtk-application-prefer-dark-theme=1
+    '';
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  dconf.settings = {
+    # "org/gnome/desktop/background" = {
+    #   picture-uri-dark = "file://${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.src}";
+    # };
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  # systemd.user.sessionVariables = config.home-manager.users.jona.home.sessionVariables;
+
+  qt = {
+    enable = true;
+    # platformTheme.name = "gnome";
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
   };
 
   wayland.windowManager.sway = let
