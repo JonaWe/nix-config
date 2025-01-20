@@ -7,6 +7,7 @@
     ./swaync.nix
     ./mimeapps.nix
     ./themes.nix
+    ./sway.nix
   ];
 
   home.file.".config/xkb" = {
