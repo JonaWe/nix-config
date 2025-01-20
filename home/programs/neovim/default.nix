@@ -3,6 +3,9 @@
     source = ./nvim;
     recursive = true;
   };
+  home.file.".ideavimrc" = {
+    source = ./.ideavimrc;
+  };
 
   home.packages = with pkgs; [
     neovim
