@@ -4,9 +4,11 @@
   ...
 }: {
   home.pointerCursor = {
-    name = "Posy_Cursor";
+    name = "Banana";
+    # name = "Posy_Cursor";
     size = 32;
-    package = pkgs.posy-cursors;
+    package = pkgs.banana-cursors;
+    # package = pkgs.posy-cursors;
     x11.enable = true;
     gtk.enable = true;
   };
