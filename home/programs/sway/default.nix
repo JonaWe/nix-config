@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./swaync.nix
     ./mimeapps.nix
@@ -47,26 +51,29 @@
     };
   };
 
+  # home.pointerCursor = {
+  #   name = "phinger-cursors-light";
+  #   package = pkgs.phinger-cursors;
+  #   size = 32;
+  #   gtk.enable = true;
+  # };
+
+  home.pointerCursor = {
+    name = "Banana";
+    size = 32;
+    package = pkgs.banana-cursor;
+    x11.enable = true;
+    gtk.enable = true;
+  };
+
   gtk = {
     enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-    cursorTheme = {
-      name = "Adawaita";
-      size = 24;
-    };
-    #    theme = {
-    #   package = pkgs.flat-remix-gtk;
-    #   name = "Flat-Remix-GTK-Grey-Darkest";
-    # };
-    #
-    # iconTheme = {
-    #   package = pkgs.gnome.adwaita-icon-theme;
-    #   name = "Adwaita";
-    # };
+    theme.name = "Adwaita-dark";
+    theme.package = pkgs.gnome-themes-extra;
+    cursorTheme.name = config.home.pointerCursor.name;
+    cursorTheme.size = config.home.pointerCursor.size;
   };
+
   wayland.windowManager.sway = let
     mod = "Mod4";
 
@@ -85,6 +92,9 @@
     config = rec {
       modifier = "Mod4";
       terminal = term;
+      seat."*" = {
+        xcursor_theme = "${config.home.pointerCursor.name} ${toString config.home.pointerCursor.size}";
+      };
       bars = [
         {command = bar;}
       ];
