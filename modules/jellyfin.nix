@@ -8,6 +8,31 @@
 in {
   options.myconf.services.jellyfin = {
     enable = lib.mkEnableOption "Enable jellyfin service for media streaming";
+    directory = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/lib/jellyfin";
+      description = "Directory used for jellyfin storage";
+    };
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Open firewall for jellyfin service";
+    };
+    mediaDirectory = lib.mkOption {
+      type = lib.types.str;
+      default = "/data/media/jellyfin";
+      description = "Directory used for media files";
+    };
+    user = lib.mkOption {
+      type = lib.types.str;
+      default = "jellyfin";
+      description = "User used for jellyfin service";
+    };
+    group = lib.mkOption {
+      type = lib.types.str;
+      default = "jellyfin";
+      description = "Group used for jellyfin service";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -54,13 +79,30 @@ in {
 
     services.jellyfin = {
       enable = true;
-      openFirewall = true;
-      dataDir = "/data/media/jellyfin";
-      cacheDir = "/data/media/jellyfin/cache";
+      openFirewall = cfg.openFirewall;
+      user = cfg.user;
+      group = cfg.group;
+      dataDir = cfg.directory;
+      cacheDir = "${cfg.directory}/cache";
     };
 
+    # myconf.disk.extraDatasets = {
+    #   "enc/services/jellyfin" = {
+    #     type = "zfs_fs";
+    #     mountpoint = cfg.directory;
+    #     options.mountpoint = "legacy";
+    #   };
+    #   "enc/services/jellyfin/media" = {
+    #     type = "zfs_fs";
+    #     mountpoint = cfg.mediaDirectory;
+    #     options.mountpoint = "legacy";
+    #     options.recordsize = "1M";
+    #   };
+    # };
+
     systemd.tmpfiles.rules = [
-      "d /data/media/jellyfin 0700 jellyfin jellyfin -"
+      "d ${cfg.directory} 0700 ${cfg.user} ${cfg.group} -"
+      "d ${cfg.mediaDirectory} 0700 ${cfg.user} ${cfg.group} -"
     ];
   };
 }
