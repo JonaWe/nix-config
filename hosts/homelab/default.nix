@@ -17,7 +17,7 @@
     ../../modules/ddclient.nix
     ../../modules/gitea.nix
     ../../modules/radicale.nix
-    ../../modules/syncthing-homelab.nix
+    # ../../modules/syncthing-homelab.nix
     # ../../modules/immich.nix
     ../../modules/nginx.nix
     # ../../modules/wireguard-server.nix
@@ -46,6 +46,15 @@
 
   myconf.services.jellyfin.enable = true;
   myconf.services.teamspeak.enable = true;
+  myconf.services.syncthing = {
+    enable = true;
+    dataDir = "/data/syncthing";
+    user = "syncthing";
+    group = "syncthing";
+    zfsIntegration.enable = true;
+    zfsIntegration.enableBackups = true;
+  };
+
 
   networking.hostName = "homelab";
 

@@ -15,12 +15,17 @@
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
     ../../modules/sops.nix
-    ../../modules/syncthing-pangolin.nix
+    # ../../modules/syncthing-pangolin.nix
     # ../../modules/wireguard-client.nix
   ];
   boot.supportedFilesystems = ["ntfs" "zfs"];
 
-  myconf.services.jellyfin.enable = true;
+  myconf.services.syncthing = {
+    enable = true;
+    dataDir = "/home/jona";
+    user = "jona";
+    group = "users";
+  };
 
   services.gnome = {
     evolution-data-server.enable = true;
