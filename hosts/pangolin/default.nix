@@ -20,6 +20,8 @@
   ];
   boot.supportedFilesystems = ["ntfs" "zfs"];
 
+  myconf.services.jellyfin.enable = true;
+
   services.gnome = {
     evolution-data-server.enable = true;
     gnome-online-accounts.enable = true;

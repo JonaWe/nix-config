@@ -11,7 +11,7 @@
     ../../modules/ssh.nix
     ../../modules/docker.nix
     ../../modules/samba.nix
-    ../../modules/jellyfin.nix
+    # ../../modules/jellyfin.nix
     ../../modules/fonts.nix
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix

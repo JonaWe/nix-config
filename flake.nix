@@ -37,6 +37,7 @@
         modules = [
           ./hosts/homelab
           ./users/jona/nixos.nix
+          ./modules
 
           inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
@@ -56,6 +57,7 @@
         modules = [
           ./hosts/octopus
           ./users/jona/nixos.nix
+          ./modules
 
           home-manager.nixosModules.home-manager
           {
@@ -73,6 +75,9 @@
         modules = [
           ./hosts/pangolin
           ./users/jona/nixos.nix
+          ./modules
+
+          inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
