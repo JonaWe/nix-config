@@ -4,6 +4,7 @@
     settings = {
       # PasswordAuthentication = false;
       PermitRootLogin = "yes";
+      # PermitRootLogin = "prohibit-password";
       PasswordAuthentication = true;
     };
   };
