@@ -12,13 +12,10 @@
     ../../modules/docker.nix
     ../../modules/samba.nix
     ../../modules/fonts.nix
-    ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
     ../../modules/ddclient.nix
     ../../modules/gitea.nix
     ../../modules/radicale.nix
-    # ../../modules/syncthing-homelab.nix
-    # ../../modules/immich.nix
     ../../modules/nginx.nix
     # ../../modules/wireguard-server.nix
   ];
@@ -74,6 +71,10 @@
       openFirewall = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
+    };
+    minecraft-servers = {
+      enable = true;
+      openFirewall = true;
     };
   };
 

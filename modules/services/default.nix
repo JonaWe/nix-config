@@ -5,5 +5,6 @@
     ./jellyfin.nix
     ./immich.nix
     ./samba.nix
+    ./minecraft-servers.nix
   ];
 }
