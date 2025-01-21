@@ -49,6 +49,7 @@ in {
           acltype = "posixacl";
           atime = "off";
           canmount = "off";
+          mountpoint = "none";
           compression = "zstd";
           "com.sun:auto-snapshot" = "false";
           dnodesize = "auto";

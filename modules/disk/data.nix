@@ -29,6 +29,7 @@
     atime = "off";
     canmount = "off";
     compression = "zstd";
+    mountpoint = "none";
     "com.sun:auto-snapshot" = "false";
     dnodesize = "auto";
     normalization = "formD";
