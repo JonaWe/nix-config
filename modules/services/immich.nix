@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  cfg = config.myconf.services.jellyfin;
+  cfg = config.myconf.services.immich;
 in {
   options.myconf.services.immich = {
     enable = lib.mkEnableOption "Enable immich service for photo management";
