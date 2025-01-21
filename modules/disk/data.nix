@@ -67,7 +67,7 @@ in {
                 canmount = "off";
               };
             }
-            // config.myconf.disk.extraDatasets;
+            // config.myconf.disk.dataPool.extraDatasets;
         };
       };
     };
