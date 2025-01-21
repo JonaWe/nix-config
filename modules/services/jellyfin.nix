@@ -98,6 +98,7 @@ in {
         type = "zfs_fs";
         mountpoint = cfg.mediaDirectory;
         options.mountpoint = "legacy";
+        options.quota = "3T";
         options.recordsize = "1M";
       };
     };
