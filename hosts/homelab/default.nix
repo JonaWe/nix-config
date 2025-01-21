@@ -45,11 +45,7 @@
   };
 
   myconf.services.jellyfin.enable = true;
-
-  services.teamspeak3 = {
-    enable = true;
-    openFirewall = true;
-  };
+  myconf.services.teamspeak.enable = true;
 
   networking.hostName = "homelab";
 
