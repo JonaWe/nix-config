@@ -86,19 +86,19 @@ in {
       cacheDir = "${cfg.directory}/cache";
     };
 
-    # myconf.disk.extraDatasets = {
-    #   "enc/services/jellyfin" = {
-    #     type = "zfs_fs";
-    #     mountpoint = cfg.directory;
-    #     options.mountpoint = "legacy";
-    #   };
-    #   "enc/services/jellyfin/media" = {
-    #     type = "zfs_fs";
-    #     mountpoint = cfg.mediaDirectory;
-    #     options.mountpoint = "legacy";
-    #     options.recordsize = "1M";
-    #   };
-    # };
+    myconf.disk.extraDatasets = {
+      "enc/services/jellyfin" = {
+        type = "zfs_fs";
+        mountpoint = cfg.directory;
+        options.mountpoint = "legacy";
+      };
+      "enc/services/jellyfin/media" = {
+        type = "zfs_fs";
+        mountpoint = cfg.mediaDirectory;
+        options.mountpoint = "legacy";
+        options.recordsize = "1M";
+      };
+    };
 
     systemd.tmpfiles.rules = [
       "d ${cfg.directory} 0700 ${cfg.user} ${cfg.group} -"

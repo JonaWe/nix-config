@@ -5,5 +5,6 @@
 }: {
   imports = [
     ./jellyfin.nix
+    ./disk
   ];
 }
