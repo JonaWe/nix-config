@@ -10,7 +10,6 @@
     ../../modules/base.nix
     ../../modules/ssh.nix
     ../../modules/docker.nix
-    ../../modules/samba.nix
     ../../modules/fonts.nix
     ../../modules/sops.nix
     ../../modules/ddclient.nix
