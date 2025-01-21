@@ -9,7 +9,7 @@ in {
     disk = {
       nvme = {
         type = "disk";
-        device = cfg.device;
+        device = cfg.drive;
         content = {
           type = "gpt";
           partitions = {
