@@ -23,7 +23,7 @@
         };
       };
     })
-    cfg.devices);
+    cfg.drives);
   rootFsOptions = {
     acltype = "posixacl";
     atime = "off";
