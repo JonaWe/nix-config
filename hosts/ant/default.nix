@@ -26,6 +26,7 @@
 
   myconf.disk = {
     enable = true;
+    backups.enable = true;
     rootPool = {
       enable = true;
       drive = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T";

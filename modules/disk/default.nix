@@ -47,7 +47,7 @@ in {
     networking.hostId = cfg.hostId;
     boot.supportedFilesystems = ["zfs"];
     services.sanoid = {
-      enable = cfg.backup.enable;
+      enable = cfg.backups.enable;
       templates = {
         default = {
           daily = 7;
