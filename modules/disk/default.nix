@@ -5,13 +5,13 @@
 }: let
   cfg = config.myconf.disk;
 in {
+  imports = [
+    ./root.nix
+    ./data.nix
+  ];
+
   options.myconf.disk = {
     enable = lib.mkEnableOption "Enable disk management with disko";
-    extraDatasets = lib.mkOption {
-      type = lib.types.attrs;
-      default = {};
-      description = "Extra datasets that sould be added to the zfs zdata pool";
-    };
     hostId = lib.mkOption {
       type = lib.types.str;
       default = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
@@ -30,16 +30,17 @@ in {
         type = lib.types.listOf;
         description = "List of Identifier for the devices that are used for the data pool";
       };
+      extraDatasets = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
+        description = "Extra datasets that sould be added to the zfs zdata pool";
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     networking.hostId = cfg.hostId;
     boot.supportedFilesystems = ["zfs"];
-    imports = [
-      ./root.nix {device = cfg.rootPool.drive;}
-      ./data.nix {devices = cfg.dataPool.drives;}
-    ];
     # device = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T";
     # dataDrives = [
     #   "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20TJNQ"

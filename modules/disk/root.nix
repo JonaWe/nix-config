@@ -1,26 +1,15 @@
-{device}: {
-  disko.devices = let
-    rootFsOptions = {
-      acltype = "posixacl";
-      atime = "off";
-      canmount = "off";
-      compression = "zstd";
-      "com.sun:auto-snapshot" = "false";
-      dnodesize = "auto";
-      normalization = "formD";
-      relatime = "on";
-      xattr = "sa";
-    };
-    options = {
-      ashift = "12";
-      autotrim = "on";
-      cachefile = "none";
-    };
-  in {
+{
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.myconf.disk.rootPool;
+in {
+  disko.devices = lib.mkIf cfg.enable {
     disk = {
       nvme = {
         type = "disk";
-        inherit device;
+        device = cfg.device;
         content = {
           type = "gpt";
           partitions = {
@@ -51,8 +40,22 @@
       zroot = {
         type = "zpool";
         mode = "";
-        inherit options;
-        inherit rootFsOptions;
+        options = {
+          ashift = "12";
+          autotrim = "on";
+          cachefile = "none";
+        };
+        rootFsOptions = {
+          acltype = "posixacl";
+          atime = "off";
+          canmount = "off";
+          compression = "zstd";
+          "com.sun:auto-snapshot" = "false";
+          dnodesize = "auto";
+          normalization = "formD";
+          relatime = "on";
+          xattr = "sa";
+        };
         datasets = {
           "root" = {
             mountpoint = "/";

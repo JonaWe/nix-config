@@ -1,41 +1,46 @@
-{devices, config}: {
-  disko.devices = let
-    dataDiskConfig = builtins.listToAttrs (builtins.map (device: {
-        name = "dataDrive:" + device;
-        value = {
-          type = "disk";
-          inherit device;
-          content = {
-            type = "gpt";
-            partitions = {
-              files = {
-                size = "100%";
-                content = {
-                  type = "zfs";
-                  pool = "zdata";
-                };
+{
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.myconf.disk.dataPool;
+  dataDiskConfig = builtins.listToAttrs (builtins.map (device: {
+      name = "dataDrive:" + device;
+      value = {
+        type = "disk";
+        inherit device;
+        content = {
+          type = "gpt";
+          partitions = {
+            files = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = "zdata";
               };
             };
           };
         };
-      })
-      devices);
-    rootFsOptions = {
-      acltype = "posixacl";
-      atime = "off";
-      canmount = "off";
-      compression = "zstd";
-      "com.sun:auto-snapshot" = "false";
-      dnodesize = "auto";
-      normalization = "formD";
-      relatime = "on";
-      xattr = "sa";
-    };
-    options = {
-      ashift = "12";
-      autotrim = "on";
-    };
-  in {
+      };
+    })
+    cfg.devices);
+  rootFsOptions = {
+    acltype = "posixacl";
+    atime = "off";
+    canmount = "off";
+    compression = "zstd";
+    "com.sun:auto-snapshot" = "false";
+    dnodesize = "auto";
+    normalization = "formD";
+    relatime = "on";
+    xattr = "sa";
+  };
+  options = {
+    ashift = "12";
+    autotrim = "on";
+  };
+in {
+  disko.devices = lib.mkIf cfg.enable {
     disk = dataDiskConfig;
     zpool = {
       zdata = {
@@ -53,13 +58,15 @@
               keylocation = "prompt";
             };
           };
-          "plain" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              canmount = "off";
-            };
-          } // config.myconf.disk.extraDatasets;
+          "plain" =
+            {
+              type = "zfs_fs";
+              options = {
+                mountpoint = "none";
+                canmount = "off";
+              };
+            }
+            // config.myconf.disk.extraDatasets;
         };
       };
     };
