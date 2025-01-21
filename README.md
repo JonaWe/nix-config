@@ -50,7 +50,7 @@ sudo nixos-rebuild switch --flake ~/nixos-config
 This is an experimental feature and should not be used if you have important data on your drive.
 
 ```bash
-disko --mode format --dry-run ./hosts/homelab/disko-config.nix
+disko --mode format --dry-run ./hosts/<hostname>/disko-config.nix
 
 ```
 

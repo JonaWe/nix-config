@@ -78,7 +78,7 @@
     };
   };
 
-  networking.hostName = "homelab";
+  networking.hostName = "ant";
 
   networking.firewall = {
     enable = true;

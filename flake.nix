@@ -30,12 +30,12 @@
     specialArgs = {inherit username inputs;};
   in {
     nixosConfigurations = {
-      homelab = nixpkgs.lib.nixosSystem {
+      ant = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64-linux";
 
         modules = [
-          ./hosts/homelab
+          ./hosts/ant
           ./users/jona/nixos.nix
           ./modules
 
