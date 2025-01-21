@@ -48,27 +48,27 @@ in {
         mode = "raidz1";
         inherit options;
         inherit rootFsOptions;
-        datasets = {
-          "enc" = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              canmount = "off";
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "prompt";
+        datasets =
+          {
+            "enc" = {
+              type = "zfs_fs";
+              options = {
+                mountpoint = "none";
+                canmount = "off";
+                encryption = "aes-256-gcm";
+                keyformat = "passphrase";
+                keylocation = "prompt";
+              };
             };
-          };
-          "plain" =
-            {
+            "plain" = {
               type = "zfs_fs";
               options = {
                 mountpoint = "none";
                 canmount = "off";
               };
-            }
-            // config.myconf.disk.dataPool.extraDatasets;
-        };
+            };
+          }
+          // config.myconf.disk.dataPool.extraDatasets;
       };
     };
   };
