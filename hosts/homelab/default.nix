@@ -46,16 +46,26 @@
 
   myconf.services = {
     jellyfin = {
-        enable = true;
-        zfsIntegration.enable = true;
-        zfsIntegration.enableBackups = true;
+      enable = true;
+      openFirewall = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
     };
-    teamspeak.enable = true;
+    teamspeak = {
+      enable = true;
+      openFirewall = true;
+    };
     syncthing = {
       enable = true;
       dataDir = "/data/syncthing";
       user = "syncthing";
       group = "syncthing";
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
+    immich = {
+      enable = true;
+      openFirewall = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
