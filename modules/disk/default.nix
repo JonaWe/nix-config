@@ -17,6 +17,11 @@ in {
       default = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
       description = "HostId used for zfs. Defualt is md5 hash of hostname";
     };
+    backups.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable sanoid backup service. This still has to be configured for each dataset";
+    };
     rootPool = {
       enable = lib.mkEnableOption "Enable root pool with zfs";
       drive = lib.mkOption {
@@ -41,11 +46,19 @@ in {
   config = lib.mkIf cfg.enable {
     networking.hostId = cfg.hostId;
     boot.supportedFilesystems = ["zfs"];
-    # device = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T";
-    # dataDrives = [
-    #   "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20TJNQ"
-    #   "/dev/disk/by-id/ata-ST16000NM001G-2KK103_ZL2NZAQ8"
-    #   "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20VP3M"
-    # ];
+    services.sanoid = {
+      enable = cfg.backup.enable;
+      templates = {
+        default = {
+          daily = 7;
+          hourly = 23;
+          weekly = 4;
+          monthly = 3;
+        };
+      };
+  #   datasets = {
+  #     "zdata/samba".useTemplate = ["default"];
+  #   };
+    };
   };
 }

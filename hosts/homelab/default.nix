@@ -11,7 +11,6 @@
     ../../modules/ssh.nix
     ../../modules/docker.nix
     ../../modules/samba.nix
-    # ../../modules/jellyfin.nix
     ../../modules/fonts.nix
     ../../modules/minecraft-servers.nix
     ../../modules/sops.nix
@@ -22,7 +21,6 @@
     # ../../modules/immich.nix
     ../../modules/nginx.nix
     # ../../modules/wireguard-server.nix
-    ./disko-config.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -30,23 +28,23 @@
   boot.loader.timeout = 1;
   boot.supportedFilesystems = ["zfs" "ntfs"];
 
-  networking.hostId = "37dff6a3";
-  # networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
-
-  services.sanoid = {
+  myconf.disk = {
     enable = true;
-    templates = {
-      default = {
-        daily = 7;
-        hourly = 23;
-        weekly = 4;
-        monthly = 3;
-      };
+    rootPool = {
+      enable = true;
+      drive = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T";
     };
-    datasets = {
-      "zdata/samba".useTemplate = ["default"];
+    dataPool = {
+      enable = true;
+      drives = [
+        "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20TJNQ"
+        "/dev/disk/by-id/ata-ST16000NM001G-2KK103_ZL2NZAQ8"
+        "/dev/disk/by-id/ata-ST16000NM001G-2KK103_WL20VP3M"
+      ];
     };
   };
+
+  myconf.services.jellyfin.enable = true;
 
   services.teamspeak3 = {
     enable = true;
@@ -63,11 +61,5 @@
     # allowedUDPPorts = [ ... ];
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "24.11";
 }
