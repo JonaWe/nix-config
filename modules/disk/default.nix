@@ -32,7 +32,7 @@ in {
     dataPool = {
       enable = lib.mkEnableOption "Enable data pool with zfs";
       drives = lib.mkOption {
-        type = lib.types.listOf;
+        type = lib.types.listOf lib.types.str;
         description = "List of Identifier for the devices that are used for the data pool";
       };
       extraDatasets = lib.mkOption {
