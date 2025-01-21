@@ -15,16 +15,25 @@
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
     ../../modules/sops.nix
-    # ../../modules/syncthing-pangolin.nix
-    # ../../modules/wireguard-client.nix
   ];
-  boot.supportedFilesystems = ["ntfs" "zfs"];
 
-  myconf.services.syncthing = {
+  boot.supportedFilesystems = ["ntfs"];
+
+  myconf.disk = {
     enable = true;
-    dataDir = "/home/jona";
-    user = "jona";
-    group = "users";
+    rootPool = {
+      enable = true;
+      drive = "/dev/disk/by-id/nvme-eui.ace42e0035e9a7b32ee4ac0000000001";
+    };
+  };
+
+  myconf.services = {
+    syncthing = {
+      enable = true;
+      dataDir = "/home/jona";
+      user = "jona";
+      group = "users";
+    };
   };
 
   services.gnome = {
@@ -38,7 +47,6 @@
   };
 
   networking.hostName = "pangolin";
-  networking.hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
 
   services.fprintd.enable = true;
   services.fprintd.tod.enable = true;

@@ -33,6 +33,8 @@ in {
       default = "jellyfin";
       description = "Group used for jellyfin service";
     };
+    zfsIntegration.enable = lib.mkEnableOption "Enable zfs integration that creates datasets etc.";
+    zfsIntegration.enableBackups = lib.mkEnableOption "Enables zfs backups for the created datasets";
   };
 
   config = lib.mkIf cfg.enable {
@@ -86,7 +88,7 @@ in {
       cacheDir = "${cfg.directory}/cache";
     };
 
-    myconf.disk.dataPool.extraDatasets = {
+    myconf.disk.dataPool.extraDatasets = lib.mkIf cfg.zfsIntegration.enable {
       "enc/services/jellyfin" = {
         type = "zfs_fs";
         mountpoint = cfg.directory;
@@ -100,9 +102,15 @@ in {
       };
     };
 
-    systemd.tmpfiles.rules = [
+    systemd.tmpfiles.rules = lib.mkIf cfg.zfsIntegration.enable [
       "d ${cfg.directory} 0700 ${cfg.user} ${cfg.group} -"
       "d ${cfg.mediaDirectory} 0700 ${cfg.user} ${cfg.group} -"
     ];
+
+    services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
+      datasets = {
+        "zdata/enc/services/jellyfin".useTemplate = ["default"];
+      };
+    };
   };
 }

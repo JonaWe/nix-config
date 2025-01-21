@@ -44,17 +44,22 @@
     };
   };
 
-  myconf.services.jellyfin.enable = true;
-  myconf.services.teamspeak.enable = true;
-  myconf.services.syncthing = {
-    enable = true;
-    dataDir = "/data/syncthing";
-    user = "syncthing";
-    group = "syncthing";
-    zfsIntegration.enable = true;
-    zfsIntegration.enableBackups = true;
+  myconf.services = {
+    jellyfin = {
+        enable = true;
+        zfsIntegration.enable = true;
+        zfsIntegration.enableBackups = true;
+    };
+    teamspeak.enable = true;
+    syncthing = {
+      enable = true;
+      dataDir = "/data/syncthing";
+      user = "syncthing";
+      group = "syncthing";
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
   };
-
 
   networking.hostName = "homelab";
 
