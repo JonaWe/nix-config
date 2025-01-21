@@ -86,7 +86,7 @@ in {
       cacheDir = "${cfg.directory}/cache";
     };
 
-    myconf.disk.extraDatasets = {
+    myconf.disk.dataPool.extraDatasets = {
       "enc/services/jellyfin" = {
         type = "zfs_fs";
         mountpoint = cfg.directory;
