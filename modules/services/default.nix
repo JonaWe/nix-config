@@ -4,5 +4,6 @@
     ./teamspeak.nix
     ./jellyfin.nix
     ./immich.nix
+    ./samba.nix
   ];
 }
