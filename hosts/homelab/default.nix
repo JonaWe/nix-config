@@ -69,6 +69,12 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    samba = {
+      enable = true;
+      openFirewall = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
   };
 
   networking.hostName = "homelab";
