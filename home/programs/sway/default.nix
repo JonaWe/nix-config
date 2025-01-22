@@ -40,6 +40,7 @@
     swww
     libreoffice
     nautilus
+    anki
     hunspell
     hunspellDicts.de_DE
     hunspellDicts.en_US-large
