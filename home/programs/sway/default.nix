@@ -44,6 +44,7 @@
     hunspell
     hunspellDicts.de_DE
     hunspellDicts.en_US-large
+    kdePackages.okular
   ];
 
   services.blueman-applet.enable = true;
