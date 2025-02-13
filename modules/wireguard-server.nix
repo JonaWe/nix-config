@@ -40,6 +40,10 @@
           publicKey = "6BGuu4h4uJTMyN0+npEzZObz1KhXc7fweqz6yYo6YTE=";
           allowedIPs = ["10.100.0.3/32"];
         }
+        { # Phone
+          publicKey = "HeBxNhME2mobfLf/6bxW5VIS/i4rreD4nmjV9+ADlhs=";
+          allowedIPs = ["10.100.0.4/32"];
+        }
       ];
     };
   };
