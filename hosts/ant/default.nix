@@ -77,8 +77,10 @@
       openFirewall = true;
     };
     home-assistant = {
-        enable = true;
-        openFirewall = true;
+      enable = true;
+      openFirewall = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
     };
   };
 
