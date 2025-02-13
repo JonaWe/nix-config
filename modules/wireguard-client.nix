@@ -4,25 +4,30 @@
   ...
 }: {
   sops.secrets."wireguard/privatehome" = {};
-  networking.wg-quick.interfaces."wg-home" = {
-    autostart = true;
-    dns = ["192.168.188.1" "fritz.box"];
-    privateKeyFile = config.sops.secrets."wireguard/privatehome".path;
-    address = ["192.168.188.203/24"];
-    # listenPort = 51820;
-
-    peers = [
-      {
-        publicKey = "lxWt1sm9n/UNpcX6yMc1bXZ9P5c0JX2egrjtVSzk7SU=";
-        allowedIPs = ["192.168.188.0/24" "0.0.0.0/0"];
-        endpoint = "home.pinkorca.de:57031";
-  #         persistentKeepalive = 25;
-      }
-    ];
+  networking.wg-quick.interfaces = {
+    wg0 = {
+      configFile = "/home/jona/downloads/wg-laptop.conf";
+    };
   };
-  # networking.firewall = {
-  #   allowedUDPPorts = [51820];
+  # networking.wg-quick.interfaces."wg-home" = {
+  #   autostart = true;
+  #   dns = ["192.168.188.1" "fritz.box"];
+  #   privateKeyFile = config.sops.secrets."wireguard/privatehome".path;
+  #   address = ["192.168.188.203/24"];
+  #   # listenPort = 51820;
+  #
+  #   peers = [
+  #     {
+  #       publicKey = "lxWt1sm9n/UNpcX6yMc1bXZ9P5c0JX2egrjtVSzk7SU=";
+  #       allowedIPs = ["192.168.188.0/24" "0.0.0.0/0"];
+  #       endpoint = "home.pinkorca.de:57031";
+  #         persistentKeepalive = 25;
+  #     }
+  #   ];
   # };
+  networking.firewall = {
+    allowedUDPPorts = [57031];
+  };
   # networking.wireguard.enable = true;
   # networking.wireguard.interfaces = {
   #   wg0 = {
