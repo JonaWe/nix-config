@@ -16,7 +16,7 @@
     ../../modules/gitea.nix
     ../../modules/radicale.nix
     ../../modules/nginx.nix
-    ../../modules/wireguard-server.nix
+    # ../../modules/wireguard-server.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
