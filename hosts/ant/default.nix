@@ -76,6 +76,10 @@
       enable = true;
       openFirewall = true;
     };
+    home-assistant = {
+        enable = true;
+        openFirewall = true;
+    };
   };
 
   networking.hostName = "ant";

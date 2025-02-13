@@ -6,5 +6,6 @@
     ./immich.nix
     ./samba.nix
     ./minecraft-servers.nix
+    ./home-assistant.nix
   ];
 }
