@@ -3,10 +3,10 @@
   config,
   ...
 }: {
-  sops.secrets."wireguard/privatehome" = {};
+  sops.secrets."wireguard/configs/wg-laptop.conf" = {};
   networking.wg-quick.interfaces = {
     wg0 = {
-      configFile = "/home/jona/downloads/wg-laptop.conf";
+      configFile = config.sops.secrets."wireguard/configs/wg-laptop.conf".path;
     };
   };
   # networking.wg-quick.interfaces."wg-home" = {
