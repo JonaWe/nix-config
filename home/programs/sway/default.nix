@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgsUnstable,
+  # nixpkgs-unstable,
   ...
 }: {
   imports = [
@@ -46,7 +46,8 @@
     hunspellDicts.de_DE
     hunspellDicts.en_US-large
     kdePackages.okular
-    pkgsUnstable.makemkv
+    # nixpkgs-unstable.makemkv
+    makemkv
   ];
 
   nixpkgs.config.allowUnfree = true;

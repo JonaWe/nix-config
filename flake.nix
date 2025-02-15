@@ -2,7 +2,7 @@
   description = "Configuration for nix os systems";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +24,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    nixpkgs-unstable,
+    # nixpkgs-unstable,
     home-manager,
     ...
   }: let
