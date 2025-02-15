@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  # nixpkgs-unstable,
   ...
 }: {
   imports = [
@@ -45,7 +46,11 @@
     hunspellDicts.de_DE
     hunspellDicts.en_US-large
     kdePackages.okular
+    # nixpkgs-unstable.makemkv
+    makemkv
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   services.blueman-applet.enable = true;
 
