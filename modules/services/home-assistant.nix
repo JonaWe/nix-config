@@ -48,7 +48,7 @@ in {
         ];
         environment.TZ = "Europe/Berlin";
         image = "ghcr.io/home-assistant/home-assistant:stable"; # Warning: if the tag does not change, the image will not be updated
-        ports = ["${builtins.toString cfg.port}:8123"];
+        # ports = ["${builtins.toString cfg.port}:8123"];
         user = "home-assistant:home-assistant";
         extraOptions = [
           "--network=host"
