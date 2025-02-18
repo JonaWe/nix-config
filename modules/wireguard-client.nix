@@ -7,6 +7,7 @@
   networking.wg-quick.interfaces = {
     wg0 = {
       configFile = config.sops.secrets."wireguard/configs/wg-laptop.conf".path;
+      autostart = false;
     };
   };
   # networking.wg-quick.interfaces."wg-home" = {

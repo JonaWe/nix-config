@@ -37,6 +37,7 @@
     };
   };
 
+  services.mullvad-vpn.enable = true;
   services.gnome = {
     evolution-data-server.enable = true;
     gnome-online-accounts.enable = true;

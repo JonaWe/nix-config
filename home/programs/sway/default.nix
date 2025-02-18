@@ -48,7 +48,11 @@
     kdePackages.okular
     # nixpkgs-unstable.makemkv
     makemkv
+    mullvad-vpn
+    qbittorrent
   ];
+
+
 
   nixpkgs.config.allowUnfree = true;
 
