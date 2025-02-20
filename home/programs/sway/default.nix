@@ -50,6 +50,7 @@
     makemkv
     mullvad-vpn
     qbittorrent
+    xournalpp
   ];
 
 
