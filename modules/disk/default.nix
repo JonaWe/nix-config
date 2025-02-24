@@ -24,6 +24,11 @@ in {
     };
     rootPool = {
       enable = lib.mkEnableOption "Enable root pool with zfs";
+      encrypted = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Enable zfs encryption for this dataset";
+      };
       drive = lib.mkOption {
         type = lib.types.str;
         description = "Identifier for the device that is used for the root pool";
@@ -56,9 +61,9 @@ in {
           monthly = 3;
         };
       };
-  #   datasets = {
-  #     "zdata/samba".useTemplate = ["default"];
-  #   };
+      #   datasets = {
+      #     "zdata/samba".useTemplate = ["default"];
+      #   };
     };
   };
 }

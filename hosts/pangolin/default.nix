@@ -24,6 +24,7 @@
     enable = true;
     rootPool = {
       enable = true;
+      encrypted = true;
       drive = "/dev/disk/by-id/nvme-eui.ace42e0035e9a7b32ee4ac0000000001";
     };
   };

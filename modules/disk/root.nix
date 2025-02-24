@@ -57,34 +57,74 @@ in {
           relatime = "on";
           xattr = "sa";
         };
-        datasets = {
-          "root" = {
-            mountpoint = "/";
-            options.mountpoint = "legacy";
-            type = "zfs_fs";
-          };
+        datasets =
+          if cfg.encrypted
+          then {
+            "enc" = {
+              type = "zfs_fs";
+              options = {
+                mountpoint = "none";
+                canmount = "off";
+                encryption = "aes-256-gcm";
+                keyformat = "passphrase";
+                keylocation = "prompt";
+              };
+            };
+            "enc/root" = {
+              mountpoint = "/";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
 
-          "root/nix" = {
-            mountpoint = "/nix";
-            options.mountpoint = "legacy";
-            type = "zfs_fs";
+            "enc/root/nix" = {
+              mountpoint = "/nix";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+            "enc/root/home" = {
+              mountpoint = "/home";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+            "enc/root/log" = {
+              mountpoint = "/var/log";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+            "enc/root/lib" = {
+              mountpoint = "/var/lib";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+          }
+          else {
+            "root" = {
+              mountpoint = "/";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+
+            "root/nix" = {
+              mountpoint = "/nix";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+            "root/home" = {
+              mountpoint = "/home";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+            "root/log" = {
+              mountpoint = "/var/log";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
+            "root/lib" = {
+              mountpoint = "/var/lib";
+              options.mountpoint = "legacy";
+              type = "zfs_fs";
+            };
           };
-          "root/home" = {
-            mountpoint = "/home";
-            options.mountpoint = "legacy";
-            type = "zfs_fs";
-          };
-          "root/log" = {
-            mountpoint = "/var/log";
-            options.mountpoint = "legacy";
-            type = "zfs_fs";
-          };
-          "root/lib" = {
-            mountpoint = "/var/lib";
-            options.mountpoint = "legacy";
-            type = "zfs_fs";
-          };
-        };
       };
     };
   };
