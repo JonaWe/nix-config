@@ -79,10 +79,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1739459003,
-        "narHash": "sha256-4b/NbroS33KEkoXy9o9xxAaPMKy9IsMotB3YGRfEOjE=",
+        "lastModified": 1740439132,
+        "narHash": "sha256-iaY2hL5L8LjCzSHq6ZaEw4vLKT4746pck/+wkR/+T8Y=",
         "ref": "refs/heads/main",
-        "rev": "00d6d277d616e91b296e6f7da784d59b9c0ba670",
+        "rev": "c3883a4d19dfdfa999fe0be3d776da66f49059a6",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/JonaWe/nix-secrets.git"
