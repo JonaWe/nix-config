@@ -16,6 +16,15 @@
   ];
   networking.hostName = "octopus";
 
+  myconf.services = {
+    syncthing = {
+      enable = true;
+      dataDir = "/home/jona";
+      user = "jona";
+      group = "users";
+    };
+  };
+
   # use grub as the bootloader for better dual booting experience
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;

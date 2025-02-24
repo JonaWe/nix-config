@@ -60,6 +60,9 @@ in {
           ant = {
             id = "DP6G2PA-QLRCJRJ-SZ644M2-LVX2T47-33KGVYT-2QJXS7N-JFXGNZ5-IIVC5Q5";
           };
+          octopus = {
+            id = "B7VXQ7Y-E57K6BJ-IX37GNP-P34K33S-POJAZJI-NLGZFH6-KXVYAVO-5O2TKQT";
+          };
         };
         device-names = builtins.attrNames devices;
       in {
