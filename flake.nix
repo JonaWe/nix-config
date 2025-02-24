@@ -61,6 +61,7 @@
           ./users/jona/nixos.nix
           ./modules
 
+          inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

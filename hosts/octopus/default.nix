@@ -9,9 +9,10 @@
     ../../modules/ssh.nix
     ../../modules/docker.nix
     ../../modules/fonts.nix
-    ../../modules/minecraft-servers.nix
+    # ../../modules/minecraft-servers.nix
     ../../modules/steam.nix
     ../../modules/sway.nix
+    ../../modules/sops.nix
   ];
   networking.hostName = "octopus";
 
