@@ -21,9 +21,9 @@
   boot.supportedFilesystems = ["ntfs"];
 
   myconf.disk = {
-    enable = false;
+    enable = true;
     rootPool = {
-      enable = false;
+      enable = true;
       drive = "/dev/disk/by-id/nvme-eui.ace42e0035e9a7b32ee4ac0000000001";
     };
   };
