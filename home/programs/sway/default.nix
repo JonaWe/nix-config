@@ -51,6 +51,7 @@
     mullvad-vpn
     qbittorrent
     xournalpp
+    wdisplays
   ];
 
 
