@@ -17,21 +17,21 @@
   boot.kernelModules = [];
   boot.extraModulePackages = [];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8b8417a8-f94f-4945-9931-e966356deffb";
-    fsType = "btrfs";
-    options = ["subvol=@"];
-  };
+  # fileSystems."/" = {
+  #   device = "/dev/disk/by-uuid/8b8417a8-f94f-4945-9931-e966356deffb";
+  #   fsType = "btrfs";
+  #   options = ["subvol=@"];
+  # };
 
-  boot.initrd.luks.devices."luks-d32d3db7-c658-4d73-9e7a-9799aa1eb8b8".device = "/dev/disk/by-uuid/d32d3db7-c658-4d73-9e7a-9799aa1eb8b8";
+  # boot.initrd.luks.devices."luks-d32d3db7-c658-4d73-9e7a-9799aa1eb8b8".device = "/dev/disk/by-uuid/d32d3db7-c658-4d73-9e7a-9799aa1eb8b8";
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/A2BF-77F3";
-    fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
-  };
+  # fileSystems."/boot" = {
+  #   device = "/dev/disk/by-uuid/A2BF-77F3";
+  #   fsType = "vfat";
+  #   options = ["fmask=0077" "dmask=0077"];
+  # };
 
-  swapDevices = [];
+  # swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
