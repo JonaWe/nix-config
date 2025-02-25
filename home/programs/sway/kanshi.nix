@@ -9,6 +9,7 @@
     settings = [
       {
         profile.name = "internal";
+        profile.exec = "swww img /home/jona/bg.jpg";
         profile.outputs = [
           {
             criteria = internal;
@@ -22,6 +23,7 @@
       }
       {
         profile.name = "docked-home";
+        profile.exec = "swww img /home/jona/bg.jpg";
         profile.outputs = [
           {
             criteria = home_main;
@@ -41,6 +43,7 @@
       }
       {
         profile.name = "docked-home+internal";
+        profile.exec = "swww img /home/jona/bg.jpg";
         profile.outputs = [
           {
             criteria = internal;
