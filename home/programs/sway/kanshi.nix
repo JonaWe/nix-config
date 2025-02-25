@@ -21,7 +21,7 @@
         ];
       }
       {
-        profile.name = "docked home + internal";
+        profile.name = "docked-home+internal";
         profile.outputs = [
           {
             criteria = internal;
