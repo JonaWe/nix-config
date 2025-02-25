@@ -1,7 +1,8 @@
 {...}: {
   services.kanshi = let
-    out_laptop = "eDP-1";
-    out_home_right = "BNQ ZOWIE XL LCD N5H01932SL0";
+    internal = "eDP-1";
+    home_main = "ASUSTek COMPUTER INC VG27AQ1A LALMQS102663";
+    home_sec = "BNQ ZOWIE XL LCD N5H01932SL0";
   in {
     enable = true;
     systemdTarget = "graphical-session.target";
@@ -10,7 +11,7 @@
         profile.name = "internal";
         profile.outputs = [
           {
-            criteria = "eDP-1";
+            criteria = internal;
             status = "enable";
             # adaptiveSync = true;
             # mode = "2560x1440@144";
@@ -20,19 +21,27 @@
         ];
       }
       {
-        profile.name = "external";
+        profile.name = "docked home + internal";
         profile.outputs = [
           {
-            criteria = out_laptop;
+            criteria = internal;
             status = "enable";
             scale = 1.0;
-            position = "0,1080";
+            position = "320,1440";
           }
           {
-            criteria = out_home_right;
+            criteria = home_main;
             status = "enable";
             scale = 1.0;
+            # adaptiveSync = true;
+            mode = "2560x1440@144";
             position = "0,0";
+          }
+          {
+            criteria = home_sec;
+            status = "enable";
+            scale = 1.0;
+            position = "2560,180";
           }
         ];
       }
