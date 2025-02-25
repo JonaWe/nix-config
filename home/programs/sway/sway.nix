@@ -304,7 +304,7 @@ in {
         {command = "${pkgs.keepassxc}/bin/keepassxc";}
         {command = "${pkgs.obsidian}/bin/obsidian";}
         {command = "${pkgs.kitty}/bin/kitty --title \"Obsidian Terminal\" -e zsh 'cd ~/vault/personal && nvim Home.md'";}
-        {command = "kanshi";}
+        # {command = "kanshi";}
 
         # {command = "sleep 10; syncthingtray";}
       ];
