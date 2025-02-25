@@ -266,7 +266,7 @@ in {
         {command = "${pkgs.obsidian}/bin/obsidian";}
         {command = "${pkgs.kitty}/bin/kitty --title \"Obsidian Terminal\" -e zsh 'cd ~/vault/personal && nvim Home.md'";}
 
-        {command = "sleep 10; syncthingtray";}
+        # {command = "sleep 10; syncthingtray";}
       ];
       window = {
         border = 1;
@@ -328,7 +328,9 @@ in {
           {instance = "brave-browser";}
         ];
         "20" = [
-          {app_id = "org.keepassxc.KeePassXC";}
+          {title = "\\[Locked\\] - KeePassXC$";}
+          {title = "Passwords - KeePassXC$";}
+          # {title = "Unlock Database - KeePassXC$";}
         ];
       };
       seat."*" = {
