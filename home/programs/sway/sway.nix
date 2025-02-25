@@ -263,6 +263,9 @@ in {
         {command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/";}
         {command = "${pkgs.firefox}/bin/firefox";}
         {command = "${pkgs.keepassxc}/bin/keepassxc";}
+        {command = "${pkgs.obsidian}/bin/obsidian";}
+        {command = "${pkgs.kitty}/bin/kitty --title \"Obsidian Terminal\" -e zsh 'cd ~/vault/personal && nvim Home.md'";}
+
         {command = "sleep 10; syncthingtray";}
       ];
       window = {
@@ -270,6 +273,12 @@ in {
         titlebar = false;
         hideEdgeBorders = "none";
         commands = [
+          {
+            command = "layout tabbed";
+            criteria = {
+              title = "Obsidian Terminal";
+            };
+          }
           {
             command = "layout tabbed";
             criteria = {
