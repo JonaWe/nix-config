@@ -70,11 +70,11 @@ in {
     # workaround for gcj keyboard layout
     checkConfig = false;
     extraConfig =''
-        # Any future keyboard xkb_options overrides need to go here
-        bindgesture swipe:4:right workspace prev
-        bindgesture swipe:4:left workspace next
-        bindgesture swipe:3:right focus left
-        bindgesture swipe:3:left focus right
+        # Here I could bind gestures if I would like
+        # bindgesture swipe:4:right workspace prev
+        # bindgesture swipe:4:left workspace next
+        # bindgesture swipe:3:right focus left
+        # bindgesture swipe:3:left focus right
         set $laptop eDP-1
         bindswitch --reload --locked lid:on output $laptop disable
         bindswitch --reload --locked lid:off output $laptop enable
@@ -136,7 +136,7 @@ in {
         "${mod}+${left}" = "focus left";
         "${mod}+${right}" = "focus right";
         "${mod}+${up}" = "focus up";
-        "${mod}+${down}" = "focus up";
+        "${mod}+${down}" = "focus down";
         "${mod}+Shift+${left}" = "move left";
         "${mod}+Shift+${right}" = "move right";
         "${mod}+Shift+${up}" = "move up";
