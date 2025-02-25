@@ -21,6 +21,25 @@
         ];
       }
       {
+        profile.name = "docked-home";
+        profile.outputs = [
+          {
+            criteria = home_main;
+            status = "enable";
+            scale = 1.0;
+            adaptiveSync = true;
+            mode = "2560x1440@144";
+            position = "0,0";
+          }
+          {
+            criteria = home_sec;
+            status = "enable";
+            scale = 1.0;
+            position = "2560,180";
+          }
+        ];
+      }
+      {
         profile.name = "docked-home+internal";
         profile.outputs = [
           {
@@ -33,7 +52,7 @@
             criteria = home_main;
             status = "enable";
             scale = 1.0;
-            # adaptiveSync = true;
+            adaptiveSync = true;
             mode = "2560x1440@144";
             position = "0,0";
           }
