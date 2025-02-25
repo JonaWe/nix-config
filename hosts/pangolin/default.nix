@@ -19,6 +19,11 @@
   ];
 
   boot.supportedFilesystems = ["ntfs"];
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  services.xserver.videoDrivers = ["amdgpu"];
 
   myconf.disk = {
     enable = true;
@@ -68,13 +73,6 @@
     in ["${automount_opts}"];
   };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.initrd.luks.devices."luks-2bf3e013-c763-4185-887a-044c1fbc2eaa".device = "/dev/disk/by-uuid/2bf3e013-c763-4185-887a-044c1fbc2eaa";
-
-  services.xserver.videoDrivers = ["amdgpu"];
 
   system.stateVersion = "24.11";
 }
