@@ -155,15 +155,15 @@ in {
 
         "${mod}+Ctrl+l" = "layout toggle split tabbed";
 
-        "XF86AudioRaiseVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%";
-        "XF86AudioLowerVolume" = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%";
-        "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle";
-        "XF86AudioMicMute" = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-        "XF86AudioPlay" = "exec --no-startup-id playerctl play-pause";
-        "XF86AudioNext" = "exec --no-startup-id playerctl next";
-        "XF86AudioPrev" = "exec --no-startup-id playerctl previous";
-        "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set 10%+";
-        "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set 10%-";
+        "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+        "XF86AudioPlay" = "exec playerctl play-pause";
+        "XF86AudioNext" = "exec playerctl next";
+        "XF86AudioPrev" = "exec playerctl previous";
+        "XF86MonBrightnessUp" = "exec brightnessctl set 10%+";
+        "XF86MonBrightnessDown" = "exec brightnessctl set 10%-";
 
         "${mod}+1" = "exec workspace-swapper 1";
         "${mod}+2" = "exec workspace-swapper 2";
@@ -206,6 +206,27 @@ in {
         "${mod}+Shift+i" = "move container to workspace 18; workspace 18";
         "${mod}+Shift+o" = "move container to workspace 19; workspace 19";
         "${mod}+Shift+period" = "move container to workspace 20; workspace 20";
+
+        "${mod}+Shift+Ctrl+1" ="[workspace=^1$] move workspace to output current";
+        "${mod}+Shift+Ctrl+2" ="[workspace=^2$] move workspace to output current";
+        "${mod}+Shift+Ctrl+3" ="[workspace=^3$] move workspace to output current";
+        "${mod}+Shift+Ctrl+4" ="[workspace=^4$] move workspace to output current";
+        "${mod}+Shift+Ctrl+5" ="[workspace=^5$] move workspace to output current";
+        "${mod}+Shift+Ctrl+6" ="[workspace=^6$] move workspace to output current";
+        "${mod}+Shift+Ctrl+7" ="[workspace=^7$] move workspace to output current";
+        "${mod}+Shift+Ctrl+8" ="[workspace=^8$] move workspace to output current";
+        "${mod}+Shift+Ctrl+9" ="[workspace=^9$] move workspace to output current";
+        "${mod}+Shift+Ctrl+0" ="[workspace=^0$] move workspace to output current";
+        "${mod}+Shift+Ctrl+m"="[workspace=^11$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+slash"="[workspace=^12$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+p"="[workspace=^13$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+comma"="[workspace=^14$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+u"="[workspace=^15$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+n"="[workspace=^16$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+parenleft"="[workspace=^17$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+i"="[workspace=^18$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+o"="[workspace=^19$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+period"="[workspace=^20$] move workspace to output current"; 
 
         "${mod}+r" = "mode resize";
         "${mod}+minus" = "mode session";
