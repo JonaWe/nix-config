@@ -69,7 +69,16 @@ in {
     enable = true;
     # workaround for gcj keyboard layout
     checkConfig = false;
-
+    extraConfig =''
+        # Any future keyboard xkb_options overrides need to go here
+        bindgesture swipe:4:right workspace prev
+        bindgesture swipe:4:left workspace next
+        bindgesture swipe:3:right focus left
+        bindgesture swipe:3:left focus right
+        set $laptop eDP-1
+        bindswitch --reload --locked lid:on output $laptop disable
+        bindswitch --reload --locked lid:off output $laptop enable
+    '';
     config = rec {
       modifier = "Mod4";
       terminal = term;

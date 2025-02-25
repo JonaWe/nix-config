@@ -5,7 +5,7 @@
     home_sec = "BNQ ZOWIE XL LCD N5H01932SL0";
   in {
     enable = true;
-    systemdTarget = "graphical-session.target";
+    # systemdTarget = "graphical-session.target";
     settings = [
       {
         profile.name = "internal";
