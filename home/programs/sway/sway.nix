@@ -85,11 +85,11 @@ in {
           scroll_factor = "0.5";
         };
       };
-      output = {
-        DP-1 = {
-          mode = "2560x1440@144Hz";
-        };
-      };
+      # output = {
+      #   DP-1 = {
+      #     mode = "2560x1440@144Hz";
+      #   };
+      # };
       focus = {
         forceWrapping = false;
         followMouse = false;
@@ -166,6 +166,7 @@ in {
         "${mod}+parenleft" = "exec workspace-swapper 17";
         "${mod}+i" = "exec workspace-swapper 18";
         "${mod}+o" = "exec workspace-swapper 19";
+        "${mod}+period" = "exec workspace-swapper 20";
 
         "${mod}+Shift+1" = "move container to workspace 1; workspace 1";
         "${mod}+Shift+2" = "move container to workspace 2; workspace 2";
@@ -186,6 +187,7 @@ in {
         "${mod}+Shift+parenleft" = "move container to workspace 17; workspace 17";
         "${mod}+Shift+i" = "move container to workspace 18; workspace 18";
         "${mod}+Shift+o" = "move container to workspace 19; workspace 19";
+        "${mod}+Shift+period" = "move container to workspace 20; workspace 20";
 
         "${mod}+r" = "mode resize";
         "${mod}+minus" = "mode session";
@@ -260,6 +262,7 @@ in {
         {command = "${pkgs.brave}/bin/brave";}
         {command = "${pkgs.brave}/bin/brave --app=https://calendar.proton.me/u/0/";}
         {command = "${pkgs.firefox}/bin/firefox";}
+        {command = "${pkgs.keepassxc}/bin/keepassxc";}
         {command = "sleep 10; syncthingtray";}
       ];
       window = {
@@ -314,6 +317,9 @@ in {
         ];
         "18" = [
           {instance = "brave-browser";}
+        ];
+        "20" = [
+          {app_id = "org.keepassxc.KeePassXC";}
         ];
       };
       seat."*" = {
