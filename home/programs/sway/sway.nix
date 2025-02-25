@@ -21,7 +21,16 @@
         exit 0
     fi
 
-    # check if workspace is on visible on a different monitor
+    # check if workspace is empty
+    WORKSPACE_EMPTY=$(swaymsg -t get_tree | jq --arg current_output "$CURRENT_OUTPUT" --arg ws "$WORKSPACE"  -r '.. | select(.type?=="output" and .name?!=$current_output) | .nodes[] | select(.name? == $ws) | select(.nodes | length ?== 0) | .name')
+
+    # check if workspace is empty to move to it: empty workspace -> focused workspace
+    if [ ! -z "$WORKSPACE_EMPTY" ]; then
+        swaymsg workspace $WORKSPACE
+        exit 0
+    fi
+
+    # check if workspace is visible on a different monitor
     ACTIVE_ON_OTHER_MONITOR=$(swaymsg -t get_tree | jq --arg current_output "$CURRENT_OUTPUT" --arg ws "$WORKSPACE"  -r '.. | select(.type?=="output" and .name?!=$current_output) | .nodes[] | select(.name? == $ws) | recurse(.nodes[]) | select(.visible) | .name')
 
     # check if the window is focused on a different monitor
@@ -34,7 +43,7 @@
     WORKSPACE_EXISTS=$(swaymsg -t get_tree | jq --arg ws "$WORKSPACE" -r '.. | select(.type?=="workspace" and .name? == $ws)')
     # if the workspace exists move the workspace to the current monitor
     if [ ! -z "$WORKSPACE_EXISTS" ]; then
-        swaymsg "[workspace=''${WORKSPACE}] move workspace to output current"
+        swaymsg "[workspace=^''${WORKSPACE}$] move workspace to output current"
         exit 0
     fi
 
