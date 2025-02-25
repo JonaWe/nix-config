@@ -8,6 +8,7 @@
     ./mimeapps.nix
     ./themes.nix
     ./sway.nix
+    ./kanshi.nix
   ];
 
   home.file.".config/xkb" = {
