@@ -9,6 +9,7 @@
     ./themes.nix
     ./sway.nix
     ./kanshi.nix
+    ./swayidle.nix
   ];
 
   home.file.".config/xkb" = {
