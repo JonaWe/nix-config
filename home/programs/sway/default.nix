@@ -52,6 +52,7 @@
     qbittorrent
     xournalpp
     wdisplays
+    libnotify
   ];
 
 

@@ -3,6 +3,19 @@
   config,
   ...
 }: let
+  start-swayidle = pkgs.writeShellScriptBin "start-swayidle" ''
+    #!/bin/bash
+
+    # set -eufo pipefail
+    exec swayidle -w \
+         timeout 300 'swaylock -f -F' \
+         timeout 420 'swaymsg "output * dpms off"' \
+              resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -F' \
+         lock 'swaylock -f -F' &
+
+    # echo $! > /tmp/swayidle.pid
+  '';
   workspace-swapper = pkgs.writeShellScriptBin "workspace-swapper" ''
     #!/bin/bash
 
@@ -53,6 +66,9 @@
 in {
   home.packages = with pkgs; [
     workspace-swapper
+    start-swayidle
+    swayidle
+    swaylock
   ];
 
   wayland.windowManager.sway = let
@@ -69,15 +85,15 @@ in {
     enable = true;
     # workaround for gcj keyboard layout
     checkConfig = false;
-    extraConfig =''
-        # Here I could bind gestures if I would like
-        # bindgesture swipe:4:right workspace prev
-        # bindgesture swipe:4:left workspace next
-        # bindgesture swipe:3:right focus left
-        # bindgesture swipe:3:left focus right
-        set $laptop eDP-1
-        bindswitch --reload --locked lid:on output $laptop disable
-        bindswitch --reload --locked lid:off output $laptop enable
+    extraConfig = ''
+      # Here I could bind gestures if I would like
+      # bindgesture swipe:4:right workspace prev
+      # bindgesture swipe:4:left workspace next
+      # bindgesture swipe:3:right focus left
+      # bindgesture swipe:3:left focus right
+      set $laptop eDP-1
+      bindswitch --reload --locked lid:on output $laptop disable
+      bindswitch --reload --locked lid:off output $laptop enable
     '';
     config = rec {
       modifier = "Mod4";
@@ -208,26 +224,26 @@ in {
         "${mod}+Shift+o" = "move container to workspace 19; workspace 19";
         "${mod}+Shift+period" = "move container to workspace 20; workspace 20";
 
-        "${mod}+Shift+Ctrl+1" ="[workspace=^1$] move workspace to output current";
-        "${mod}+Shift+Ctrl+2" ="[workspace=^2$] move workspace to output current";
-        "${mod}+Shift+Ctrl+3" ="[workspace=^3$] move workspace to output current";
-        "${mod}+Shift+Ctrl+4" ="[workspace=^4$] move workspace to output current";
-        "${mod}+Shift+Ctrl+5" ="[workspace=^5$] move workspace to output current";
-        "${mod}+Shift+Ctrl+6" ="[workspace=^6$] move workspace to output current";
-        "${mod}+Shift+Ctrl+7" ="[workspace=^7$] move workspace to output current";
-        "${mod}+Shift+Ctrl+8" ="[workspace=^8$] move workspace to output current";
-        "${mod}+Shift+Ctrl+9" ="[workspace=^9$] move workspace to output current";
-        "${mod}+Shift+Ctrl+0" ="[workspace=^0$] move workspace to output current";
-        "${mod}+Shift+Ctrl+m"="[workspace=^11$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+slash"="[workspace=^12$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+p"="[workspace=^13$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+comma"="[workspace=^14$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+u"="[workspace=^15$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+n"="[workspace=^16$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+parenleft"="[workspace=^17$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+i"="[workspace=^18$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+o"="[workspace=^19$] move workspace to output current"; 
-        "${mod}+Shift+Ctrl+period"="[workspace=^20$] move workspace to output current"; 
+        "${mod}+Shift+Ctrl+1" = "[workspace=^1$] move workspace to output current";
+        "${mod}+Shift+Ctrl+2" = "[workspace=^2$] move workspace to output current";
+        "${mod}+Shift+Ctrl+3" = "[workspace=^3$] move workspace to output current";
+        "${mod}+Shift+Ctrl+4" = "[workspace=^4$] move workspace to output current";
+        "${mod}+Shift+Ctrl+5" = "[workspace=^5$] move workspace to output current";
+        "${mod}+Shift+Ctrl+6" = "[workspace=^6$] move workspace to output current";
+        "${mod}+Shift+Ctrl+7" = "[workspace=^7$] move workspace to output current";
+        "${mod}+Shift+Ctrl+8" = "[workspace=^8$] move workspace to output current";
+        "${mod}+Shift+Ctrl+9" = "[workspace=^9$] move workspace to output current";
+        "${mod}+Shift+Ctrl+0" = "[workspace=^0$] move workspace to output current";
+        "${mod}+Shift+Ctrl+m" = "[workspace=^11$] move workspace to output current";
+        "${mod}+Shift+Ctrl+slash" = "[workspace=^12$] move workspace to output current";
+        "${mod}+Shift+Ctrl+p" = "[workspace=^13$] move workspace to output current";
+        "${mod}+Shift+Ctrl+comma" = "[workspace=^14$] move workspace to output current";
+        "${mod}+Shift+Ctrl+u" = "[workspace=^15$] move workspace to output current";
+        "${mod}+Shift+Ctrl+n" = "[workspace=^16$] move workspace to output current";
+        "${mod}+Shift+Ctrl+parenleft" = "[workspace=^17$] move workspace to output current";
+        "${mod}+Shift+Ctrl+i" = "[workspace=^18$] move workspace to output current";
+        "${mod}+Shift+Ctrl+o" = "[workspace=^19$] move workspace to output current";
+        "${mod}+Shift+Ctrl+period" = "[workspace=^20$] move workspace to output current";
 
         "${mod}+r" = "mode resize";
         "${mod}+minus" = "mode session";
@@ -287,6 +303,10 @@ in {
           command = "wl-paste --watch cliphist store";
           always = true;
         }
+        {
+          command = "start-swayidle";
+          always = true;
+        }
 
         # wallpaper
         {command = "swww-daemon";}
@@ -305,7 +325,6 @@ in {
         {command = "${pkgs.keepassxc}/bin/keepassxc";}
         {command = "${pkgs.obsidian}/bin/obsidian";}
         {command = "${pkgs.kitty}/bin/kitty --title \"Obsidian Terminal\" -e zsh 'cd ~/vault/personal && nvim Home.md'";}
-        # {command = "kanshi";}
 
         # {command = "sleep 10; syncthingtray";}
       ];
