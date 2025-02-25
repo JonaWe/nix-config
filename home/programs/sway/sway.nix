@@ -2,7 +2,50 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  workspace-swapper = pkgs.writeShellScriptBin "workspace-swapper" ''
+    #!/bin/bash
+
+    # get the name of the to be moved workspace
+    WORKSPACE=$1
+
+    # get name of active monitor
+    CURRENT_OUTPUT=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
+
+    # check if workspace is on current monitor
+    ON_CURRENT_MONITOR=$(swaymsg -t get_tree | jq --arg current_output "$CURRENT_OUTPUT" --arg ws "$WORKSPACE"  -r '.. | select(.type?=="output" and .name?==$current_output) | .nodes[] | select(.name? == $ws)')
+
+    # check if workspace is already on current monitor
+    if [ ! -z "$ON_CURRENT_MONITOR" ]; then
+        swaymsg workspace $WORKSPACE
+        exit 0
+    fi
+
+    # check if workspace is on visible on a different monitor
+    ACTIVE_ON_OTHER_MONITOR=$(swaymsg -t get_tree | jq --arg current_output "$CURRENT_OUTPUT" --arg ws "$WORKSPACE"  -r '.. | select(.type?=="output" and .name?!=$current_output) | .nodes[] | select(.name? == $ws) | recurse(.nodes[]) | select(.visible) | .name')
+
+    # check if the window is focused on a different monitor
+    if [ ! -z "$ACTIVE_ON_OTHER_MONITOR" ]; then
+        swaymsg workspace $WORKSPACE
+        exit 0
+    fi
+
+    # check if the workspace exists
+    WORKSPACE_EXISTS=$(swaymsg -t get_tree | jq --arg ws "$WORKSPACE" -r '.. | select(.type?=="workspace" and .name? == $ws)')
+    # if the workspace exists move the workspace to the current monitor
+    if [ ! -z "$WORKSPACE_EXISTS" ]; then
+        swaymsg "[workspace=''${WORKSPACE}] move workspace to output current"
+        exit 0
+    fi
+
+    # otherwise create the workspace on the current monitor
+    swaymsg workspace $WORKSPACE
+  '';
+in {
+  home.packages = with pkgs; [
+    workspace-swapper
+  ];
+
   wayland.windowManager.sway = let
     mod = "Mod4";
 
@@ -70,7 +113,6 @@
 
         # "${mod}+Shift+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show calc -modi calc -no-show-match -no-sort";
         "${mod}+e" = "exec ${pkgs.nautilus}/bin/nautilus --new-window";
-        # "${mod}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm";
         "${mod}+g" = "exec ${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
 
         "${mod}+${left}" = "focus left";
@@ -105,25 +147,25 @@
         "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set 10%+";
         "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set 10%-";
 
-        "${mod}+1" = "workspace 1";
-        "${mod}+2" = "workspace 2";
-        "${mod}+3" = "workspace 3";
-        "${mod}+4" = "workspace 4";
-        "${mod}+5" = "workspace 5";
-        "${mod}+6" = "workspace 6";
-        "${mod}+7" = "workspace 7";
-        "${mod}+8" = "workspace 8";
-        "${mod}+9" = "workspace 9";
-        "${mod}+0" = "workspace 10";
-        "${mod}+m" = "workspace 11";
-        "${mod}+slash" = "workspace 12";
-        "${mod}+p" = "workspace 13";
-        "${mod}+comma" = "workspace 14";
-        "${mod}+u" = "workspace 15";
-        "${mod}+n" = "workspace 16";
-        "${mod}+parenleft" = "workspace 17";
-        "${mod}+i" = "workspace 18";
-        "${mod}+o" = "workspace 19";
+        "${mod}+1" = "exec workspace-swapper 1";
+        "${mod}+2" = "exec workspace-swapper 2";
+        "${mod}+3" = "exec workspace-swapper 3";
+        "${mod}+4" = "exec workspace-swapper 4";
+        "${mod}+5" = "exec workspace-swapper 5";
+        "${mod}+6" = "exec workspace-swapper 6";
+        "${mod}+7" = "exec workspace-swapper 7";
+        "${mod}+8" = "exec workspace-swapper 8";
+        "${mod}+9" = "exec workspace-swapper 9";
+        "${mod}+0" = "exec workspace-swapper 10";
+        "${mod}+m" = "exec workspace-swapper 11";
+        "${mod}+slash" = "exec workspace-swapper 12";
+        "${mod}+p" = "exec workspace-swapper 13";
+        "${mod}+comma" = "exec workspace-swapper 14";
+        "${mod}+u" = "exec workspace-swapper 15";
+        "${mod}+n" = "exec workspace-swapper 16";
+        "${mod}+parenleft" = "exec workspace-swapper 17";
+        "${mod}+i" = "exec workspace-swapper 18";
+        "${mod}+o" = "exec workspace-swapper 19";
 
         "${mod}+Shift+1" = "move container to workspace 1; workspace 1";
         "${mod}+Shift+2" = "move container to workspace 2; workspace 2";

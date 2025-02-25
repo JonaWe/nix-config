@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  # nixpkgs-unstable,
   ...
 }: {
   imports = [
@@ -46,7 +45,6 @@
     hunspellDicts.de_DE
     hunspellDicts.en_US-large
     kdePackages.okular
-    # nixpkgs-unstable.makemkv
     makemkv
     mullvad-vpn
     qbittorrent
