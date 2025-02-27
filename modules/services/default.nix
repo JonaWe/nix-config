@@ -7,5 +7,6 @@
     ./samba.nix
     ./minecraft-servers.nix
     ./home-assistant.nix
+    ./homepage.nix
   ];
 }
