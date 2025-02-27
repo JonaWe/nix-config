@@ -81,6 +81,9 @@ in {
 
     term = "${pkgs.kitty}/bin/kitty";
     bar = "${pkgs.waybar}/bin/waybar";
+
+    mode-resize = "Resize";
+    mode-session ="(S)hutdown, (r)eboot, (s)uspend, (h)ibernate, (l)lock, (L)logout"; 
   in {
     enable = true;
     # workaround for gcj keyboard layout
@@ -245,11 +248,11 @@ in {
         "${mod}+Shift+Ctrl+o" = "[workspace=^19$] move workspace to output current";
         "${mod}+Shift+Ctrl+period" = "[workspace=^20$] move workspace to output current";
 
-        "${mod}+r" = "mode resize";
-        "${mod}+minus" = "mode session";
+        "${mod}+r" = "mode ${mode-resize}";
+        "${mod}+minus" = "mode '${mode-session}'";
       };
       modes = {
-        resize = {
+        "${mode-resize}" = {
           "q" = "mode default";
           "Return" = "mode default";
           "Escape" = "mode default";
@@ -258,7 +261,7 @@ in {
           "${left}" = "resize shrink width 50 px or 50 ppt";
           "${right}" = "resize grow width 50 px or 50 ppt";
         };
-        session = {
+        "${mode-session}" = {
           "q" = "mode default";
           "Return" = "mode default";
           "Escape" = "mode default";
@@ -303,10 +306,8 @@ in {
           command = "wl-paste --watch cliphist store";
           always = true;
         }
-        {
-          command = "start-swayidle";
-          always = true;
-        }
+
+        {command = "start-swayidle";}
 
         # wallpaper
         {command = "swww-daemon";}
