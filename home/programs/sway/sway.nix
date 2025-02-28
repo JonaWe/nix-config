@@ -172,7 +172,7 @@ in {
         "${mod}+Shift+s" = "sticky toggle";
         "${mod}+Shift+c" = "reload";
 
-        "${mod}+Ctrl+k" = "systemctl --user restart kanshi";
+        "${mod}+Ctrl+k" = "exec systemctl --user restart kanshi";
         "${mod}+Ctrl+l" = "layout toggle split tabbed";
 
         "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
