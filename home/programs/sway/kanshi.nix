@@ -73,6 +73,24 @@
         ];
       }
       {
+        profile.name = "docked-home-second";
+        profile.exec = "swww img /home/jona/bg.jpg";
+        profile.outputs = [
+          {
+            criteria = internal;
+            status = "enable";
+            scale = 1.0;
+            position = "0,1080";
+          }
+          {
+            criteria = home_sec;
+            status = "enable";
+            scale = 1.0;
+            position = "0,0";
+          }
+        ];
+      }
+      {
         profile.name = "docked-dachs";
         profile.exec = "swww img /home/jona/bg.jpg";
         profile.outputs = [
