@@ -76,12 +76,21 @@
       enable = true;
       openFirewall = true;
     };
-    home-assistant = {
+    adguardhome = {
       enable = true;
+      openFirewall = true;
+    };
+    homepage = {
+      enable = true;
+      openFirewall = true;
+    };
+    home-assistant = {
+      enable = false;
       openFirewall = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    arr.enable = true;
   };
 
   networking.hostName = "ant";
@@ -89,9 +98,8 @@
   networking.firewall = {
     enable = true;
     allowPing = true;
-    # Open ports in the firewall.
-    allowedTCPPorts = [3001];
-    # allowedUDPPorts = [ ... ];
+    allowedTCPPorts = [3001 5200 ];
+    allowedUDPPorts = [ 5201 ];
   };
 
   system.stateVersion = "24.11";

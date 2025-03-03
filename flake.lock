@@ -79,10 +79,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1740439132,
-        "narHash": "sha256-iaY2hL5L8LjCzSHq6ZaEw4vLKT4746pck/+wkR/+T8Y=",
+        "lastModified": 1741017165,
+        "narHash": "sha256-EP4nwiwq7iqHnnXotVRtJw77peR9rcDpiD6V/UKAiVk=",
         "ref": "refs/heads/main",
-        "rev": "c3883a4d19dfdfa999fe0be3d776da66f49059a6",
+        "rev": "1e6cb164e533ce43b3042b32618a4799f6ac646b",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/JonaWe/nix-secrets.git"
@@ -129,6 +129,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1740916017,
+        "narHash": "sha256-Ze/3XCElkVljFCnBKezLldOz2ZaGp7eozxRqFzACnMI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b58e19b11fe72175fd7a9e014a4786a91e99da5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1740339700,
@@ -152,6 +168,7 @@
         "mysecrets": "mysecrets",
         "nix-minecraft": "nix-minecraft",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix"
       }
     },

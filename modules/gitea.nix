@@ -44,10 +44,10 @@ in {
         };
         server = {
           HTTP_PORT = 3002;
-          ROOT_URL = "https://git.home.pinkorca.de/";
-          DOMAIN = "home.pinkorca.de";
+          ROOT_URL = "http://192.168.188.133:3002/";
+          DOMAIN = "http://192.168.188.133:3002/";
           SSH_USER = "git";
-          SSH_DOMAIN = "git.home.pinkorca.de";
+          SSH_DOMAIN = "192.168.188.133";
           #     SSH_TRUSTED_USER_CA_KEYS = lib.concatStringsSep "," [
           #       (builtins.readFile "${inputs.ssh}/ca.pub")
           #     ];
@@ -80,12 +80,12 @@ in {
     #
     networking.firewall.allowedTCPPorts = [3002];
 
-    services.nginx.virtualHosts."git.home.pinkorca.de" = {
-      useACMEHost = "pinkorca.de";
-      addSSL = true;
-      locations."/" = {
-        proxyPass = "http://0.0.0.0:3002/";
-      };
-    };
+    # services.nginx.virtualHosts."git.home.pinkorca.de" = {
+    #   useACMEHost = "pinkorca.de";
+    #   addSSL = true;
+    #   locations."/" = {
+    #     proxyPass = "http://0.0.0.0:3002/";
+    #   };
+    # };
   };
 }
