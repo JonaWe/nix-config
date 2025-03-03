@@ -96,9 +96,28 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable (let
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    partOf = [
+      "docker-compose-arr-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-arr-root.target"
+    ];
+    defaultSystemDConfig = {
+        inherit serviceConfig;
+        inherit partOf;
+        inherit wantedBy;
+    };
+  in {
+    sops.secrets."arr/vpn/env" = {};
+
     # users
-    #
     users.users.${cfg.user.user} = {
       isNormalUser = true;
       home = cfg.dataDir.base;
@@ -111,6 +130,7 @@ in {
       gid = cfg.user.gid;
     };
 
+    # directories
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir.base} 0700 ${cfg.user.user} ${cfg.user.group} -"
       "d ${cfg.dataDir.downloads} 0700 ${cfg.user.user} ${cfg.user.group} -"
@@ -125,16 +145,15 @@ in {
       "d ${cfg.libDir.sonarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
     ];
 
-
-    sops.secrets."arr/vpn/env" = {};
-    # Runtime
+    # runtime
     virtualisation.docker = {
       enable = lib.mkDefault true;
       autoPrune.enable = lib.mkDefault true;
     };
     virtualisation.oci-containers.backend = "docker";
 
-    # Containers
+    # containers
+    systemd.services."docker-flaresolverr" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."flaresolverr" = {
       image = "ghcr.io/flaresolverr/flaresolverr:latest";
       environment = {
@@ -148,18 +167,16 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-flaresolverr" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
+
+    systemd.services."docker-gluetun" = {
+      inherit serviceConfig;
+      inherit partOf;
+      inherit wantedBy;
+      after = [
+        "docker-network-arr_default.service"
       ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
+      requires = [
+        "docker-network-arr_default.service"
       ];
     };
     virtualisation.oci-containers.containers."gluetun" = {
@@ -183,26 +200,8 @@ in {
         "--network=arr_default"
       ];
     };
-    systemd.services."docker-gluetun" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      after = [
-        "docker-network-arr_default.service"
-      ];
-      requires = [
-        "docker-network-arr_default.service"
-      ];
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
+
+    systemd.services."docker-jellyseerr" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."jellyseerr" = {
       image = "fallenbagel/jellyseerr:latest";
       environment = {
@@ -221,20 +220,8 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-jellyseerr" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
+
+    systemd.services."docker-prowlarr" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."prowlarr" = {
       image = "lscr.io/linuxserver/prowlarr:latest";
       environment = {
@@ -254,20 +241,8 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-prowlarr" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
+
+    systemd.services."docker-qbittorrent" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."qbittorrent" = {
       image = "lscr.io/linuxserver/qbittorrent:latest";
       environment = {
@@ -289,20 +264,8 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-qbittorrent" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
+
+    systemd.services."docker-radarr" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."radarr" = {
       image = "lscr.io/linuxserver/radarr:latest";
       environment = {
@@ -324,20 +287,8 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-radarr" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
+
+    systemd.services."docker-readarr" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."readarr" = {
       image = "lscr.io/linuxserver/readarr:develop";
       environment = {
@@ -358,20 +309,8 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-readarr" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
+
+    systemd.services."docker-sonarr" = defaultSystemDConfig;
     virtualisation.oci-containers.containers."sonarr" = {
       image = "lscr.io/linuxserver/sonarr:latest";
       environment = {
@@ -393,22 +332,8 @@ in {
         "--network=container:gluetun"
       ];
     };
-    systemd.services."docker-sonarr" = {
-      serviceConfig = {
-        Restart = lib.mkOverride 90 "always";
-        RestartMaxDelaySec = lib.mkOverride 90 "1m";
-        RestartSec = lib.mkOverride 90 "100ms";
-        RestartSteps = lib.mkOverride 90 9;
-      };
-      partOf = [
-        "docker-compose-arr-root.target"
-      ];
-      wantedBy = [
-        "docker-compose-arr-root.target"
-      ];
-    };
 
-    # Networks
+    # networks
     systemd.services."docker-network-arr_default" = {
       path = [pkgs.docker];
       serviceConfig = {
@@ -432,5 +357,5 @@ in {
       };
       wantedBy = ["multi-user.target"];
     };
-  };
+  });
 }
