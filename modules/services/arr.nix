@@ -7,54 +7,430 @@
   cfg = config.myconf.services.arr;
 in {
   options.myconf.services.arr = {
-    enable = lib.mkEnableOption "Enable *arr";
+    enable = lib.mkEnableOption "Enable *arr app suite for media management";
+    libDir = {
+      base = lib.mkOption {
+        type = lib.types.path;
+        default = "/var/lib";
+        description = "Base directory where service config is stored";
+      };
+      jellyseerr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/jellyseerr";
+        description = "Directory for jellyseerr runtime config";
+      };
+      prowlarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/prowlarr";
+        description = "Directory for prowlarr runtime config";
+      };
+      qbittorrent = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/qbittorrent";
+        description = "Directory for qbittorrent runtime config";
+      };
+      radarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/radarr";
+        description = "Directory for radarr runtime config";
+      };
+      readarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/readarr";
+        description = "Directory for readarr runtime config";
+      };
+      sonarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/sonarr";
+        description = "Directory for sonarr runtime config";
+      };
+    };
+    dataDir = {
+      base = lib.mkOption {
+        type = lib.types.path;
+        default = "/data/arr";
+        description = "Base directory that is used to store the arr data";
+      };
+      downloads = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/downloads";
+        description = "Directory where the downloads are stored";
+      };
+      movies = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/movies";
+        description = "Directory for movies";
+      };
+      tvshows = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/tvshows";
+        description = "Directory for tv shows";
+      };
+      books = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/books";
+        description = "Directory for books";
+      };
+    };
+    user = {
+      user = lib.mkOption {
+        type = lib.types.str;
+        default = "arr";
+        description = "User that is used to run arr apps";
+      };
+      uid = lib.mkOption {
+        type = lib.types.int;
+        default = 2010;
+        description = "User id that is used to run arr apps";
+      };
+      gid = lib.mkOption {
+        type = lib.types.int;
+        default = 2010;
+        description = "Group id that is used to run arr apps";
+      };
+      group = lib.mkOption {
+        type = lib.types.str;
+        default = "arr";
+        description = "Group that is used to run arr apps";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    networking.nat = {
-      enable = true;
-      internalInterfaces = ["ve-+"];
-      externalInterface = "ens3";
-      # Lazy IPv6 connectivity for the container
-      # enableIPv6 = true;
+    # users
+    #
+    users.users.${cfg.user.user} = {
+      isNormalUser = true;
+      home = cfg.dataDir.base;
+      group = cfg.user.group;
+      description = "User for the arr apps";
+      uid = cfg.user.uid;
     };
 
-    containers.arr = {
-      autoStart = true;
-      privateNetwork = true;
-      hostAddress = "192.168.188.117";
-      localAddress = "192.168.1.1";
-      # hostAddress6 = "fc00::1";
-      # localAddress6 = "fc00::2";
-      config = {
-        config,
-        pkgs,
-        lib,
-        ...
-      }: {
-        services.transmission.enable = true;
+    users.groups.${cfg.user.group} = {
+      gid = cfg.user.gid;
+    };
 
-        # services.nextcloud = {
-        #   enable = true;
-        #   package = pkgs.nextcloud28;
-        #   hostName = "localhost";
-        #   config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}"; # DON'T DO THIS IN PRODUCTION - the password file will be world-readable in the Nix Store!
-        # };
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataDir.base} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.dataDir.downloads} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.dataDir.movies} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.dataDir.tvshows} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.jellyseerr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.prowlarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.qbittorrent} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.radarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.readarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.sonarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+    ];
 
-        system.stateVersion = "24.11";
 
-        networking = {
-          firewall = {
-            enable = true;
-            allowedTCPPorts = [80];
-          };
-          # Use systemd-resolved inside the container
-          # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
-          useHostResolvConf = lib.mkForce false;
-        };
+    sops.secrets."arr/vpn/env" = {};
+    # Runtime
+    virtualisation.docker = {
+      enable = lib.mkDefault true;
+      autoPrune.enable = lib.mkDefault true;
+    };
+    virtualisation.oci-containers.backend = "docker";
 
-        services.resolved.enable = true;
+    # Containers
+    virtualisation.oci-containers.containers."flaresolverr" = {
+      image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      environment = {
+        "LOG_LEVEL" = "info";
       };
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-flaresolverr" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."gluetun" = {
+      image = "qmcgaw/gluetun";
+      environmentFiles = [config.sops.secrets."arr/vpn/env".path];
+      ports = [
+        "8080:8080/tcp" # qbittorrent
+        "9696:9696/tcp" # prowlarr
+        "8989:8989/tcp" # sonarr
+        "7878:7878/tcp" # radarr
+        "8787:8787/tcp" # readarr
+        "8686:8686/tcp" # lidarr
+        "5055:5055/tcp" # jellyseerr
+        # "8096:8096/tcp"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--cap-add=NET_ADMIN"
+        "--device=/dev/net/tun:/dev/net/tun:rwm"
+        "--network-alias=gluetun"
+        "--network=arr_default"
+      ];
+    };
+    systemd.services."docker-gluetun" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      after = [
+        "docker-network-arr_default.service"
+      ];
+      requires = [
+        "docker-network-arr_default.service"
+      ];
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."jellyseerr" = {
+      image = "fallenbagel/jellyseerr:latest";
+      environment = {
+        "LOG_LEVEL" = "info";
+        "PORT" = "5055";
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.jellyseerr}:/app/config:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-jellyseerr" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."prowlarr" = {
+      image = "lscr.io/linuxserver/prowlarr:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "${cfg.libDir.prowlarr}:/config:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-prowlarr" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."qbittorrent" = {
+      image = "lscr.io/linuxserver/qbittorrent:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TORRENTING_PORT" = "6881";
+        "TZ" = "Europe/Berlin";
+        "WEBUI_PORT" = "8080";
+      };
+      volumes = [
+        "${cfg.libDir.qbittorrent}:/config:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-qbittorrent" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."radarr" = {
+      image = "lscr.io/linuxserver/radarr:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "${cfg.libDir.radarr}:/config:rw"
+        "${cfg.dataDir.downloads}:/Downloads:rw"
+        "${cfg.dataDir.movies}:/Movies:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-radarr" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."readarr" = {
+      image = "lscr.io/linuxserver/readarr:develop";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.readarr}:/config:rw"
+        "${cfg.dataDir.books}:/Books:rw"
+        "${cfg.dataDir.downloads}:/Downloads:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-readarr" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+    virtualisation.oci-containers.containers."sonarr" = {
+      image = "lscr.io/linuxserver/sonarr:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "${cfg.libDir.sonarr}:/config:rw"
+        "${cfg.dataDir.tvshows}:/TVShows:rw"
+        "${cfg.dataDir.downloads}:/Downloads:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+    systemd.services."docker-sonarr" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      partOf = [
+        "docker-compose-arr-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-arr-root.target"
+      ];
+    };
+
+    # Networks
+    systemd.services."docker-network-arr_default" = {
+      path = [pkgs.docker];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStop = "docker network rm -f arr_default";
+      };
+      script = ''
+        docker network inspect arr_default || docker network create arr_default
+      '';
+      partOf = ["docker-compose-arr-root.target"];
+      wantedBy = ["docker-compose-arr-root.target"];
+    };
+
+    # Root service
+    # When started, this will automatically create all resources and start
+    # the containers. When stopped, this will teardown all resources.
+    systemd.targets."docker-compose-arr-root" = {
+      unitConfig = {
+        Description = "Root docker target for arr apps";
+      };
+      wantedBy = ["multi-user.target"];
     };
   };
 }

@@ -36,6 +36,9 @@
   };
 
   myconf.services = {
+    arr = {
+      enable = true;
+    };
     syncthing = {
       enable = true;
       dataDir = "/home/jona";
@@ -72,7 +75,6 @@
       # in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
     in ["${automount_opts}"];
   };
-
 
   system.stateVersion = "24.11";
 }
