@@ -8,5 +8,6 @@
     ./minecraft-servers.nix
     ./home-assistant.nix
     ./homepage.nix
+    ./adguardhome.nix
   ];
 }

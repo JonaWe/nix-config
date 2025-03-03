@@ -76,6 +76,10 @@
       enable = true;
       openFirewall = true;
     };
+    adguardhome = {
+      enable = true;
+      openFirewall = true;
+    };
     homepage = {
       enable = true;
       openFirewall = true;
