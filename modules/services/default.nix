@@ -9,5 +9,6 @@
     ./home-assistant.nix
     ./homepage.nix
     ./adguardhome.nix
+    ./arr.nix
   ];
 }

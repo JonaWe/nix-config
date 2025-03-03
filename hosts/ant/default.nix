@@ -90,6 +90,7 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    arr.enable = true;
   };
 
   networking.hostName = "ant";
