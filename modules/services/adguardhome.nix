@@ -17,15 +17,14 @@ in {
 
   config = lib.mkIf cfg.enable {
     networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [3003];
+      # allowedTCPPorts = [3005];
+      allowedUDPPorts = [53];
     };
     services.adguardhome = {
       enable = true;
+      openFirewall = true;
+      port = 3005;
       settings = {
-        http = {
-          # You can select any ip and port, just make sure to open firewalls where needed
-          address = "127.0.0.1:3003";
-        };
         dns = {
           upstream_dns = [
             # Example config with quad9
