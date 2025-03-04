@@ -37,7 +37,7 @@
 
   myconf.services = {
     arr = {
-      enable = true;
+      enable = false;
       dataDir.base = "/data/arr";
       libDir.base = "/var/lib";
       qbittorrent = {

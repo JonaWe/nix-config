@@ -42,12 +42,6 @@
   };
 
   myconf.services = {
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-      zfsIntegration.enable = true;
-      zfsIntegration.enableBackups = true;
-    };
     teamspeak = {
       enable = true;
       openFirewall = true;
@@ -90,7 +84,54 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    arr.enable = true;
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+      user = "arr";
+      group = "arr";
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
+    arr = {
+      enable = true;
+      dataDir.base = "/data/media/jellyfin";
+      libDir.base = "/data/media/arr-services";
+      qbittorrent = {
+        enable = true;
+        openFirewall = true;
+      };
+      prowlarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      sonarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      radarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      readarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      lidarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      jellyseerr = {
+        enable = true;
+        openFirewall = true;
+      };
+      bazarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      flaresolverr = {
+        enable = true;
+      };
+    };
   };
 
   networking.hostName = "ant";

@@ -127,13 +127,7 @@ in {
       };
     };
     flaresolverr = {
-      enable = lib.mkEnableOption "Enable radarr service";
-      openFirewall = lib.mkEnableOption "Open firewall for radarr web ui";
-      port = lib.mkOption {
-        type = lib.types.port;
-        default = 7878;
-        description = "Default port for radarr web ui";
-      };
+      enable = lib.mkEnableOption "Enable flaresolverr service";
     };
     radarr = {
       enable = lib.mkEnableOption "Enable radarr service";
@@ -277,31 +271,34 @@ in {
     virtualisation.oci-containers.containers."gluetun" = {
       image = "qmcgaw/gluetun";
       environmentFiles = [config.sops.secrets."arr/vpn/env".path];
+      environment = {
+        FIREWALL_OUTBOUND_SUBNETS = "192.168.188.0/24";
+      };
       ports =
-        []
+        ["8096"]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
-          "${builtins.toString cfg.qbittorrent.port}:8080/tcp" # qbittorrent
+          "${builtins.toString cfg.qbittorrent.port}:8080/tcp"
         ]
         ++ lib.lists.optionals cfg.prowlarr.openFirewall [
-          "${builtins.toString cfg.prowlarr.port}:9696/tcp" # prowlarr
+          "${builtins.toString cfg.prowlarr.port}:9696/tcp"
         ]
         ++ lib.lists.optionals cfg.sonarr.openFirewall [
-          "${builtins.toString cfg.sonarr.port}:8989/tcp" # sonarr
+          "${builtins.toString cfg.sonarr.port}:8989/tcp"
         ]
         ++ lib.lists.optionals cfg.radarr.openFirewall [
-          "${builtins.toString cfg.radarr.port}:7878/tcp" # radarr
+          "${builtins.toString cfg.radarr.port}:7878/tcp"
         ]
         ++ lib.lists.optionals cfg.readarr.openFirewall [
-          "${builtins.toString cfg.readarr.port}:8787/tcp" # readarr
+          "${builtins.toString cfg.readarr.port}:8787/tcp"
         ]
         ++ lib.lists.optionals cfg.lidarr.openFirewall [
-          "${builtins.toString cfg.lidarr.port}:8686/tcp" # lidarr
+          "${builtins.toString cfg.lidarr.port}:8686/tcp"
         ]
         ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
-          "${builtins.toString cfg.jellyseerr.port}:5055/tcp" # jellyseerr
+          "${builtins.toString cfg.jellyseerr.port}:5055/tcp" 
         ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
-          "${builtins.toString cfg.bazarr.port}:6767/tcp" # bazarr
+          "${builtins.toString cfg.bazarr.port}:6767/tcp" 
         ];
       log-driver = "journald";
       extraOptions = [
@@ -422,7 +419,7 @@ in {
       volumes = [
         "/etc/localtime:/etc/localtime:ro"
         "${cfg.libDir.radarr}:/config:rw"
-        "${cfg.dataDir.downloads}:/Downloads:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
         "${cfg.dataDir.movies}:/Movies:rw"
       ];
       dependsOn = [
@@ -445,7 +442,7 @@ in {
       volumes = [
         "${cfg.libDir.readarr}:/config:rw"
         "${cfg.dataDir.books}:/Books:rw"
-        "${cfg.dataDir.downloads}:/Downloads:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
       ];
       dependsOn = [
         "gluetun"
@@ -468,7 +465,7 @@ in {
         "/etc/localtime:/etc/localtime:ro"
         "${cfg.libDir.sonarr}:/config:rw"
         "${cfg.dataDir.tvshows}:/TVShows:rw"
-        "${cfg.dataDir.downloads}:/Downloads:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
       ];
       dependsOn = [
         "gluetun"
