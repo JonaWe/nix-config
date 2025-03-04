@@ -12,10 +12,10 @@
     ../../modules/docker.nix
     ../../modules/fonts.nix
     ../../modules/sops.nix
-    ../../modules/ddclient.nix
-    ../../modules/gitea.nix
-    ../../modules/radicale.nix
-    ../../modules/nginx.nix
+    # ../../modules/ddclient.nix
+    # ../../modules/gitea.nix
+    # ../../modules/radicale.nix
+    # ../../modules/nginx.nix
     # ../../modules/wireguard-server.nix
   ];
   # Bootloader.
@@ -92,6 +92,10 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    nginx = {
+      enable = true;
+      openFirewall = true;
+    };
     arr = {
       enable = true;
       dataDir.base = "/data/media/jellyfin";
@@ -139,8 +143,8 @@
   networking.firewall = {
     enable = true;
     allowPing = true;
-    allowedTCPPorts = [3001 5200 ];
-    allowedUDPPorts = [ 5201 ];
+    allowedTCPPorts = [3001 5200];
+    allowedUDPPorts = [5201];
   };
 
   system.stateVersion = "24.11";
