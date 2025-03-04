@@ -38,6 +38,7 @@
   myconf.services = {
     arr = {
       enable = true;
+      dataDir.base = "/data/arr";
     };
     syncthing = {
       enable = true;

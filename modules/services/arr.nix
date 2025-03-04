@@ -11,7 +11,7 @@ in {
     libDir = {
       base = lib.mkOption {
         type = lib.types.path;
-        default = "/var/lib";
+        example = "/data/media/arr";
         description = "Base directory where service config is stored";
       };
       jellyseerr = lib.mkOption {
@@ -44,31 +44,36 @@ in {
         default = "${cfg.libDir.base}/sonarr";
         description = "Directory for sonarr runtime config";
       };
+      bazarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/bazarr";
+        description = "Directory for bazarr runtime config";
+      };
     };
     dataDir = {
       base = lib.mkOption {
         type = lib.types.path;
-        default = "/data/arr";
+        example = "/data/media/arr/data";
         description = "Base directory that is used to store the arr data";
       };
       downloads = lib.mkOption {
         type = lib.types.path;
-        default = "${cfg.dataDir.base}/downloads";
+        default = "${cfg.dataDir.base}/Downloads";
         description = "Directory where the downloads are stored";
       };
       movies = lib.mkOption {
         type = lib.types.path;
-        default = "${cfg.dataDir.base}/movies";
+        default = "${cfg.dataDir.base}/Movies";
         description = "Directory for movies";
       };
       tvshows = lib.mkOption {
         type = lib.types.path;
-        default = "${cfg.dataDir.base}/tvshows";
+        default = "${cfg.dataDir.base}/TVShows";
         description = "Directory for tv shows";
       };
       books = lib.mkOption {
         type = lib.types.path;
-        default = "${cfg.dataDir.base}/books";
+        default = "${cfg.dataDir.base}/Books";
         description = "Directory for books";
       };
     };
@@ -110,9 +115,9 @@ in {
       "docker-compose-arr-root.target"
     ];
     defaultSystemDConfig = {
-        inherit serviceConfig;
-        inherit partOf;
-        inherit wantedBy;
+      inherit serviceConfig;
+      inherit partOf;
+      inherit wantedBy;
     };
   in {
     sops.secrets."arr/vpn/env" = {};
@@ -143,6 +148,7 @@ in {
       "d ${cfg.libDir.radarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
       "d ${cfg.libDir.readarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
       "d ${cfg.libDir.sonarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      "d ${cfg.libDir.bazarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
     ];
 
     # runtime
@@ -190,6 +196,7 @@ in {
         "8787:8787/tcp" # readarr
         "8686:8686/tcp" # lidarr
         "5055:5055/tcp" # jellyseerr
+        "6767:6767/tcp" # bazarr
         # "8096:8096/tcp"
       ];
       log-driver = "journald";
@@ -198,6 +205,26 @@ in {
         "--device=/dev/net/tun:/dev/net/tun:rwm"
         "--network-alias=gluetun"
         "--network=arr_default"
+      ];
+    };
+
+    systemd.services."docker-bazarr" = defaultSystemDConfig;
+    virtualisation.oci-containers.containers."bazarr" = {
+      image = "lscr.io/linuxserver/bazarr:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.bazarr}:/app/config:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
       ];
     };
 
