@@ -39,6 +39,43 @@
     arr = {
       enable = true;
       dataDir.base = "/data/arr";
+      libDir.base = "/var/lib";
+      qbittorrent = {
+        enable = true;
+        openFirewall = true;
+      };
+      prowlarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      sonarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      radarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      readarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      lidarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      jellyseerr = {
+        enable = true;
+        openFirewall = true;
+      };
+      bazarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      flaresolverr = {
+        enable = true;
+        openFirewall = true;
+      };
     };
     syncthing = {
       enable = true;

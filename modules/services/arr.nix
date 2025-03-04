@@ -99,6 +99,87 @@ in {
         description = "Group that is used to run arr apps";
       };
     };
+    qbittorrent = {
+      enable = lib.mkEnableOption "Enable qbittorrent service";
+      openFirewall = lib.mkEnableOption "Open firewall for qbittorrent web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8080;
+        description = "Default port for qbittorrent web ui";
+      };
+    };
+    prowlarr = {
+      enable = lib.mkEnableOption "Enable prowlarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for prowlarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 9696;
+        description = "Default port for prowlarr web ui";
+      };
+    };
+    sonarr = {
+      enable = lib.mkEnableOption "Enable sonarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for sonarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8989;
+        description = "Default port for sonarr web ui";
+      };
+    };
+    flaresolverr = {
+      enable = lib.mkEnableOption "Enable radarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for radarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 7878;
+        description = "Default port for radarr web ui";
+      };
+    };
+    radarr = {
+      enable = lib.mkEnableOption "Enable radarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for radarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 7878;
+        description = "Default port for radarr web ui";
+      };
+    };
+    readarr = {
+      enable = lib.mkEnableOption "Enable readarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for readarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8787;
+        description = "Default port for readarr web ui";
+      };
+    };
+    lidarr = {
+      enable = lib.mkEnableOption "Enable lidarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for lidarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8686;
+        description = "Default port for lidarr web ui";
+      };
+    };
+    jellyseerr = {
+      enable = lib.mkEnableOption "Enable jellyseerr service";
+      openFirewall = lib.mkEnableOption "Open firewall for jellyseerr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 5055;
+        description = "Default port for jellyseerr web ui";
+      };
+    };
+    bazarr = {
+      enable = lib.mkEnableOption "Enable bazarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for bazarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 6767;
+        description = "Default port for bazarr web ui";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable (let
@@ -136,20 +217,35 @@ in {
     };
 
     # directories
-    systemd.tmpfiles.rules = [
-      "d ${cfg.dataDir.base} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.dataDir.downloads} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.dataDir.movies} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.dataDir.tvshows} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.jellyseerr} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.prowlarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.qbittorrent} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.radarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.readarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.sonarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
-      "d ${cfg.libDir.bazarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
-    ];
+    systemd.tmpfiles.rules =
+      [
+        "d ${cfg.dataDir.base} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.downloads} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.movies} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.tvshows} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.jellyseerr.enable [
+        "d ${cfg.libDir.jellyseerr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.prowlarr.enable [
+        "d ${cfg.libDir.prowlarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.qbittorrent.enable [
+        "d ${cfg.libDir.qbittorrent} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.radarr.enable [
+        "d ${cfg.libDir.radarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.readarr.enable [
+        "d ${cfg.libDir.readarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.sonarr.enable [
+        "d ${cfg.libDir.sonarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.bazarr.enable [
+        "d ${cfg.libDir.bazarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ];
 
     # runtime
     virtualisation.docker = {
@@ -159,21 +255,6 @@ in {
     virtualisation.oci-containers.backend = "docker";
 
     # containers
-    systemd.services."docker-flaresolverr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."flaresolverr" = {
-      image = "ghcr.io/flaresolverr/flaresolverr:latest";
-      environment = {
-        "LOG_LEVEL" = "info";
-      };
-      dependsOn = [
-        "gluetun"
-      ];
-      log-driver = "journald";
-      extraOptions = [
-        "--network=container:gluetun"
-      ];
-    };
-
     systemd.services."docker-gluetun" = {
       inherit serviceConfig;
       inherit partOf;
@@ -188,17 +269,32 @@ in {
     virtualisation.oci-containers.containers."gluetun" = {
       image = "qmcgaw/gluetun";
       environmentFiles = [config.sops.secrets."arr/vpn/env".path];
-      ports = [
-        "8080:8080/tcp" # qbittorrent
-        "9696:9696/tcp" # prowlarr
-        "8989:8989/tcp" # sonarr
-        "7878:7878/tcp" # radarr
-        "8787:8787/tcp" # readarr
-        "8686:8686/tcp" # lidarr
-        "5055:5055/tcp" # jellyseerr
-        "6767:6767/tcp" # bazarr
-        # "8096:8096/tcp"
-      ];
+      ports =
+        []
+        ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
+          "${builtins.toString cfg.qbittorrent.port}:8080/tcp" # qbittorrent
+        ]
+        ++ lib.lists.optionals cfg.prowlarr.openFirewall [
+          "${builtins.toString cfg.prowlarr.port}:9696/tcp" # prowlarr
+        ]
+        ++ lib.lists.optionals cfg.sonarr.openFirewall [
+          "${builtins.toString cfg.sonarr.port}:8989/tcp" # sonarr
+        ]
+        ++ lib.lists.optionals cfg.radarr.openFirewall [
+          "${builtins.toString cfg.radarr.port}:7878/tcp" # radarr
+        ]
+        ++ lib.lists.optionals cfg.readarr.openFirewall [
+          "${builtins.toString cfg.readarr.port}:8787/tcp" # readarr
+        ]
+        ++ lib.lists.optionals cfg.lidarr.openFirewall [
+          "${builtins.toString cfg.lidarr.port}:8686/tcp" # lidarr
+        ]
+        ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
+          "${builtins.toString cfg.jellyseerr.port}:5055/tcp" # jellyseerr
+        ]
+        ++ lib.lists.optionals cfg.bazarr.openFirewall [
+          "${builtins.toString cfg.bazarr.port}:6767/tcp" # bazarr
+        ];
       log-driver = "journald";
       extraOptions = [
         "--cap-add=NET_ADMIN"
@@ -208,8 +304,23 @@ in {
       ];
     };
 
-    systemd.services."docker-bazarr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."bazarr" = {
+    systemd.services."docker-flaresolverr" = lib.mkIf cfg.flaresolverr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."flaresolverr" = lib.mkIf cfg.flaresolverr.enable {
+      image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      environment = {
+        "LOG_LEVEL" = "info";
+      };
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+
+    systemd.services."docker-bazarr" = lib.mkIf cfg.bazarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."bazarr" = lib.mkIf cfg.bazarr.enable {
       image = "lscr.io/linuxserver/bazarr:latest";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
@@ -228,8 +339,8 @@ in {
       ];
     };
 
-    systemd.services."docker-jellyseerr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."jellyseerr" = {
+    systemd.services."docker-jellyseerr" = lib.mkIf cfg.jellyseerr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."jellyseerr" = lib.mkIf cfg.jellyseerr.enable {
       image = "fallenbagel/jellyseerr:latest";
       environment = {
         "LOG_LEVEL" = "info";
@@ -248,8 +359,8 @@ in {
       ];
     };
 
-    systemd.services."docker-prowlarr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."prowlarr" = {
+    systemd.services."docker-prowlarr" = lib.mkIf cfg.flaresolverr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."prowlarr" = lib.mkIf cfg.flaresolverr.enable {
       image = "lscr.io/linuxserver/prowlarr:latest";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
@@ -269,8 +380,8 @@ in {
       ];
     };
 
-    systemd.services."docker-qbittorrent" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."qbittorrent" = {
+    systemd.services."docker-qbittorrent" = lib.mkIf cfg.qbittorrent.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."qbittorrent" = lib.mkIf cfg.qbittorrent.enable {
       image = "lscr.io/linuxserver/qbittorrent:latest";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
@@ -292,8 +403,8 @@ in {
       ];
     };
 
-    systemd.services."docker-radarr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."radarr" = {
+    systemd.services."docker-radarr" = lib.mkIf cfg.radarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."radarr" = lib.mkIf cfg.radarr.enable {
       image = "lscr.io/linuxserver/radarr:latest";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
@@ -315,8 +426,8 @@ in {
       ];
     };
 
-    systemd.services."docker-readarr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."readarr" = {
+    systemd.services."docker-readarr" = lib.mkIf cfg.readarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."readarr" = lib.mkIf cfg.readarr.enable {
       image = "lscr.io/linuxserver/readarr:develop";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
@@ -337,8 +448,8 @@ in {
       ];
     };
 
-    systemd.services."docker-sonarr" = defaultSystemDConfig;
-    virtualisation.oci-containers.containers."sonarr" = {
+    systemd.services."docker-sonarr" = lib.mkIf cfg.sonarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."sonarr" = lib.mkIf cfg.sonarr.enable {
       image = "lscr.io/linuxserver/sonarr:latest";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
