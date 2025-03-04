@@ -216,6 +216,14 @@ in {
       gid = cfg.user.gid;
     };
 
+    myconf.disk.dataPool.extraDatasets = lib.mkIf config.myconf.services.jellyfin.zfsIntegration.enable {
+      "enc/services/arr" = {
+        type = "zfs_fs";
+        mountpoint = cfg.libDir.base;
+        options.mountpoint = "legacy";
+      };
+    };
+
     # directories
     systemd.tmpfiles.rules =
       [
