@@ -34,6 +34,11 @@ in {
         default = "${cfg.libDir.base}/radarr";
         description = "Directory for radarr runtime config";
       };
+      lidarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/lidarr";
+        description = "Directory for lidarr runtime config";
+      };
       readarr = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/readarr";
@@ -65,6 +70,11 @@ in {
         type = lib.types.path;
         default = "${cfg.dataDir.base}/Movies";
         description = "Directory for movies";
+      };
+      music = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/Music";
+        description = "Directory for music";
       };
       tvshows = lib.mkOption {
         type = lib.types.path;
@@ -226,6 +236,7 @@ in {
         "d ${cfg.dataDir.movies} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.tvshows} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.music} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
       ++ lib.lists.optionals cfg.jellyseerr.enable [
         "d ${cfg.libDir.jellyseerr} 0700 ${cfg.user.user} ${cfg.user.group} -"
@@ -238,6 +249,9 @@ in {
       ]
       ++ lib.lists.optionals cfg.radarr.enable [
         "d ${cfg.libDir.radarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.lidarr.enable [
+        "d ${cfg.libDir.lidarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
       ++ lib.lists.optionals cfg.readarr.enable [
         "d ${cfg.libDir.readarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
@@ -295,10 +309,10 @@ in {
           "${builtins.toString cfg.lidarr.port}:8686/tcp"
         ]
         ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
-          "${builtins.toString cfg.jellyseerr.port}:5055/tcp" 
+          "${builtins.toString cfg.jellyseerr.port}:5055/tcp"
         ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
-          "${builtins.toString cfg.bazarr.port}:6767/tcp" 
+          "${builtins.toString cfg.bazarr.port}:6767/tcp"
         ];
       log-driver = "journald";
       extraOptions = [
@@ -334,6 +348,28 @@ in {
       };
       volumes = [
         "${cfg.libDir.bazarr}:/app/config:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network=container:gluetun"
+      ];
+    };
+
+    systemd.services."docker-lidarr" = lib.mkIf cfg.lidarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."lidarr" = lib.mkIf cfg.lidarr.enable {
+      image = "lscr.io/linuxserver/lidarr:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.lidarr}:/app/config:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
+        "${cfg.dataDir.music}:/Music:rw"
       ];
       dependsOn = [
         "gluetun"

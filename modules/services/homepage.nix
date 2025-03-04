@@ -33,6 +33,10 @@ in {
             style = "row";
             columns = "4";
           };
+          "*arr" = {
+            style = "row";
+            columns = "4";
+          };
           System = {
             style = "row";
             columns = "4";
@@ -58,15 +62,108 @@ in {
           };
         }
       ];
-      services = [
+      services = let
+        serverIp = "192.168.188.117";
+      in [
+        {
+          "*arr" = [
+            {
+              Radarr = {
+                icon = "radarr.png";
+                href = "http://${serverIp}:7878/";
+                statusStyle = "dot";
+                # ping = "192.168.188.117:8096";
+                description = "Movie Manager";
+                widget = {
+                  type = "radarr";
+                  url = "http://localhost:7878";
+                  key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
+                  enableQueue = "true";
+                };
+              };
+            }
+            {
+              Readarr = {
+                icon = "readarr.png";
+                href = "http://${serverIp}:8787/";
+                statusStyle = "dot";
+                # ping = "192.168.188.117:8096";
+                description = "Book Manager";
+                widget = {
+                  type = "readarr";
+                  url = "http://localhost:8787";
+                  key = "{{HOMEPAGE_VAR_READARR_API_KEY}}";
+                };
+              };
+            }
+            {
+              Sonarr = {
+                icon = "sonarr.png";
+                href = "http://${serverIp}:8989/";
+                statusStyle = "dot";
+                # ping = "192.168.188.117:8096";
+                description = "TV Show Manager";
+                widget = {
+                  type = "sonarr";
+                  url = "http://localhost:8989";
+                  key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+                  # enableQueue = "true";
+                };
+              };
+            }
+            {
+              Prowlarr = {
+                icon = "prowlarr.png";
+                href = "http://${serverIp}:9696/";
+                statusStyle = "dot";
+                # ping = "192.168.188.117:8096";
+                description = "Index Manager";
+                widget = {
+                  type = "prowlarr";
+                  url = "http://localhost:9696";
+                  key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
+                };
+              };
+            }
+            {
+              Jellyseerr = {
+                icon = "jellyseerr.png";
+                href = "http://${serverIp}:5055/";
+                statusStyle = "dot";
+                # ping = "192.168.188.117:8096";
+                description = "Media Requests";
+                widget = {
+                  type = "jellyseerr";
+                  url = "http://localhost:5055";
+                  key = "{{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}";
+                };
+              };
+            }
+            {
+              qBittorrent = {
+                icon = "qbittorrent.png";
+                href = "http://${serverIp}:8080/";
+                statusStyle = "dot";
+                # ping = "192.168.188.117:8096";
+                description = "Torrent Download Client";
+                widget = {
+                  type = "qbittorrent";
+                  url = "http://localhost:8080";
+                  username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
+                  password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
+                };
+              };
+            }
+          ];
+        }
         {
           "Media" = [
             {
               Immich = {
                 icon = "immich.png";
-                href = "http://192.168.188.117:2283/";
+                href = "http://${serverIp}:2283/";
                 statusStyle = "dot";
-                ping = "192.168.188.117:2283";
+                ping = "${serverIp}:2283";
                 description = "Photo Library";
                 widget = {
                   type = "immich";
@@ -79,10 +176,10 @@ in {
             {
               Jellyfin = {
                 icon = "jellyfin.png";
-                href = "http://192.168.188.117:8096/";
+                href = "http://${serverIp}:8096/";
                 statusStyle = "dot";
-                ping = "192.168.188.117:8096";
-                description = "Media streaming service";
+                ping = "${serverIp}:8096";
+                description = "Media Streaming";
                 widget = {
                   type = "jellyfin";
                   url = "http://localhost:8096";
@@ -96,10 +193,10 @@ in {
             }
           ];
         }
-        # {
-        #   "System" = [
-        #   ];
-        # }
+        {
+          "System" = [
+          ];
+        }
       ];
       bookmarks = [
         {
