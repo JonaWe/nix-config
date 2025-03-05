@@ -11,5 +11,6 @@
     ./adguardhome.nix
     ./arr.nix
     ./nginx.nix
+    ./gitea.nix
   ];
 }
