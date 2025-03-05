@@ -207,6 +207,51 @@ in {
   in {
     sops.secrets."arr/vpn/env" = {};
 
+    services.nginx.virtualHosts = {
+      "sonarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.sonarr.port}/";
+        };
+      };
+      "readarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.readarr.port}/";
+        };
+      };
+      "prowlarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.prowlarr.port}/";
+        };
+      };
+      "qbittorrent.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.qbittorrent.port}/";
+        };
+      };
+      "jellyseerr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.jellyseerr.port}/";
+        };
+      };
+      "radarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.radarr.port}/";
+        };
+      };
+    };
+
     # users
     users.users.${cfg.user.user} = {
       isNormalUser = true;

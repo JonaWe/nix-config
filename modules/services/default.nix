@@ -10,5 +10,6 @@
     ./homepage.nix
     ./adguardhome.nix
     ./arr.nix
+    ./nginx.nix
   ];
 }

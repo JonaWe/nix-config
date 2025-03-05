@@ -63,14 +63,14 @@ in {
         }
       ];
       services = let
-        serverIp = "192.168.188.117";
+        serverBaseUrl = "home.pinkorca.de";
       in [
         {
           "*arr" = [
             {
               Radarr = {
                 icon = "radarr.png";
-                href = "http://${serverIp}:7878/";
+                href = "https://radarr.${serverBaseUrl}/";
                 statusStyle = "dot";
                 # ping = "192.168.188.117:8096";
                 description = "Movie Manager";
@@ -85,7 +85,7 @@ in {
             {
               Readarr = {
                 icon = "readarr.png";
-                href = "http://${serverIp}:8787/";
+                href = "https://readarr.${serverBaseUrl}/";
                 statusStyle = "dot";
                 # ping = "192.168.188.117:8096";
                 description = "Book Manager";
@@ -99,7 +99,7 @@ in {
             {
               Sonarr = {
                 icon = "sonarr.png";
-                href = "http://${serverIp}:8989/";
+                href = "https://sonarr.${serverBaseUrl}/";
                 statusStyle = "dot";
                 # ping = "192.168.188.117:8096";
                 description = "TV Show Manager";
@@ -114,7 +114,7 @@ in {
             {
               Prowlarr = {
                 icon = "prowlarr.png";
-                href = "http://${serverIp}:9696/";
+                href = "https://prowlarr.${serverBaseUrl}/";
                 statusStyle = "dot";
                 # ping = "192.168.188.117:8096";
                 description = "Index Manager";
@@ -128,7 +128,7 @@ in {
             {
               Jellyseerr = {
                 icon = "jellyseerr.png";
-                href = "http://${serverIp}:5055/";
+                href = "https://jellyseerr.${serverBaseUrl}/";
                 statusStyle = "dot";
                 # ping = "192.168.188.117:8096";
                 description = "Media Requests";
@@ -142,7 +142,7 @@ in {
             {
               qBittorrent = {
                 icon = "qbittorrent.png";
-                href = "http://${serverIp}:8080/";
+                href = "https://qbittorrent.${serverBaseUrl}/";
                 statusStyle = "dot";
                 # ping = "192.168.188.117:8096";
                 description = "Torrent Download Client";
@@ -161,9 +161,9 @@ in {
             {
               Immich = {
                 icon = "immich.png";
-                href = "http://${serverIp}:2283/";
+                href = "https://immich.${serverBaseUrl}/";
                 statusStyle = "dot";
-                ping = "${serverIp}:2283";
+                ping = "${serverBaseUrl}:2283";
                 description = "Photo Library";
                 widget = {
                   type = "immich";
@@ -176,9 +176,9 @@ in {
             {
               Jellyfin = {
                 icon = "jellyfin.png";
-                href = "http://${serverIp}:8096/";
+                href = "https://jellyfin.${serverBaseUrl}/";
                 statusStyle = "dot";
-                ping = "${serverIp}:8096";
+                ping = "${serverBaseUrl}:8096";
                 description = "Media Streaming";
                 widget = {
                   type = "jellyfin";
@@ -240,6 +240,14 @@ in {
           ];
         }
       ];
+    };
+
+    services.nginx.virtualHosts."homepage.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8082/";
+      };
     };
   };
 }

@@ -38,6 +38,14 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.nginx.virtualHosts."jellyfin.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8096/";
+      };
+    };
+
     nixpkgs.config.packageOverrides = pkgs: {
       vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
     };

@@ -30,27 +30,6 @@ in {
       recommendedTlsSettings = true;
 
       virtualHosts = {
-        "immich.home.pinkorca.de" = {
-          useACMEHost = "pinkorca.de";
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://localhost:8096/";
-          };
-        };
-        "jellyfin.home.pinkorca.de" = {
-          useACMEHost = "pinkorca.de";
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://localhost:8096/";
-          };
-        };
-        "homepage.home.pinkorca.de" = {
-          useACMEHost = "pinkorca.de";
-          forceSSL = true;
-          locations."/" = {
-            proxyPass = "http://localhost:8082/";
-          };
-        };
         "_" = {
           useACMEHost = "pinkorca.de";
           addSSL = true;
