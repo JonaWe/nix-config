@@ -185,7 +185,7 @@ in {
                   url = "http://localhost:8096";
                   enableBlocks = true;
                   enableNowPlaying = true;
-                  enableUser = true;
+                  enableUser = false;
                   expandOneStreamToTwoRows = false;
                   key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
                 };

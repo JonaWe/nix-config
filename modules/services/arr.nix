@@ -243,6 +243,20 @@ in {
           proxyPass = "http://localhost:${builtins.toString cfg.jellyseerr.port}/";
         };
       };
+      "bazarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.bazarr.port}/";
+        };
+      };
+      "lidarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.lidarr.port}/";
+        };
+      };
       "radarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
@@ -334,7 +348,7 @@ in {
         FIREWALL_OUTBOUND_SUBNETS = "192.168.188.0/24";
       };
       ports =
-        ["8096"]
+        []
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
           "${builtins.toString cfg.qbittorrent.port}:8080/tcp"
         ]

@@ -56,7 +56,7 @@
     };
     immich = {
       enable = true;
-      openFirewall = true;
+      # openFirewall = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
@@ -76,7 +76,7 @@
     };
     homepage = {
       enable = true;
-      openFirewall = true;
+      # openFirewall = true;
     };
     home-assistant = {
       enable = false;
@@ -86,7 +86,7 @@
     };
     jellyfin = {
       enable = true;
-      openFirewall = true;
+      # openFirewall = true;
       user = "arr";
       group = "arr";
       zfsIntegration.enable = true;
