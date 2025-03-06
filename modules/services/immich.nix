@@ -70,12 +70,12 @@ in {
       };
     };
 
-    # services.nginx.virtualHosts."photos.home.pinkorca.de" = {
-    #   useACMEHost = "pinkorca.de";
-    #   forceSSL = true;
-    #   locations."/" = {
-    #     proxyPass = "${toString config.services.immich.host}:${toString config.services.immich.port}/";
-    #   };
-    # };
+    services.nginx.virtualHosts."immich.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://${toString config.services.immich.host}:${toString config.services.immich.port}/";
+      };
+    };
   };
 }

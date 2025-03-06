@@ -12,10 +12,10 @@
     ../../modules/docker.nix
     ../../modules/fonts.nix
     ../../modules/sops.nix
-    ../../modules/ddclient.nix
-    ../../modules/gitea.nix
-    ../../modules/radicale.nix
-    ../../modules/nginx.nix
+    # ../../modules/ddclient.nix
+    # ../../modules/gitea.nix
+    # ../../modules/radicale.nix
+    # ../../modules/nginx.nix
     # ../../modules/wireguard-server.nix
   ];
   # Bootloader.
@@ -42,12 +42,6 @@
   };
 
   myconf.services = {
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-      zfsIntegration.enable = true;
-      zfsIntegration.enableBackups = true;
-    };
     teamspeak = {
       enable = true;
       openFirewall = true;
@@ -60,9 +54,14 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    gitea = {
+      enable = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
     immich = {
       enable = true;
-      openFirewall = true;
+      # openFirewall = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
@@ -82,7 +81,7 @@
     };
     homepage = {
       enable = true;
-      openFirewall = true;
+      # openFirewall = true;
     };
     home-assistant = {
       enable = false;
@@ -90,7 +89,58 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    arr.enable = true;
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+      user = "arr";
+      group = "arr";
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
+    nginx = {
+      enable = true;
+      openFirewall = true;
+    };
+    arr = {
+      enable = true;
+      dataDir.base = "/data/media/jellyfin";
+      libDir.base = "/data/media/arr-services";
+      qbittorrent = {
+        enable = true;
+        openFirewall = true;
+      };
+      prowlarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      sonarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      radarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      readarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      lidarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      jellyseerr = {
+        enable = true;
+        openFirewall = true;
+      };
+      bazarr = {
+        enable = true;
+        openFirewall = true;
+      };
+      flaresolverr = {
+        enable = true;
+      };
+    };
   };
 
   networking.hostName = "ant";
@@ -98,8 +148,8 @@
   networking.firewall = {
     enable = true;
     allowPing = true;
-    allowedTCPPorts = [3001 5200 ];
-    allowedUDPPorts = [ 5201 ];
+    allowedTCPPorts = [3001 5200];
+    allowedUDPPorts = [5201];
   };
 
   system.stateVersion = "24.11";
