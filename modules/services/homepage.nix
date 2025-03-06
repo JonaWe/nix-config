@@ -157,7 +157,7 @@ in {
           ];
         }
         {
-          "Media" = [
+          "Services" = [
             {
               Immich = {
                 icon = "immich.png";
@@ -188,6 +188,20 @@ in {
                   enableUser = false;
                   expandOneStreamToTwoRows = false;
                   key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
+                };
+              };
+            }
+            {
+              Gitea = {
+                icon = "gitea.png";
+                href = "https://gitea.${serverBaseUrl}/";
+                statusStyle = "dot";
+                ping = "${serverBaseUrl}:3002";
+                description = "Git Server";
+                widget = {
+                  type = "gitea";
+                  url = "http://localhost:3002";
+                  key = "{{HOMEPAGE_VAR_GITEA_API_KEY}}";
                 };
               };
             }

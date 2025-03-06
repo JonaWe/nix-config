@@ -56,6 +56,8 @@
     };
     gitea = {
       enable = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
     };
     immich = {
       enable = true;
