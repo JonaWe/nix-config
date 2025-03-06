@@ -348,7 +348,7 @@ in {
         FIREWALL_OUTBOUND_SUBNETS = "192.168.188.0/24";
       };
       ports =
-        []
+        ["8096"]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
           "${builtins.toString cfg.qbittorrent.port}:8080/tcp"
         ]

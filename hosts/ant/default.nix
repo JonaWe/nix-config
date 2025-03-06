@@ -89,7 +89,7 @@
     };
     jellyfin = {
       enable = true;
-      # openFirewall = true;
+      openFirewall = true;
       user = "arr";
       group = "arr";
       zfsIntegration.enable = true;
