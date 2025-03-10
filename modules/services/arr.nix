@@ -357,28 +357,28 @@ in {
       ports =
         ["8096"]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
-          "${builtins.toString cfg.qbittorrent.port}:8080/tcp"
+          "127.0.0.1:${builtins.toString cfg.qbittorrent.port}:8080/tcp"
         ]
         ++ lib.lists.optionals cfg.prowlarr.openFirewall [
-          "${builtins.toString cfg.prowlarr.port}:9696/tcp"
+          "127.0.0.1:${builtins.toString cfg.prowlarr.port}:9696/tcp"
         ]
         ++ lib.lists.optionals cfg.sonarr.openFirewall [
-          "${builtins.toString cfg.sonarr.port}:8989/tcp"
+          "127.0.0.1:${builtins.toString cfg.sonarr.port}:8989/tcp"
         ]
         ++ lib.lists.optionals cfg.radarr.openFirewall [
-          "${builtins.toString cfg.radarr.port}:7878/tcp"
+          "127.0.0.1:${builtins.toString cfg.radarr.port}:7878/tcp"
         ]
         ++ lib.lists.optionals cfg.readarr.openFirewall [
-          "${builtins.toString cfg.readarr.port}:8787/tcp"
+          "127.0.0.1:${builtins.toString cfg.readarr.port}:8787/tcp"
         ]
         ++ lib.lists.optionals cfg.lidarr.openFirewall [
-          "${builtins.toString cfg.lidarr.port}:8686/tcp"
+          "127.0.0.1:${builtins.toString cfg.lidarr.port}:8686/tcp"
         ]
         ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
-          "${builtins.toString cfg.jellyseerr.port}:5055/tcp"
+          "127.0.0.1:${builtins.toString cfg.jellyseerr.port}:5055/tcp"
         ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
-          "${builtins.toString cfg.bazarr.port}:6767/tcp"
+          "127.0.0.1:${builtins.toString cfg.bazarr.port}:6767/tcp"
         ];
       log-driver = "journald";
       extraOptions = [

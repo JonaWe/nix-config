@@ -29,7 +29,7 @@ in {
         title = "Homelab Status";
         useEqualHeights = true;
         layout = {
-          Media = {
+          "Services" = {
             style = "row";
             columns = "4";
           };
@@ -37,7 +37,7 @@ in {
             style = "row";
             columns = "4";
           };
-          System = {
+          "System" = {
             style = "row";
             columns = "4";
           };
@@ -57,14 +57,79 @@ in {
             label = "System";
             cpu = true;
             cputemp = true;
+            uptime = true;
             units = "metric";
             memory = true;
+            network = true;
+          };
+        }
+        {
+          resources = {
+            label = "Jellyfin";
+            disk = "/data/media/jellyfin";
+          };
+        }
+        {
+          resources = {
+            label = "Immich";
+            disk = "/data/media/immich";
           };
         }
       ];
       services = let
         serverBaseUrl = "home.pinkorca.de";
       in [
+        {
+          "Services" = [
+            {
+              Immich = {
+                icon = "immich.png";
+                href = "https://immich.${serverBaseUrl}/";
+                statusStyle = "dot";
+                ping = "${serverBaseUrl}:2283";
+                description = "Photo Library";
+                widget = {
+                  type = "immich";
+                  url = "http://localhost:2283";
+                  key = "{{HOMEPAGE_VAR_IMMICH_API_KEY}}";
+                  version = "2";
+                };
+              };
+            }
+            {
+              Jellyfin = {
+                icon = "jellyfin.png";
+                href = "https://jellyfin.${serverBaseUrl}/";
+                statusStyle = "dot";
+                ping = "${serverBaseUrl}:8096";
+                description = "Media Streaming";
+                widget = {
+                  type = "jellyfin";
+                  url = "http://localhost:8096";
+                  enableBlocks = true;
+                  enableNowPlaying = true;
+                  enableUser = false;
+                  expandOneStreamToTwoRows = false;
+                  key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
+                };
+              };
+            }
+            {
+              Gitea = {
+                icon = "gitea.png";
+                href = "https://gitea.${serverBaseUrl}/";
+                statusStyle = "dot";
+                ping = "${serverBaseUrl}:3002";
+                description = "Git Server";
+                widget = {
+                  type = "gitea";
+                  url = "http://localhost:3002";
+                  key = "{{HOMEPAGE_VAR_GITEA_API_KEY}}";
+                };
+              };
+            }
+          ];
+        }
         {
           "*arr" = [
             {
@@ -151,57 +216,6 @@ in {
                   url = "http://localhost:8080";
                   username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
                   password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
-                };
-              };
-            }
-          ];
-        }
-        {
-          "Services" = [
-            {
-              Immich = {
-                icon = "immich.png";
-                href = "https://immich.${serverBaseUrl}/";
-                statusStyle = "dot";
-                ping = "${serverBaseUrl}:2283";
-                description = "Photo Library";
-                widget = {
-                  type = "immich";
-                  url = "http://localhost:2283";
-                  key = "{{HOMEPAGE_VAR_IMMICH_API_KEY}}";
-                  version = "2";
-                };
-              };
-            }
-            {
-              Jellyfin = {
-                icon = "jellyfin.png";
-                href = "https://jellyfin.${serverBaseUrl}/";
-                statusStyle = "dot";
-                ping = "${serverBaseUrl}:8096";
-                description = "Media Streaming";
-                widget = {
-                  type = "jellyfin";
-                  url = "http://localhost:8096";
-                  enableBlocks = true;
-                  enableNowPlaying = true;
-                  enableUser = false;
-                  expandOneStreamToTwoRows = false;
-                  key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
-                };
-              };
-            }
-            {
-              Gitea = {
-                icon = "gitea.png";
-                href = "https://gitea.${serverBaseUrl}/";
-                statusStyle = "dot";
-                ping = "${serverBaseUrl}:3002";
-                description = "Git Server";
-                widget = {
-                  type = "gitea";
-                  url = "http://localhost:3002";
-                  key = "{{HOMEPAGE_VAR_GITEA_API_KEY}}";
                 };
               };
             }
