@@ -236,6 +236,13 @@ in {
           proxyPass = "http://localhost:${builtins.toString cfg.qbittorrent.port}/";
         };
       };
+      "jellyseerr.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.jellyseerr.port}/";
+        };
+      };
       "jellyseerr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
