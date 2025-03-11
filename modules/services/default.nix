@@ -12,5 +12,6 @@
     ./arr.nix
     ./nginx.nix
     ./gitea.nix
+    ./tandoor-recipes.nix
   ];
 }

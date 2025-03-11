@@ -101,6 +101,9 @@
       enable = true;
       openFirewall = true;
     };
+    tandoor-recipes = {
+      enable = true;
+    };
     arr = {
       enable = true;
       dataDir.base = "/data/media/jellyfin";
