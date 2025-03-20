@@ -106,6 +106,9 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    llm = {
+        enable = true;
+    };
     arr = {
       enable = true;
       dataDir.base = "/data/media/jellyfin";

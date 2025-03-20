@@ -1,0 +1,49 @@
+{
+  config,
+  lib,
+  pkgs-unstable,
+  ...
+}: let
+  cfg = config.myconf.services.llm;
+in {
+  options.myconf.services.llm = {
+    enable = lib.mkEnableOption "Enable llm service";
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Opens ports for llm";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    services.ollama = {
+      enable = true;
+      package = pkgs-unstable.ollama;
+      loadModels = ["llama3.2:3b" "gemma3:4b" "gemma3:12b" "llama3.2-vision:11b" "deepseek-r1:7b" "deepseek-r1:8b" "phi4:14b" "nomic-embed-text" "dolphin3:8b"];
+
+      # acceleration = "cuda";
+    };
+
+    services.open-webui = {
+      enable = true;
+      # package = pkgs-unstable.open-webui;
+      port = 8085;
+    };
+
+    services.nginx.virtualHosts."llm.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8085/";
+      };
+    };
+
+    services.nginx.virtualHosts."llm.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8085/";
+      };
+    };
+  };
+}
