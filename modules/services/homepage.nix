@@ -25,8 +25,7 @@ in {
       environmentFile = config.sops.secrets."homepage/environment".path;
       openFirewall = cfg.openFirewall;
       settings = {
-        # base = "https://example.com";
-        title = "Homelab Status";
+        title = "Homelab Statuspage";
         useEqualHeights = true;
         layout = {
           "Services" = {
@@ -34,6 +33,10 @@ in {
             columns = "4";
           };
           "*arr" = {
+            style = "row";
+            columns = "4";
+          };
+          "Network" = {
             style = "row";
             columns = "4";
           };
@@ -143,7 +146,22 @@ in {
               };
             }
             {
-              stirling-pdf = {
+              Paperless = {
+                icon = "paperless-ngx.svg";
+                href = "https://paperless.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.paperless.port}";
+                description = "Digital Document Mananger";
+                widget = {
+                  type = "paperlessngx";
+                  url = "http://localhost:${toString config.myconf.services.paperless.port}";
+                  username = "admin";
+                  password = "admin";
+                };
+              };
+            }
+            {
+              "Stirling Pdf" = {
                 icon = "stirling-pdf.svg";
                 href = "https://pdf.${serverBaseUrl}/";
                 statusStyle = "dot";
@@ -152,7 +170,7 @@ in {
               };
             }
             {
-              open-webui = {
+              "Open WebUI" = {
                 icon = "open-webui.svg";
                 href = "https://llm.${serverBaseUrl}/";
                 statusStyle = "dot";
@@ -254,9 +272,9 @@ in {
           ];
         }
         {
-          "System" = [
+          "Network" = [
             {
-              opnsense = {
+              "OPNSense" = {
                 icon = "opnsense.png";
                 href = "https://10.1.1.1/";
                 statusStyle = "dot";
@@ -271,6 +289,10 @@ in {
                 };
               };
             }
+          ];
+        }
+        {
+          "System" = [
           ];
         }
       ];

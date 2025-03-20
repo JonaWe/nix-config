@@ -112,11 +112,18 @@
     llm = {
         enable = true;
     };
+    paperless = {
+        enable = true;
+    };
     arr = {
       enable = true;
       dataDir.base = "/data/media/jellyfin";
       libDir.base = "/data/media/arr-services";
       qbittorrent = {
+        enable = true;
+        openFirewall = true;
+      };
+      recommendarr = {
         enable = true;
         openFirewall = true;
       };

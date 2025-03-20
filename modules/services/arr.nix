@@ -14,6 +14,11 @@ in {
         example = "/data/media/arr";
         description = "Base directory where service config is stored";
       };
+      recommendarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/recommendarr";
+        description = "Directory for recommendarr runtime config";
+      };
       jellyseerr = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/jellyseerr";
@@ -107,6 +112,15 @@ in {
         type = lib.types.str;
         default = "arr";
         description = "Group that is used to run arr apps";
+      };
+    };
+    recommendarr = {
+      enable = lib.mkEnableOption "Enable recommendarr service";
+      openFirewall = lib.mkEnableOption "Open firewall for recommendarr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8765;
+        description = "Default port for recommendarr web ui";
       };
     };
     qbittorrent = {
@@ -208,6 +222,13 @@ in {
     sops.secrets."arr/vpn/env" = {};
 
     services.nginx.virtualHosts = {
+      "recommendarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.recommendarr.port}/";
+        };
+      };
       "sonarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
@@ -304,6 +325,9 @@ in {
         "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.music} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
+      ++ lib.lists.optionals cfg.recommendarr.enable [
+        "d ${cfg.libDir.recommendarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
       ++ lib.lists.optionals cfg.jellyseerr.enable [
         "d ${cfg.libDir.jellyseerr} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
@@ -352,10 +376,13 @@ in {
       image = "qmcgaw/gluetun";
       environmentFiles = [config.sops.secrets."arr/vpn/env".path];
       environment = {
-        FIREWALL_OUTBOUND_SUBNETS = "192.168.188.0/24";
+        FIREWALL_OUTBOUND_SUBNETS = "10.1.1.0/24";
       };
       ports =
-        ["8096"]
+        ["8096" "11434"]
+        ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
+          "127.0.0.1:${builtins.toString cfg.recommendarr.port}:8765/tcp"
+        ]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
           "127.0.0.1:${builtins.toString cfg.qbittorrent.port}:8080/tcp"
         ]
@@ -382,6 +409,7 @@ in {
         ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--cap-add=NET_ADMIN"
         "--device=/dev/net/tun:/dev/net/tun:rwm"
         "--network-alias=gluetun"
@@ -400,6 +428,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -420,6 +449,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -442,6 +472,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -462,6 +493,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -483,6 +515,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -506,6 +539,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -529,6 +563,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -551,6 +586,7 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
@@ -574,6 +610,48 @@ in {
       ];
       log-driver = "journald";
       extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
+    # Builds
+    systemd.services."docker-build-recommendarr" = {
+      path = [pkgs.docker pkgs.git];
+      serviceConfig = {
+        Type = "oneshot";
+        TimeoutSec = 300;
+      };
+      script = ''
+        cd /tmp/docker-recommendarr-build
+        docker build -t tannermiddleton/recommendarr:latest --build-arg BASE_URL=https://recommendarr.home.pinkorca.de .
+      '';
+    };
+
+    systemd.services."docker-recommendarr" = lib.mkIf cfg.recommendarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."recommendarr" = lib.mkIf cfg.recommendarr.enable {
+      image = "tannermiddleton/recommendarr:latest";
+      environment = {
+        "DOCKER_ENV" = "true";
+        "FORCE_SECURE_COOKIES" = "true";
+        "NODE_ENV" = "production";
+        "PORT" = "8765";
+        "PUBLIC_URL" = "https://recommendarr.home.pinkorca.de";
+
+        # "PGID" = builtins.toString cfg.user.gid;
+        # "PUID" = builtins.toString cfg.user.uid;
+        # "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "${cfg.libDir.recommendarr}:/app/server/data:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
         "--network=container:gluetun"
       ];
     };
