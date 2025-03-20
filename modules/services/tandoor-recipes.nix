@@ -13,61 +13,16 @@ in {
       default = false;
       description = "Opens ports for tandoor-recipes";
     };
-    # baseDirectory = lib.mkOption {
-    #   type = lib.types.str;
-    #   default = "/data/media/gitea";
-    #   description = "Directory used for gitea data";
-    # };
-    # repoDirectory = lib.mkOption {
-    #   type = lib.types.str;
-    #   default = "${cfg.baseDirectory}/repo";
-    #   description = "Directory used for gitea repo data";
-    # };
-    # zfsIntegration.enable = lib.mkEnableOption "Enable zfs integration that creates datasets etc.";
-    # zfsIntegration.enableBackups = lib.mkEnableOption "Enables zfs backups for the created datasets";
+    backupDirectory = lib.mkOption {
+      type = lib.types.str;
+      default = "/data/postgresql/backups";
+      description = "Directory used for sql dump backups";
+    };
+    zfsIntegration.enable = lib.mkEnableOption "Enable zfs integration that creates datasets etc.";
+    zfsIntegration.enableBackups = lib.mkEnableOption "Enables zfs backups for the created datasets";
   };
 
   config = lib.mkIf cfg.enable {
-    # services.postgresql = {
-    #   enable = true;
-    #   ensureUsers = [
-    #     {
-    #       name = "tandoor_recipes";
-    #       ensureDBOwnership = true;
-    #     }
-    #   ];
-    #   ensureDatabases = [
-    #     "tandoor_recipes"
-    #   ];
-    # };
-    # services.tandoor-recipes = {
-    #   enable = true;
-    #   port = 9203;
-    #   package = pkgs-unstable.tandoor-recipes;
-    #   extraConfig = let
-    #     tandoorRecipesDomain = "recipes.home.pinkorca.de";
-    #   in {
-    #     # DB_ENGINE = "django.db.backends.postgresql";
-    #     # POSTGRES_DB = "tandoor_recipes";
-    #     # Use PostgreSQL
-    #     # DB_ENGINE = "django.db.backends.postgresql";
-    #     # POSTGRES_HOST = "/run/postgresql";
-    #     # POSTGRES_USER = "tandoor_recipes";
-    #     # POSTGRES_DB = "tandoor_recipes";
-    #     ENABLE_SIGNUP= "1";
-    #
-    #     # GUNICORN_MEDIA = "0";
-    #     # MEDIA_URL="/data/media/"
-    #
-    #     # Security settings
-    #     # ALLOWED_HOSTS = tandoorRecipesDomain;
-    #     # CSRF_TRUSTED_ORIGINS = "https://${tandoorRecipesDomain}";
-    #     #
-    #     # # Misc
-    #     # TIMEZONE = "Europe/Berlin";
-    #   };
-    # };
-
     services.tandoor-recipes = {
       enable = true;
       package = pkgs-unstable.tandoor-recipes;
@@ -81,10 +36,11 @@ in {
         POSTGRES_USER = "tandoor_recipes";
         POSTGRES_DB = "tandoor_recipes";
 
-        ENABLE_SIGNUP= "1";
+        ENABLE_METRICS = "1";
+        ENABLE_SIGNUP = "1";
 
         # Security settings
-        ALLOWED_HOSTS = tandoorRecipesDomain;
+        ALLOWED_HOSTS = "${tandoorRecipesDomain},localhost";
         CSRF_TRUSTED_ORIGINS = "https://${tandoorRecipesDomain}";
 
         # Misc
@@ -92,13 +48,15 @@ in {
       };
     };
 
+    sops.secrets."tandoor/environment" = {};
+
     systemd.services = {
       tandoor-recipes = {
         after = ["postgresql.service"];
         requires = ["postgresql.service"];
 
         serviceConfig = {
-          # EnvironmentFile = cfg.secretKeyFile;
+          EnvironmentFile = config.sops.secrets."tandoor/environment".path;
           DynamicUser = lib.mkForce false;
         };
       };
@@ -115,6 +73,12 @@ in {
         }
       ];
     };
+    services.postgresqlBackup = {
+        enable = true;
+        databases = ["tandoor_recipes"];
+        startAt = "*-*-* *:55:00";
+        location = cfg.backupDirectory;
+    };
 
     systemd.services.nginx.serviceConfig.SupplimentaryGroups = ["tandoor_recipes"];
 
@@ -124,15 +88,9 @@ in {
     };
     users.groups.tandoor_recipes = {};
 
-    ### Ingress
     services.nginx.virtualHosts."recipes.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
-      # locations."/media/".alias = "/var/lib/tandoor-recipes/"; # needed to show images
-      # locations."^~ /" = {
-      #   proxyPass = "http://127.0.0.1:9203";
-      #   # extraConfig = "resolver 10.88.0.1;";
-      # };
       kTLS = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:9203";
@@ -143,14 +101,23 @@ in {
       };
     };
 
-    # services.mealie.port = 9202;
-    # services.mealie.enable = true;
-    # services.nginx.virtualHosts."mealie.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-    #   useACMEHost = "pinkorca.de";
-    #   forceSSL = true;
-    #   locations."/" = {
-    #     proxyPass = "http://localhost:9202/";
-    #   };
-    # };
+
+    myconf.disk.dataPool.extraDatasets = lib.mkIf cfg.zfsIntegration.enable {
+      "enc/services/postgresqlBackups" = {
+        type = "zfs_fs";
+        mountpoint = cfg.backupDirectory;
+        options.mountpoint = "legacy";
+      };
+    };
+
+    systemd.tmpfiles.rules = [
+      "d ${cfg.backupDirectory} 0700 postgres postgres -"
+    ];
+
+    services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
+      datasets = {
+        "zdata/enc/services/postgresqlBackups".useTemplate = ["default"];
+      };
+    };
   };
 }

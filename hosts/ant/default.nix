@@ -103,6 +103,8 @@
     };
     tandoor-recipes = {
       enable = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
     };
     arr = {
       enable = true;
