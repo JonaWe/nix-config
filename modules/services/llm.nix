@@ -13,6 +13,12 @@ in {
       default = false;
       description = "Opens ports for llm";
     };
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 8085;
+      example = 8085;
+      description = "Port that is used for open webui";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -27,14 +33,14 @@ in {
     services.open-webui = {
       enable = true;
       # package = pkgs-unstable.open-webui;
-      port = 8085;
+      port = cfg.port;
     };
 
     services.nginx.virtualHosts."llm.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:8085/";
+        proxyPass = "http://localhost:${toString cfg.port}/";
       };
     };
 
@@ -42,7 +48,7 @@ in {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:8085/";
+        proxyPass = "http://localhost:${toString cfg.port}/";
       };
     };
   };

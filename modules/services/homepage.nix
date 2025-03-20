@@ -142,6 +142,24 @@ in {
                 };
               };
             }
+            {
+              stirling-pdf = {
+                icon = "stirling-pdf.svg";
+                href = "https://pdf.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.stirling-pdf.port}";
+                description = "PDF Multitool";
+              };
+            }
+            {
+              open-webui = {
+                icon = "open-webui.svg";
+                href = "https://llm.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.llm.port}";
+                description = "AI Chatbot";
+              };
+            }
           ];
         }
         {
@@ -237,6 +255,22 @@ in {
         }
         {
           "System" = [
+            {
+              opnsense = {
+                icon = "opnsense.png";
+                href = "https://10.1.1.1/";
+                statusStyle = "dot";
+                siteMonitor = "https://10.1.1.1";
+                description = "Router";
+                widget = {
+                  type = "opnsense";
+                  url = "https://10.1.1.1";
+                  username = "{{HOMEPAGE_VAR_OPNSENSE_USERNAME}}";
+                  password = "{{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}";
+                  key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+                };
+              };
+            }
           ];
         }
       ];
