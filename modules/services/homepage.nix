@@ -86,7 +86,7 @@ in {
                 icon = "immich.png";
                 href = "https://immich.${serverBaseUrl}/";
                 statusStyle = "dot";
-                ping = "${serverBaseUrl}:2283";
+                siteMonitor = "http://localhost:2283";
                 description = "Photo Library";
                 widget = {
                   type = "immich";
@@ -101,7 +101,7 @@ in {
                 icon = "jellyfin.png";
                 href = "https://jellyfin.${serverBaseUrl}/";
                 statusStyle = "dot";
-                ping = "${serverBaseUrl}:8096";
+                siteMonitor = "http://localhost:8096/health";
                 description = "Media Streaming";
                 widget = {
                   type = "jellyfin";
@@ -119,12 +119,26 @@ in {
                 icon = "gitea.png";
                 href = "https://gitea.${serverBaseUrl}/";
                 statusStyle = "dot";
-                ping = "${serverBaseUrl}:3002";
+                siteMonitor = "http://localhost:3002";
                 description = "Git Server";
                 widget = {
                   type = "gitea";
                   url = "http://localhost:3002";
                   key = "{{HOMEPAGE_VAR_GITEA_API_KEY}}";
+                };
+              };
+            }
+            {
+              Tandoor = {
+                icon = "tandoor-recipes.png";
+                href = "https://recipes.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:9203";
+                description = "Recipe Manager";
+                widget = {
+                  type = "tandoor";
+                  url = "http://localhost:9203";
+                  key = "{{HOMEPAGE_VAR_TANDOOR_API_KEY}}";
                 };
               };
             }
@@ -137,7 +151,7 @@ in {
                 icon = "radarr.png";
                 href = "https://radarr.${serverBaseUrl}/";
                 statusStyle = "dot";
-                # ping = "192.168.188.117:8096";
+                siteMonitor = "http://localhost:7878";
                 description = "Movie Manager";
                 widget = {
                   type = "radarr";
@@ -152,7 +166,7 @@ in {
                 icon = "readarr.png";
                 href = "https://readarr.${serverBaseUrl}/";
                 statusStyle = "dot";
-                # ping = "192.168.188.117:8096";
+                siteMonitor = "http://localhost:8787";
                 description = "Book Manager";
                 widget = {
                   type = "readarr";
@@ -166,7 +180,7 @@ in {
                 icon = "sonarr.png";
                 href = "https://sonarr.${serverBaseUrl}/";
                 statusStyle = "dot";
-                # ping = "192.168.188.117:8096";
+                siteMonitor = "http://localhost:8989";
                 description = "TV Show Manager";
                 widget = {
                   type = "sonarr";
@@ -181,7 +195,7 @@ in {
                 icon = "prowlarr.png";
                 href = "https://prowlarr.${serverBaseUrl}/";
                 statusStyle = "dot";
-                # ping = "192.168.188.117:8096";
+                siteMonitor = "http://localhost:9696";
                 description = "Index Manager";
                 widget = {
                   type = "prowlarr";
@@ -195,7 +209,7 @@ in {
                 icon = "jellyseerr.png";
                 href = "https://jellyseerr.${serverBaseUrl}/";
                 statusStyle = "dot";
-                # ping = "192.168.188.117:8096";
+                siteMonitor = "http://localhost:5055";
                 description = "Media Requests";
                 widget = {
                   type = "jellyseerr";
@@ -209,7 +223,7 @@ in {
                 icon = "qbittorrent.png";
                 href = "https://qbittorrent.${serverBaseUrl}/";
                 statusStyle = "dot";
-                # ping = "192.168.188.117:8096";
+                siteMonitor = "http://localhost:8080";
                 description = "Torrent Download Client";
                 widget = {
                   type = "qbittorrent";
