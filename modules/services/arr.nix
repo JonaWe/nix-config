@@ -91,6 +91,11 @@ in {
         default = "${cfg.dataDir.base}/Books";
         description = "Directory for books";
       };
+      audiobooks = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/Audiobooks";
+        description = "Directory for audiobooks";
+      };
     };
     user = {
       user = lib.mkOption {
@@ -222,6 +227,14 @@ in {
     sops.secrets."arr/vpn/env" = {};
 
     services.nginx.virtualHosts = {
+      "audiobookshelf.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:8654/";
+          proxyWebsockets = true;
+        };
+      };
       "recommendarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
@@ -323,6 +336,7 @@ in {
         "d ${cfg.dataDir.movies} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.tvshows} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.audiobooks} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.music} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
       ++ lib.lists.optionals cfg.recommendarr.enable [
@@ -352,6 +366,13 @@ in {
       ++ lib.lists.optionals cfg.bazarr.enable [
         "d ${cfg.libDir.bazarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ];
+
+    services.audiobookshelf = {
+      enable = true;
+      port = 8654;
+      user = "arr";
+      group = "arr";
+    };
 
     # runtime
     virtualisation.docker = {
@@ -579,6 +600,7 @@ in {
       volumes = [
         "${cfg.libDir.readarr}:/config:rw"
         "${cfg.dataDir.books}:/Books:rw"
+        "${cfg.dataDir.audiobooks}:/Audiobooks:rw"
         "${cfg.dataDir.downloads}:/downloads:rw"
       ];
       dependsOn = [

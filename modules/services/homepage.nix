@@ -255,6 +255,15 @@ in {
               };
             }
             {
+              Recommendarr = {
+                icon = "jellyseerr.png";
+                href = "https://recommendarr.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:8765";
+                description = "Media Reccomendations";
+              };
+            }
+            {
               qBittorrent = {
                 icon = "qbittorrent.png";
                 href = "https://qbittorrent.${serverBaseUrl}/";
