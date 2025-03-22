@@ -187,6 +187,15 @@ in {
                 description = "Household Management";
               };
             }
+            {
+              "Wallos" = {
+                icon = "wallos.svg";
+                href = "https://wallos.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.wallos.port}";
+                description = "Subscription Management";
+              };
+            }
           ];
         }
         {
@@ -265,7 +274,7 @@ in {
             }
             {
               Recommendarr = {
-                icon = "jellyseerr.png";
+                icon = "recommendarr.png";
                 href = "https://recommendarr.${serverBaseUrl}/";
                 statusStyle = "dot";
                 siteMonitor = "http://localhost:8765";

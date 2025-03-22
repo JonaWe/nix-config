@@ -79,6 +79,9 @@
       enable = true;
       openFirewall = true;
     };
+    wallos = {
+      enable = true;
+    };
     grocy = {
       enable = true;
     };

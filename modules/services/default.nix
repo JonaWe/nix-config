@@ -17,5 +17,6 @@
     ./stirling-pdf.nix
     ./paperless.nix
     ./grocy.nix
+    ./wallos.nix
   ];
 }
