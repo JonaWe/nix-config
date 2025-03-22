@@ -178,6 +178,15 @@ in {
                 description = "AI Chatbot";
               };
             }
+            {
+              "Grocy" = {
+                icon = "grocy.svg";
+                href = "https://grocy.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.grocy.port}";
+                description = "Household Management";
+              };
+            }
           ];
         }
         {

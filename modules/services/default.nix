@@ -16,5 +16,6 @@
     ./llm.nix
     ./stirling-pdf.nix
     ./paperless.nix
+    ./grocy.nix
   ];
 }

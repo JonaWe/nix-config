@@ -79,6 +79,9 @@
       enable = true;
       openFirewall = true;
     };
+    grocy = {
+      enable = true;
+    };
     homepage = {
       enable = true;
       # openFirewall = true;
