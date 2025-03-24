@@ -18,5 +18,6 @@
     ./paperless.nix
     ./grocy.nix
     ./wallos.nix
+    ./actual.nix
   ];
 }

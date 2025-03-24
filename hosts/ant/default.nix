@@ -79,6 +79,9 @@
       enable = true;
       openFirewall = true;
     };
+    actual = {
+      enable = true;
+    };
     wallos = {
       enable = true;
     };
