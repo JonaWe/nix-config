@@ -93,6 +93,13 @@ in {
       };
     };
 
+    services.nginx.virtualHosts."gitea.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:3002/";
+      };
+    };
     services.nginx.virtualHosts."gitea.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;

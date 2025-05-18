@@ -32,12 +32,12 @@ in {
     services.immich = {
       enable = true;
       openFirewall = cfg.openFirewall;
-      host = "0.0.0.0";
+      host = "127.0.0.1";
       port = 2283;
       mediaLocation = cfg.mediaDirectory;
       user = "immich";
       group = "immich";
-      # settings.server.externalDomain = "https://photos.home.pinkorca.de";
+      # settings.server.externalDomain = "https://immich.home.pinkorca.de";
       # environment = {
       #   IMMICH_ENV = "production";
       #   IMMICH_LOG_LEVEL = "log";
@@ -73,8 +73,15 @@ in {
     services.nginx.virtualHosts."immich.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
+      extraConfig = ''
+        proxy_read_timeout 600s;
+        proxy_send_timeout 600s;
+        send_timeout       600s;
+        client_max_body_size 50000M;
+      '';
       locations."/" = {
         proxyPass = "http://${toString config.services.immich.host}:${toString config.services.immich.port}/";
+        proxyWebsockets = true;
       };
     };
   };

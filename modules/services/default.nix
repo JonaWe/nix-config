@@ -12,5 +12,12 @@
     ./arr.nix
     ./nginx.nix
     ./gitea.nix
+    ./tandoor-recipes.nix
+    ./llm.nix
+    ./stirling-pdf.nix
+    ./paperless.nix
+    ./grocy.nix
+    ./wallos.nix
+    ./actual.nix
   ];
 }

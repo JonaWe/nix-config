@@ -50,7 +50,7 @@ in {
       key = config.sops.secrets."syncthing/devices/${config.networking.hostName}/key".path;
       cert = config.sops.secrets."syncthing/devices/${config.networking.hostName}/cert".path;
       settings = let
-        devices = {
+        my-devices = {
           pangolin = {
             id = "SCRTM6K-4YE5FGZ-HP27RDE-Z4PUUNQ-WUVCGF6-633QWR5-X6XYMPS-V72OFQB";
           };
@@ -64,33 +64,51 @@ in {
             id = "B7VXQ7Y-E57K6BJ-IX37GNP-P34K33S-POJAZJI-NLGZFH6-KXVYAVO-5O2TKQT";
           };
         };
-        device-names = builtins.attrNames devices;
+        my-device-names = builtins.attrNames my-devices;
       in {
-        devices = devices;
+        devices =
+          my-devices
+          // {
+            rahel-handy = {
+              id = "VY52ZGY-4WI5KHU-O3OS3DX-3IXMAOI-YB5KRRN-KE5QVK4-EU57MMQ-BXDWRQ3";
+            };
+          };
         folders = {
           "keepass" = {
             id = "keepass";
             label = "Keepass Database";
             path = "${cfg.dataDir}/.keepass";
-            devices = device-names;
+            devices = my-device-names;
           };
           "vault" = {
             id = "vault";
             label = "Obsidian Vault";
             path = "${cfg.dataDir}/vault";
-            devices = device-names;
+            devices = my-device-names;
           };
           "wallpapers" = {
             id = "wallpapers";
             label = "Wallpapers";
             path = "${cfg.dataDir}/pictures/wallpapers";
-            devices = device-names;
+            devices = my-device-names;
           };
           "android-camera" = {
             id = "android-camera";
             label = "Android Camera";
             path = "${cfg.dataDir}/pictures/android-camera";
-            devices = device-names;
+            devices = my-device-names;
+          };
+          "paperless-consume" = {
+            id = "paperless-consume";
+            label = "Paperles Consume Folder";
+            path = "${cfg.dataDir}/paperless-consume";
+            devices = my-device-names;
+          };
+          "rahel-camera" = {
+            id = "rahel-camera";
+            label = "Android Camera Rahel";
+            path = "${cfg.dataDir}/rahel/pictures/android-camera";
+            devices = ["rahel-handy" "ant"];
           };
         };
       };
@@ -117,7 +135,8 @@ in {
     };
 
     systemd.tmpfiles.rules = lib.mkIf cfg.zfsIntegration.enable [
-      "d ${cfg.dataDir} 0700 ${cfg.user} ${cfg.group} -"
+      "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.group} -"
+      "d ${cfg.dataDir}/paperless-consume 0777 ${cfg.user} ${cfg.group} -"
     ];
 
     services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
