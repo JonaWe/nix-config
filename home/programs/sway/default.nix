@@ -53,9 +53,8 @@
     xournalpp
     wdisplays
     libnotify
+    wl-color-picker
   ];
-
-
 
   nixpkgs.config.allowUnfree = true;
 
