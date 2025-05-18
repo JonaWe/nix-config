@@ -7,7 +7,7 @@ local function setup_lsp_diagnostic()
 
     vim.diagnostic.config({
         signs = {
-            active = signs,
+            active = true,
         },
         underline = true,
         update_in_insert = false,
@@ -77,6 +77,17 @@ return {
                     },
                 },
             })
+            -- this is the language tool language server
+            require("lspconfig").ltex.setup({
+                --         filetypes = { "tex" },
+                settings = {
+                    ltex = {
+                        language = "en-US",
+                        -- language = "de-DE",
+                    },
+                },
+            })
+            require("lspconfig").texlab.setup({})
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "pyright",
@@ -88,8 +99,6 @@ return {
                     "tailwindcss",
                     "eslint",
                     "kotlin_language_server",
-                    "ltex",
-                    "texlab",
                 },
                 handlers = {
                     function(server_name)
@@ -97,18 +106,18 @@ return {
                             require("lspconfig")[server_name].setup({})
                         end
                     end,
-                    ["ltex"] = function()
-                        local lspconfig = require("lspconfig")
-                        lspconfig.ltex.setup({
-                            filetypes = { "tex" },
-                            settings = {
-                                ltex = {
-                                    -- language = "en-US",
-                                    language = "de-DE",
-                                },
-                            },
-                        })
-                    end,
+                    -- ["ltex"] = function()
+                    --     local lspconfig = require("lspconfig")
+                    --     lspconfig.ltex.setup({
+                    --         filetypes = { "tex" },
+                    --         settings = {
+                    --             ltex = {
+                    --                 language = "en-US",
+                    --                 -- language = "de-DE",
+                    --             },
+                    --         },
+                    --     })
+                    -- end,
                 },
             })
 

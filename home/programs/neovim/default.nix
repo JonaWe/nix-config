@@ -17,5 +17,7 @@
     cargo
     gcc
     gnumake
+    texlab
+    ltex-ls
   ];
 }

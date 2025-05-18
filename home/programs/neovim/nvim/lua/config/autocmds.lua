@@ -32,6 +32,17 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function (event)
+        require("conform").format({
+            bufnr = event.buf,
+            timeout_ms = 2000,
+            lsp_fallback = true,
+        })
+    end
+})
+
 -- overwrite default find file behavior inside of obsidian vaults
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "/home/jona/vault/personal/*",
@@ -45,18 +56,26 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
---create auto command to set wrap on for markdown, latex and other different kinds of text files in the buffer
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {
-        "markdown",
-        "latex",
-        "text",
-    },
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = {"*.md", "*.markdown", "*.tex"},
     callback = function()
         vim.opt_local.wrap = true
         vim.opt_local.spell = false
     end,
 })
+-- --create auto command to set wrap on for markdown, latex and other different kinds of text files in the buffer
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = {
+--         "markdown",
+--         "latex",
+--         "text",
+--         "tex",
+--     },
+--     callback = function()
+--         vim.opt_local.wrap = true
+--         vim.opt_local.spell = false
+--     end,
+-- })
 
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd("FocusGained", { command = "checktime" })
