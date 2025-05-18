@@ -88,6 +88,19 @@ in {
     };
     users.groups.tandoor_recipes = {};
 
+    services.nginx.virtualHosts."recipes.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      kTLS = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:9203";
+      };
+      locations."/media/recipes/".alias = "/var/lib/tandoor-recipes/recipes/";
+      locations."= /metrics" = {
+        return = "404";
+      };
+    };
+
     services.nginx.virtualHosts."recipes.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
