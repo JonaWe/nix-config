@@ -26,8 +26,9 @@ in {
       passwordFile = "/etc/paperless-admin-pass";
       port = cfg.port;
       enable = true;
-      consumptionDirIsPublic = true;
       # dataDir = "/var/lib/paperless";
+      consumptionDir = "/data/syncthing/paperless-consume";
+      consumptionDirIsPublic = true;
       settings = {
         PAPERLESS_CONSUMER_IGNORE_PATTERN = [
           ".DS_STORE/*"
