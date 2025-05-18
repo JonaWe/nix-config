@@ -4,7 +4,12 @@
   ...
 }: {
   sops.secrets."wireguard/configs/wg-laptop.conf" = {};
+  sops.secrets."wireguard/configs/wg-homelab-laptop.conf" = {};
   networking.wg-quick.interfaces = {
+    wg-homelab = {
+      configFile = config.sops.secrets."wireguard/configs/wg-homelab-laptop.conf".path;
+      autostart = false;
+    };
     wg0 = {
       configFile = config.sops.secrets."wireguard/configs/wg-laptop.conf".path;
       autostart = false;
