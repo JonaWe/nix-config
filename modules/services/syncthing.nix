@@ -98,6 +98,12 @@ in {
             path = "${cfg.dataDir}/pictures/android-camera";
             devices = my-device-names;
           };
+          "paperless-consume" = {
+            id = "paperless-consume";
+            label = "Paperles Consume Folder";
+            path = "${cfg.dataDir}/paperless-consume";
+            devices = my-device-names;
+          };
           "rahel-camera" = {
             id = "rahel-camera";
             label = "Android Camera Rahel";
@@ -129,7 +135,8 @@ in {
     };
 
     systemd.tmpfiles.rules = lib.mkIf cfg.zfsIntegration.enable [
-      "d ${cfg.dataDir} 0700 ${cfg.user} ${cfg.group} -"
+      "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.group} -"
+      "d ${cfg.dataDir}/paperless-consume 0777 ${cfg.user} ${cfg.group} -"
     ];
 
     services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
