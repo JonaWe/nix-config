@@ -2,7 +2,19 @@
   config,
   pkgs,
   ...
-}: {
+}:
+# let
+#   lowBatteryNotifier =
+#     pkgs.writeScript "lowBatteryNotifier"
+#     ''
+#       BAT_PCT=`${pkgs.acpi}/bin/acpi -b | ${pkgs.gnugrep}/bin/grep -P -o '[0-9]+(?=%)'`
+#       BAT_STA=`${pkgs.acpi}/bin/acpi -b | ${pkgs.gnugrep}/bin/grep -P -o '\w+(?=,)'`
+#       echo "`date` battery status:$BAT_STA percentage:$BAT_PCT"
+#       test $BAT_PCT -le 10 && test $BAT_PCT -gt 5 && test $BAT_STA = "Discharging" && DISPLAY=:0.0 ${pkgs.libnotify}/bin/notify-send -c device -u normal   "Low Battery" "Would be wise to keep my charger nearby."
+#       test $BAT_PCT -le  5                        && test $BAT_STA = "Discharging" && DISPLAY=:0.0 ${pkgs.libnotify}/bin/notify-send -c device -u critical "Low Battery" "Charge me or watch me die!"
+#     '';
+# in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -17,6 +29,15 @@
     ../../modules/sops.nix
     ../../modules/wireguard-client.nix
   ];
+
+  # services.cron = {
+  #   enable = true;
+  #   systemCronJobs = let
+  #     userName = "jona";
+  #   in [
+  #     "* * * * * ${userName} bash -x ${lowBatteryNotifier} > /tmp/cron.batt.log 2>&1"
+  #   ];
+  # };
 
   boot.supportedFilesystems = ["ntfs"];
   # Bootloader.
@@ -33,6 +54,13 @@
       # drive = "/dev/disk/by-id/nvme-eui.ace42e0035e9a7b32ee4ac0000000001";
       drive = "/dev/disk/by-id/nvme-SKHynix_HFS002TEJ9X162N_ASCAN41151140A92T";
     };
+  };
+
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
   };
 
   myconf.services = {
@@ -61,7 +89,17 @@
   services.fprintd.tod.enable = true;
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
-  environment.systemPackages = [pkgs.cifs-utils];
+  nixpkgs.config.rocmSupport = true;
+  environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
+
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+    # libnotify
+    # # lowBatteryNotifier
+    # acpi
+    # gnugrep
+    # libnotify
+  ];
   fileSystems."/mnt/share" = {
     device = "//192.168.188.133/winkelsheim";
     fsType = "cifs";
