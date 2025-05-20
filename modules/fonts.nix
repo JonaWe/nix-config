@@ -7,7 +7,8 @@
       noto-fonts-cjk-sans
       noto-fonts-emoji
 
-      (nerdfonts.override {fonts = ["FiraCode"];})
+      nerd-fonts.fira-code
+      # (nerdfonts.override {fonts = ["FiraCode"];})
     ];
 
     # use fonts specified by user rather than default ones
