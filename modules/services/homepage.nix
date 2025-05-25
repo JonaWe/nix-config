@@ -212,7 +212,7 @@ in {
                   type = "radarr";
                   url = "http://localhost:7878";
                   key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
-                  enableQueue = "true";
+                  # enableQueue = "true";
                 };
               };
             }
