@@ -84,11 +84,5 @@ in {
         "*.winkelsheim.pinkorca.de"
       ];
     };
-
-    systemd.tmpfiles.rules = [
-      "d /certs/acme 0750 acme acme -"
-      # "Z /certs/acme 0750 acme acme - -"
-      "L+ /var/lib/acme - - - - /certs/acme"
-    ];
   };
 }
