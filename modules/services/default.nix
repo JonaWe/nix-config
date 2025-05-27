@@ -20,5 +20,6 @@
     ./wallos.nix
     ./actual.nix
     ./headscale.nix
+    ./tailscale.nix
   ];
 }
