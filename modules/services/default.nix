@@ -19,5 +19,6 @@
     ./grocy.nix
     ./wallos.nix
     ./actual.nix
+    ./headscale.nix
   ];
 }
