@@ -58,6 +58,16 @@
           }
         ];
       };
+      albatross = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+
+        modules = [
+          ./hosts/albatross
+          ./users/jona/nixos.nix
+          ./modules
+        ];
+      };
       octopus = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64-linux";
