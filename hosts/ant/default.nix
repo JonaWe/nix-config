@@ -145,10 +145,13 @@
       # openFirewall = true;
     };
     home-assistant = {
-      enable = false;
+      enable = true;
       openFirewall = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
+    };
+    headscale = {
+      enable = false;
     };
     jellyfin = {
       enable = true;
