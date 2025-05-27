@@ -47,6 +47,9 @@ in {
         description = "Extra datasets that sould be added to the zfs zdata pool";
       };
     };
+    ext4 = {
+      enable = lib.mkEnableOption "Enable standart ext4 for /dev/sda";
+    };
   };
 
   config = lib.mkIf cfg.enable {
