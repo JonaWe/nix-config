@@ -8,12 +8,18 @@
 in {
   options.myconf.services.headscale = {
     enable = lib.mkEnableOption "Enable headscale service";
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 9892;
+      example = 9892;
+      description = "Port that is used for headscale";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services.headscale = {
       enable = true;
-      # port = cfg.port;
+      port = cfg.port;
       address = "0.0.0.0";
       settings = {
         server_url = "https://headscale.pinkorca.de";
@@ -31,7 +37,7 @@ in {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:${toString config.services.headscale.port}/";
+        proxyPass = "http://localhost:${toString cfg.port}/";
         proxyWebsockets = true;
       };
     };
