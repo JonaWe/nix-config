@@ -19,11 +19,10 @@
     # ../../modules/wireguard-server.nix
   ];
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.grub.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  # boot.loader.timeout = 1;
-  # boot.supportedFilesystems = ["zfs" "ntfs"];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 1;
+  boot.supportedFilesystems = ["zfs" "ntfs"];
 
   # myconf.services = {
   #   teamspeak = {

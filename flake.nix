@@ -66,6 +66,16 @@
           ./hosts/albatross
           ./users/jona/nixos.nix
           ./modules
+
+          inputs.disko.nixosModules.disko
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = specialArgs;
+            home-manager.backupFileExtension = ".hm.bak";
+            home-manager.users.${username} = import ./users/${username}/base-home.nix;
+          }
         ];
       };
       octopus = nixpkgs.lib.nixosSystem {
