@@ -24,7 +24,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.ollama = {
       enable = true;
-      package = pkgs-unstable.ollama;
+      # package = pkgs-unstable.ollama;
       loadModels = ["llama3.2:3b" "gemma3:4b" "gemma3:12b" "llama3.2-vision:11b" "deepseek-r1:7b" "deepseek-r1:8b" "phi4:14b" "nomic-embed-text" "dolphin3:8b"];
 
       acceleration = "cuda";
@@ -32,7 +32,7 @@ in {
 
     services.open-webui = {
       enable = true;
-      # package = pkgs-unstable.open-webui;
+      package = pkgs-unstable.open-webui;
       port = cfg.port;
     };
 
@@ -41,6 +41,7 @@ in {
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString cfg.port}/";
+        proxyWebsockets = true;
       };
     };
 
@@ -49,6 +50,7 @@ in {
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString cfg.port}/";
+        proxyWebsockets = true;
       };
     };
   };

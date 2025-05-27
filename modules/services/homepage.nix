@@ -22,6 +22,7 @@ in {
     services.homepage-dashboard = {
       package = pkgs-unstable.homepage-dashboard;
       enable = true;
+      allowedHosts = "homepage.home.pinkorca.de";
       environmentFile = config.sops.secrets."homepage/environment".path;
       openFirewall = cfg.openFirewall;
       settings = {

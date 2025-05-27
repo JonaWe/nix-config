@@ -35,6 +35,7 @@ in {
           "desktop.ini"
         ];
         PAPERLESS_OCR_LANGUAGE = "deu+eng";
+        PAPERLESS_URL = "https://paperless.home.pinkorca.de";
         PAPERLESS_OCR_USER_ARGS = {
           optimize = 1;
           pdfa_image_compression = "lossless";

@@ -62,6 +62,7 @@
     # hugo # static site generator
     # glow # markdown previewer in terminal
 
+    nethogs #
     btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
@@ -77,8 +78,6 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
-
-    gh
   ];
 
   programs.git = {
@@ -98,7 +97,7 @@
   programs.lazygit.enable = true;
   programs.lsd = {
     enable = true;
-    enableAliases = true;
+    enableZshIntegration = true;
   };
 
   programs.zsh = {
