@@ -24,6 +24,15 @@
   boot.loader.timeout = 1;
   boot.supportedFilesystems = ["zfs" "ntfs"];
 
+  myconf.disk = {
+    enable = true;
+    backups.enable = true;
+    rootPool = {
+      enable = true;
+      drive = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_62709551";
+    };
+  };
+
   # myconf.services = {
   #   teamspeak = {
   #     enable = true;
