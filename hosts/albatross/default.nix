@@ -19,9 +19,13 @@
     # ../../modules/wireguard-server.nix
   ];
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 1;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.timeout = 1;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.zfsSupport = true;
+
   boot.supportedFilesystems = ["zfs" "ntfs"];
 
   myconf.disk = {
