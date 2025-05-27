@@ -24,16 +24,12 @@
   # boot.loader.timeout = 1;
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.zfsSupport = true;
-
-  boot.supportedFilesystems = ["zfs" "ntfs"];
 
   myconf.disk = {
     enable = true;
-    backups.enable = true;
-    rootPool = {
+    # backups.enable = true;
+    ext4 = {
       enable = true;
-      drive = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_62709551";
     };
   };
 

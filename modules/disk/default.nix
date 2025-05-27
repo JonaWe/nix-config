@@ -8,6 +8,7 @@ in {
   imports = [
     ./root.nix
     ./data.nix
+    ./ext4.nix
   ];
 
   options.myconf.disk = {
