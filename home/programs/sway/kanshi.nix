@@ -54,7 +54,7 @@
             criteria = internal;
             status = "enable";
             scale = 1.0;
-            position = "320,1440";
+            position = "1080,1920";
           }
           {
             criteria = home_main;
@@ -62,13 +62,14 @@
             scale = 1.0;
             adaptiveSync = true;
             mode = "2560x1440@144";
-            position = "0,0";
+            position = "1080,480";
           }
           {
             criteria = home_sec;
             status = "enable";
             scale = 1.0;
-            position = "2560,180";
+            position = "0,0";
+            rotate = "90";
           }
         ];
       }
