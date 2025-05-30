@@ -74,10 +74,10 @@ in {
       ];
     };
     services.postgresqlBackup = {
-        enable = true;
-        databases = ["tandoor_recipes"];
-        startAt = "*-*-* *:55:00";
-        location = cfg.backupDirectory;
+      enable = true;
+      databases = ["tandoor_recipes"];
+      startAt = "*-*-* *:55:00";
+      location = cfg.backupDirectory;
     };
 
     systemd.services.nginx.serviceConfig.SupplimentaryGroups = ["tandoor_recipes"];
@@ -114,6 +114,17 @@ in {
       };
     };
 
+    services.nginx.virtualHosts."recipes.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8096/";
+      };
+      locations."/media/recipes/".alias = "/var/lib/tandoor-recipes/recipes/";
+      locations."= /metrics" = {
+        return = "404";
+      };
+    };
 
     myconf.disk.dataPool.extraDatasets = lib.mkIf cfg.zfsIntegration.enable {
       "enc/services/postgresqlBackups" = {
