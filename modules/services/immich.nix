@@ -70,7 +70,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."immich.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."immich.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       extraConfig = ''

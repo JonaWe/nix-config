@@ -75,7 +75,7 @@ in {
       ];
     };
 
-    services.nginx.virtualHosts."wallos.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."wallos.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

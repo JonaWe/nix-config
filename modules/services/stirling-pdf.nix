@@ -28,15 +28,7 @@ in {
         SERVER_PORT = cfg.port;
       };
     };
-    services.nginx.virtualHosts."pdf.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:${toString cfg.port}/";
-      };
-    };
-
-    services.nginx.virtualHosts."pdf.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."pdf.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

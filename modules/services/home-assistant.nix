@@ -70,7 +70,7 @@ in {
     #   ];
     # };
 
-    services.nginx.virtualHosts."homeassistant.home.pinkorca.de" = {
+    services.nginx.virtualHosts."homeassistant.ts.pinkorca.de" = {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

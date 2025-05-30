@@ -36,16 +36,7 @@ in {
       port = cfg.port;
     };
 
-    services.nginx.virtualHosts."llm.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:${toString cfg.port}/";
-        proxyWebsockets = true;
-      };
-    };
-
-    services.nginx.virtualHosts."llm.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."llm.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

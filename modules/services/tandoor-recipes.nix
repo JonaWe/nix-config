@@ -28,7 +28,7 @@ in {
       package = pkgs-unstable.tandoor-recipes;
       port = 9203;
       extraConfig = let
-        tandoorRecipesDomain = "recipes.home.pinkorca.de";
+        tandoorRecipesDomain = "recipes.ts.pinkorca.de";
       in {
         # Use PostgreSQL
         DB_ENGINE = "django.db.backends.postgresql";
@@ -88,37 +88,12 @@ in {
     };
     users.groups.tandoor_recipes = {};
 
-    services.nginx.virtualHosts."recipes.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      kTLS = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:9203";
-      };
-      locations."/media/recipes/".alias = "/var/lib/tandoor-recipes/recipes/";
-      locations."= /metrics" = {
-        return = "404";
-      };
-    };
-
-    services.nginx.virtualHosts."recipes.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      kTLS = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:9203";
-      };
-      locations."/media/recipes/".alias = "/var/lib/tandoor-recipes/recipes/";
-      locations."= /metrics" = {
-        return = "404";
-      };
-    };
-
     services.nginx.virtualHosts."recipes.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
+      kTLS = true;
       locations."/" = {
-        proxyPass = "http://localhost:9203";
+        proxyPass = "http://127.0.0.1:9203";
       };
       locations."/media/recipes/".alias = "/var/lib/tandoor-recipes/recipes/";
       locations."= /metrics" = {

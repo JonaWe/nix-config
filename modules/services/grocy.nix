@@ -74,7 +74,7 @@ in {
       ];
     };
 
-    services.nginx.virtualHosts."grocy.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."grocy.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

@@ -51,8 +51,8 @@ in {
         # };
         server = {
           HTTP_PORT = 3002;
-          ROOT_URL = "https://gitea.home.pinkorca.de/";
-          DOMAIN = "gitea.home.pinkorca.de";
+          ROOT_URL = "https://gitea.ts.pinkorca.de/";
+          DOMAIN = "gitea.ts.pinkorca.de";
           SSH_USER = "git";
         };
       };
@@ -93,14 +93,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."gitea.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:3002/";
-      };
-    };
-    services.nginx.virtualHosts."gitea.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."gitea.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

@@ -21,9 +21,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    environment.etc."paperless-admin-pass".text = "admin";
+    # environment.etc."paperless-admin-pass".text = "admin";
     services.paperless = {
-      passwordFile = "/etc/paperless-admin-pass";
+      # passwordFile = "/etc/paperless-admin-pass";
       port = cfg.port;
       enable = true;
       # dataDir = "/var/lib/paperless";
@@ -35,7 +35,7 @@ in {
           "desktop.ini"
         ];
         PAPERLESS_OCR_LANGUAGE = "deu+eng";
-        PAPERLESS_URL = "https://paperless.home.pinkorca.de";
+        PAPERLESS_URL = "https://paperless.ts.pinkorca.de";
         PAPERLESS_ENABLE_HTTP_REMOTE_USER_API = "true";
         PAPERLESS_OCR_USER_ARGS = {
           optimize = 1;
@@ -44,7 +44,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."paperless.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."paperless.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
@@ -52,7 +52,7 @@ in {
       };
     };
 
-    services.nginx.virtualHosts."paperless-ai.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."paperless-ai.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {

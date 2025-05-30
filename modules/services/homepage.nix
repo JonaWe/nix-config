@@ -81,7 +81,7 @@ in {
         }
       ];
       services = let
-        serverBaseUrl = "home.pinkorca.de";
+        serverBaseUrl = "ts.pinkorca.de";
       in [
         {
           "Services" = [

@@ -227,7 +227,7 @@ in {
     sops.secrets."arr/vpn/env" = {};
 
     services.nginx.virtualHosts = {
-      "audiobookshelf.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "audiobookshelf.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
@@ -235,70 +235,63 @@ in {
           proxyWebsockets = true;
         };
       };
-      "recommendarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "recommendarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.recommendarr.port}/";
         };
       };
-      "sonarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "sonarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.sonarr.port}/";
         };
       };
-      "readarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "readarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.readarr.port}/";
         };
       };
-      "prowlarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "prowlarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.prowlarr.port}/";
         };
       };
-      "qbittorrent.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "qbittorrent.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.qbittorrent.port}/";
         };
       };
-      "jellyseerr.winkelsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "jellyseerr.tselsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.jellyseerr.port}/";
         };
       };
-      "jellyseerr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-        useACMEHost = "pinkorca.de";
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${builtins.toString cfg.jellyseerr.port}/";
-        };
-      };
-      "bazarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "bazarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.bazarr.port}/";
         };
       };
-      "lidarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "lidarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.lidarr.port}/";
         };
       };
-      "radarr.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "radarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
@@ -646,7 +639,7 @@ in {
       };
       script = ''
         cd /tmp/docker-recommendarr-build
-        docker build -t tannermiddleton/recommendarr:latest --build-arg BASE_URL=https://recommendarr.home.pinkorca.de .
+        docker build -t tannermiddleton/recommendarr:latest --build-arg BASE_URL=https://recommendarr.ts.pinkorca.de .
       '';
     };
 
@@ -658,7 +651,7 @@ in {
         "FORCE_SECURE_COOKIES" = "true";
         "NODE_ENV" = "production";
         "PORT" = "8765";
-        "PUBLIC_URL" = "https://recommendarr.home.pinkorca.de";
+        "PUBLIC_URL" = "https://recommendarr.ts.pinkorca.de";
 
         # "PGID" = builtins.toString cfg.user.gid;
         # "PUID" = builtins.toString cfg.user.uid;
