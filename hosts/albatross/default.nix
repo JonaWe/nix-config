@@ -23,11 +23,12 @@
   };
 
   myconf.services = {
-    nginx = {
-      enable = true;
-      openFirewall = true;
-    };
+    # nginx = {
+    #   enable = true;
+    #   openFirewall = true;
+    # };
     headscale.enable = true;
+    headscale.openFirewall = true;
   };
 
   networking.hostName = "albatross";
