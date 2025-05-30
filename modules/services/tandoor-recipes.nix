@@ -118,7 +118,7 @@ in {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:9203/";
+        proxyPass = "http://localhost:9203";
       };
       locations."/media/recipes/".alias = "/var/lib/tandoor-recipes/recipes/";
       locations."= /metrics" = {
