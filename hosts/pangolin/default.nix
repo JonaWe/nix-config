@@ -64,6 +64,9 @@
   };
 
   myconf.services = {
+    tailscale = {
+      enable = true;
+    };
     syncthing = {
       enable = true;
       dataDir = "/home/jona";
