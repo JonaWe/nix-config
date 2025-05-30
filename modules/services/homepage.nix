@@ -22,7 +22,7 @@ in {
     services.homepage-dashboard = {
       package = pkgs-unstable.homepage-dashboard;
       enable = true;
-      allowedHosts = "homepage.home.pinkorca.de";
+      allowedHosts = "homepage.home.pinkorca.de,homepage.ts.pinkorca.de";
       environmentFile = config.sops.secrets."homepage/environment".path;
       openFirewall = cfg.openFirewall;
       settings = {
@@ -368,6 +368,13 @@ in {
       ];
     };
 
+    services.nginx.virtualHosts."homepage.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      useACMEHost = "pinkorca.de";
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:8082/";
+      };
+    };
     services.nginx.virtualHosts."homepage.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
