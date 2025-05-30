@@ -18,14 +18,25 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.headscale = {
+      # uses acme group to access certificates
+      group = "acme";
       enable = true;
       port = cfg.port;
       address = "0.0.0.0";
       settings = {
+        tls_key_path = "/var/lib/acme/pinkorca.de/key.pem";
+        tls_cert_path = "/var/lib/acme/pinkorca.de/cert.pem";
         server_url = "https://headscale.pinkorca.de";
         logtail.enabled = false;
         dns = {
           base_domain = "head.scale";
+          extra_records = [
+            {
+              name = "*.ts.pinkorca";
+              type = "A";
+              value = "100.64.0.2";
+            }
+          ];
         };
       };
       # package = pkgs.headscale;
