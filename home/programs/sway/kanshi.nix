@@ -69,7 +69,7 @@
             status = "enable";
             scale = 1.0;
             position = "0,0";
-            rotate = "90";
+            transform = "90";
           }
         ];
       }

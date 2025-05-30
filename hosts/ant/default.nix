@@ -150,8 +150,8 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    headscale = {
-      enable = false;
+    tailscale = {
+      enable = true;
     };
     jellyfin = {
       enable = true;
