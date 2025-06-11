@@ -24,5 +24,6 @@
     ./radicale.nix
     ./unifi-controller.nix
     ./karakeep.nix
+    ./searx.nix
   ];
 }

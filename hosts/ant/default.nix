@@ -135,6 +135,9 @@
       enable = true;
       openFirewall = true;
     };
+    searx = {
+      enable = true;
+    };
     # karakeep = {
     #   enable = true;
     # };

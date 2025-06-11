@@ -51,9 +51,11 @@ in {
         {
           search = {
             focus = true;
-            provider = "duckduckgo";
-            showSearchSuggestions = true;
+            provider = "custom";
+            url = "https://search.ts.pinkorca.de/search?q=";
             target = "_blank";
+            suggestionUrl = "https://ac.ecosia.org/autocomplete?type=list&q=";
+            showSearchSuggestions = true;
           };
         }
         {
@@ -159,6 +161,15 @@ in {
                   username = "admin";
                   password = "admin";
                 };
+              };
+            }
+            {
+              SearX = {
+                href = "https://search.ts.pinkorca.de";
+                icon = "searx.svg";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.searx.port}";
+                description = "Meta Search Enging";
               };
             }
             # {
