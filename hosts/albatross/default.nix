@@ -29,6 +29,7 @@
     # };
     headscale.enable = true;
     headscale.openFirewall = true;
+    tailscale.enable = true;
   };
 
   networking.hostName = "albatross";
