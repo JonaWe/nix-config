@@ -23,5 +23,6 @@
     ./tailscale.nix
     ./radicale.nix
     ./unifi-controller.nix
+    ./karakeep.nix
   ];
 }
