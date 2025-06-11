@@ -135,10 +135,6 @@
       enable = true;
       openFirewall = true;
     };
-    adguardhome = {
-      enable = true;
-      openFirewall = true;
-    };
     actual = {
       enable = true;
     };
