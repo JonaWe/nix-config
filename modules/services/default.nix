@@ -21,5 +21,7 @@
     ./actual.nix
     ./headscale.nix
     ./tailscale.nix
+    ./radicale.nix
+    ./unifi-controller.nix
   ];
 }
