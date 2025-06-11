@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   cfg = config.myconf.services.karakeep;
@@ -28,12 +29,14 @@ in {
         CRAWLER_FULL_PAGE_ARCHIVE = "true";
       };
     };
+    services.meilisearch.package = pkgs.meilisearch;
+    # services.meilisearch.dumplessUpgrade = true;
 
-    services.nginx.virtualHosts."jellyfin.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    services.nginx.virtualHosts."karakeep.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:8096/";
+        proxyPass = "http://localhost:${toString cfg.port}/";
       };
     };
   };

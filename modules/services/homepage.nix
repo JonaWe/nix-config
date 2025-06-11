@@ -161,6 +161,15 @@ in {
                 };
               };
             }
+            # {
+            #   Karakeep = {
+            #     href = "https://karakeep.ts.pinkorca.de";
+            #     icon = "karakeep.svg";
+            #     statusStyle = "dot";
+            #     siteMonitor = "http://localhost:${toString config.myconf.services.karakeep.port}";
+            #     description = "Bookmark Mananger";
+            #   };
+            # }
             {
               "Stirling Pdf" = {
                 icon = "stirling-pdf.svg";

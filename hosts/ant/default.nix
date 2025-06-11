@@ -135,6 +135,9 @@
       enable = true;
       openFirewall = true;
     };
+    # karakeep = {
+    #   enable = true;
+    # };
     actual = {
       enable = true;
     };
