@@ -150,6 +150,7 @@
     metube = {
       enable = true;
     };
+    it-tools.enable = true;
     grocy = {
       enable = true;
     };

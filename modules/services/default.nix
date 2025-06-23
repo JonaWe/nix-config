@@ -26,5 +26,6 @@
     ./karakeep.nix
     ./searx.nix
     ./metube.nix
+    ./it-tools.nix
   ];
 }

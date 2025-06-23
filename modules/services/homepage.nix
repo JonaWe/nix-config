@@ -191,6 +191,15 @@ in {
               };
             }
             {
+              "IT-Tools" = {
+                icon = "it-tools.svg";
+                href = "https://it-tools.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.it-tools.port}";
+                description = "Collection of it tools";
+              };
+            }
+            {
               "Stirling Pdf" = {
                 icon = "stirling-pdf.svg";
                 href = "https://pdf.${serverBaseUrl}/";
