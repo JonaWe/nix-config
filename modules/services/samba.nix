@@ -41,7 +41,7 @@ in {
           "server string" = "Nix Samba Share";
           "netbios name" = "smbnix";
           security = "user";
-          "hosts allow" = "192.168.188. 127.0.0.1 localhost";
+          "hosts allow" = "100.64.0. 127.0.0.1 localhost";
           "guest account" = "nobody";
           "map to guest" = "bad user";
         };
@@ -55,6 +55,17 @@ in {
           "directory mask" = 0755;
           "force user" = cfg.user;
           comment = "public samba share";
+        };
+        games = {
+          path = "/data/samba/games";
+          "read only" = "no";
+          browsable = "yes";
+          writable = "yes";
+          "guest ok" = "yes";
+          "create mask" = 0644;
+          "directory mask" = 0755;
+          "force user" = cfg.user;
+          comment = "Game Library";
         };
         jona = {
           path = "/data/samba/jona";
@@ -93,11 +104,19 @@ in {
         options.quota = "500G";
         options.recordsize = "1M";
       };
+      "enc/services/samba/games" = {
+        type = "zfs_fs";
+        mountpoint = "/data/samba/games";
+        options.mountpoint = "legacy";
+        options.quota = "2T";
+        options.recordsize = "16K";
+      };
     };
 
     systemd.tmpfiles.rules = lib.mkIf cfg.zfsIntegration.enable [
       "d /data/samba/winkelsheim 0700 ${cfg.user} ${cfg.group} -"
       "d /data/samba/jona 0700 ${cfg.user} ${cfg.group} -"
+      "d /data/samba/games 0700 ${cfg.user} ${cfg.group} -"
     ];
 
     services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
