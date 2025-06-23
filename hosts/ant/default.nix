@@ -106,6 +106,14 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    radicale = {
+      enable = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
+    unifi-controller = {
+      enable = true;
+    };
     gitea = {
       enable = true;
       zfsIntegration.enable = true;
@@ -124,10 +132,6 @@
       zfsIntegration.enableBackups = true;
     };
     minecraft-servers = {
-      enable = true;
-      openFirewall = true;
-    };
-    adguardhome = {
       enable = true;
       openFirewall = true;
     };

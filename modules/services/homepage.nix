@@ -287,11 +287,11 @@ in {
                 icon = "qbittorrent.png";
                 href = "https://qbittorrent.${serverBaseUrl}/";
                 statusStyle = "dot";
-                siteMonitor = "http://localhost:8080";
+                siteMonitor = "http://localhost:8055";
                 description = "Torrent Download Client";
                 widget = {
                   type = "qbittorrent";
-                  url = "http://localhost:8080";
+                  url = "http://localhost:8055";
                   username = "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}";
                   password = "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}";
                 };

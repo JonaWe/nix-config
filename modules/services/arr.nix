@@ -133,7 +133,7 @@ in {
       openFirewall = lib.mkEnableOption "Open firewall for qbittorrent web ui";
       port = lib.mkOption {
         type = lib.types.port;
-        default = 8080;
+        default = 8055;
         description = "Default port for qbittorrent web ui";
       };
     };
@@ -270,7 +270,7 @@ in {
           proxyPass = "http://localhost:${builtins.toString cfg.qbittorrent.port}/";
         };
       };
-      "jellyseerr.tselsheim.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+      "jellyseerr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
@@ -393,12 +393,12 @@ in {
         FIREWALL_OUTBOUND_SUBNETS = "10.1.1.0/24";
       };
       ports =
-        ["8096" "11434"]
+        ["8096" "11434" "443"]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
           "127.0.0.1:${builtins.toString cfg.recommendarr.port}:8765/tcp"
         ]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
-          "127.0.0.1:${builtins.toString cfg.qbittorrent.port}:8080/tcp"
+          "127.0.0.1:${builtins.toString cfg.qbittorrent.port}:${toString cfg.qbittorrent.port}/tcp"
         ]
         ++ lib.lists.optionals cfg.prowlarr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.prowlarr.port}:9696/tcp"
@@ -542,7 +542,7 @@ in {
         "PUID" = builtins.toString cfg.user.uid;
         "TORRENTING_PORT" = "6881";
         "TZ" = "Europe/Berlin";
-        "WEBUI_PORT" = "8080";
+        "WEBUI_PORT" = "${toString cfg.qbittorrent.port}";
       };
       volumes = [
         "${cfg.libDir.qbittorrent}:/config:rw"
