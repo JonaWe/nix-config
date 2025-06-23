@@ -147,6 +147,9 @@
     wallos = {
       enable = true;
     };
+    metube = {
+      enable = true;
+    };
     grocy = {
       enable = true;
     };

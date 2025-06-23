@@ -25,5 +25,6 @@
     ./unifi-controller.nix
     ./karakeep.nix
     ./searx.nix
+    ./metube.nix
   ];
 }

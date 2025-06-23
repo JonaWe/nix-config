@@ -182,6 +182,15 @@ in {
             #   };
             # }
             {
+              "Metube" = {
+                icon = "metube.svg";
+                href = "https://metube.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.metube.port}";
+                description = "YouTube Downloader";
+              };
+            }
+            {
               "Stirling Pdf" = {
                 icon = "stirling-pdf.svg";
                 href = "https://pdf.${serverBaseUrl}/";
