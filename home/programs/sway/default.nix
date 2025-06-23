@@ -54,6 +54,7 @@
     wdisplays
     libnotify
     wl-color-picker
+    wireshark
   ];
 
   nixpkgs.config.allowUnfree = true;

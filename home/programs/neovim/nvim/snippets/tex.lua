@@ -29,6 +29,9 @@ return {
     s("/b", t("\\beta "), { condition = in_mathzone }),
     s("/g", t("\\gamma "), { condition = in_mathzone }),
     s("/it", t("\\item ")),
+    s("/bf", fmta("\\textbf{<>}", {i(1)})),
+    s("/if", fmta("\\textit{<>}", {i(1)})),
+    s("/tf", fmta("\\texttt{<>}", {i(1)})),
     s(
         "se",
         fmta(
@@ -123,6 +126,21 @@ return {
                 i(1),
                 i(2),
                 rep(1), -- this node repeats insert node i(1)
+            }
+        ),
+        { condition = line_begin }
+    ),
+    s(
+        { trig = "fig", dscr = "Creates a latex figure environment" },
+        fmta(
+            [[
+            \begin{figure}
+                <>
+            \end{figure
+
+            ]],
+            {
+                i(1),
             }
         ),
         { condition = line_begin }

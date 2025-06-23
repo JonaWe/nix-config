@@ -53,6 +53,7 @@
     teamspeak3
     zoom-us
     gnome-calendar
+    # kdePackages.merkuro
     jellyfin-media-player
     imv
     mongodb-compass

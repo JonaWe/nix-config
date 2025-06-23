@@ -9,7 +9,7 @@ return {
                 enable_autosnippets = true,
 
                 -- Use Tab (or some other key if you prefer) to trigger visual selection
-                store_selection_keys = "<Tab>",
+                store_selection_keys = "<C-space>",
                 -- history = true,
                 updateevents = "TextChanged,TextChangedI",
             })
@@ -61,7 +61,10 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-e>"] = cmp.mapping.close(),
                     ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-i>"] = cmp.mapping.confirm({
+                    -- ['<Tab>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+
+                    ["<tab>"] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     }),
@@ -69,7 +72,7 @@ return {
                 sources = cmp.config.sources({
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
-                    -- { name = "copilot" },
+                    { name = "copilot" },
                     { name = "path" },
                     -- { name = "obsidian" },
                     { name = "emoji" },
@@ -79,7 +82,7 @@ return {
                 sorting = {
                     priority_weight = 2,
                     comparators = {
-                        -- require("copilot_cmp.comparators").prioritize,
+                        require("copilot_cmp.comparators").prioritize,
 
                         -- Below is the default comparitor list and order for nvim-cmp
                         cmp.config.compare.offset,

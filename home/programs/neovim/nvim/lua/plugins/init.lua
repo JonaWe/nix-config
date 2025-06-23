@@ -279,4 +279,29 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         config = true,
     },
+    {
+        "zbirenbaum/copilot.lua",
+        config = function()
+            require("copilot").setup {
+  filetypes = {
+    javascript = true,
+    typescript = true,
+    python = true,
+    tex = true,
+    latex = true,
+    ["*"] = false, -- disable for all other filetypes and ignore default `filetypes`
+  },
+    suggestion = { enabled = false },
+  panel = { enabled = false },
+}
+    end,
+
+    },
+    {
+  "zbirenbaum/copilot-cmp",
+  config = function ()
+    require("copilot_cmp").setup()
+  end
+}
+
 }
