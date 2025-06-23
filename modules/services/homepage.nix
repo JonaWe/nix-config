@@ -158,8 +158,8 @@ in {
                 widget = {
                   type = "paperlessngx";
                   url = "http://localhost:${toString config.myconf.services.paperless.port}";
-                  username = "admin";
-                  password = "admin";
+                  username = "{{HOMEPAGE_VAR_PAPERLESS_USERNAME}}";
+                  password = "{{HOMEPAGE_VAR_PAPERLESS_PASSWORD}}";
                 };
               };
             }
@@ -334,6 +334,45 @@ in {
                   username = "{{HOMEPAGE_VAR_OPNSENSE_USERNAME}}";
                   password = "{{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}";
                   key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+                };
+              };
+            }
+            {
+              "Unifi Controller" = {
+                icon = "unifi.svg";
+                href = "https://10.1.1.90:8443/";
+                statusStyle = "dot";
+                siteMonitor = "https://10.1.1.90:8443";
+                description = "Unifi Controller";
+                widget = {
+                  type = "unifi";
+                  url = "https://10.1.1.90:8443";
+                  username = "homepage";
+                  password = "homepage";
+                  uptime = true;
+                  wlan = true;
+                  wlan_users = true;
+                  wlan_devices = true;
+                  # ", "wan", "lan", "lan_users", "lan_devices", "wlan", "wlan_users", "wlan_devices"]
+                };
+              };
+            }
+            {
+              "Adguard Home" = {
+                icon = "adguard.svg";
+                href = "http://10.1.1.1:3000/";
+                statusStyle = "dot";
+                siteMonitor = "http://10.1.1.1:3000";
+                description = "DNS adblocker";
+                widget = {
+                  type = "adguard";
+                  url = "http://10.1.1.1:3000";
+                  username = "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}";
+                  password = "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}";
+                  queries = true;
+                  blocked = true;
+                  filtered = true;
+                  latency = true;
                 };
               };
             }

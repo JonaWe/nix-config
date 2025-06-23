@@ -24,9 +24,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets."searx/environment" = {};
+
     services.searx = {
       enable = true;
       redisCreateLocally = true;
+      environmentFile = config.sops.secrets."searx/environment".path;
       settings = {
         server = {
           bind_address = "127.0.0.1";
