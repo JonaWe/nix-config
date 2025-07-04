@@ -209,6 +209,15 @@ in {
               };
             }
             {
+              "ConvertX" = {
+                icon = "sh-convertx.png";
+                href = "https://convert.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.convertx.port}";
+                description = "Convert any file";
+              };
+            }
+            {
               "Open WebUI" = {
                 icon = "open-webui.svg";
                 href = "https://llm.${serverBaseUrl}/";

@@ -28,5 +28,6 @@
     ./metube.nix
     ./it-tools.nix
     ./seafile.nix
+    ./convertx.nix
   ];
 }
