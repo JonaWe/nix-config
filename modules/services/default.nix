@@ -27,5 +27,6 @@
     ./searx.nix
     ./metube.nix
     ./it-tools.nix
+    ./seafile.nix
   ];
 }

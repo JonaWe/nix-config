@@ -141,6 +141,9 @@
     # karakeep = {
     #   enable = true;
     # };
+    seafile.enable = false;
+    seafile.zfsIntegration.enable = true;
+    seafile.zfsIntegration.enableBackups = true;
     actual = {
       enable = true;
     };
