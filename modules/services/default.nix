@@ -30,5 +30,6 @@
     ./seafile.nix
     ./convertx.nix
     ./omni-tools.nix
+    ./olivetin.nix
   ];
 }

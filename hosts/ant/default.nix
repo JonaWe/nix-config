@@ -141,6 +141,7 @@
     # karakeep = {
     #   enable = true;
     # };
+    olivetin.enable = true;
     convertx.enable = true;
     omni-tools.enable = true;
     seafile.enable = false;
@@ -207,7 +208,7 @@
         openFirewall = true;
       };
       recommendarr = {
-        enable = true;
+        enable = false;
         openFirewall = true;
       };
       prowlarr = {
@@ -223,11 +224,7 @@
         openFirewall = true;
       };
       readarr = {
-        enable = true;
-        openFirewall = true;
-      };
-      lidarr = {
-        enable = true;
+        enable = false;
         openFirewall = true;
       };
       jellyseerr = {
@@ -235,7 +232,7 @@
         openFirewall = true;
       };
       bazarr = {
-        enable = true;
+        enable = false;
         openFirewall = true;
       };
       flaresolverr = {
