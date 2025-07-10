@@ -142,6 +142,7 @@
     #   enable = true;
     # };
     convertx.enable = true;
+    omni-tools.enable = true;
     seafile.enable = false;
     seafile.zfsIntegration.enable = true;
     seafile.zfsIntegration.enableBackups = true;

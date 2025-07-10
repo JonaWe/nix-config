@@ -33,6 +33,10 @@ in {
             style = "row";
             columns = "4";
           };
+          "Tools" = {
+            style = "row";
+            columns = "4";
+          };
           "*arr" = {
             style = "row";
             columns = "4";
@@ -182,42 +186,6 @@ in {
             #   };
             # }
             {
-              "Metube" = {
-                icon = "metube.svg";
-                href = "https://metube.${serverBaseUrl}/";
-                statusStyle = "dot";
-                siteMonitor = "http://localhost:${toString config.myconf.services.metube.port}";
-                description = "YouTube Downloader";
-              };
-            }
-            {
-              "IT-Tools" = {
-                icon = "it-tools.svg";
-                href = "https://it-tools.${serverBaseUrl}/";
-                statusStyle = "dot";
-                siteMonitor = "http://localhost:${toString config.myconf.services.it-tools.port}";
-                description = "Collection of it tools";
-              };
-            }
-            {
-              "Stirling Pdf" = {
-                icon = "stirling-pdf.svg";
-                href = "https://pdf.${serverBaseUrl}/";
-                statusStyle = "dot";
-                siteMonitor = "http://localhost:${toString config.myconf.services.stirling-pdf.port}";
-                description = "PDF Multitool";
-              };
-            }
-            {
-              "ConvertX" = {
-                icon = "sh-convertx.png";
-                href = "https://convert.${serverBaseUrl}/";
-                statusStyle = "dot";
-                siteMonitor = "http://localhost:${toString config.myconf.services.convertx.port}";
-                description = "Convert any file";
-              };
-            }
-            {
               "Open WebUI" = {
                 icon = "open-webui.svg";
                 href = "https://llm.${serverBaseUrl}/";
@@ -242,6 +210,55 @@ in {
                 statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.wallos.port}";
                 description = "Subscription Management";
+              };
+            }
+          ];
+        }
+        {
+          "Tools" = [
+            {
+              "Metube" = {
+                icon = "metube.svg";
+                href = "https://metube.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.metube.port}";
+                description = "YouTube Downloader";
+              };
+            }
+            {
+              "Stirling Pdf" = {
+                icon = "stirling-pdf.svg";
+                href = "https://pdf.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.stirling-pdf.port}";
+                description = "PDF Multitool";
+              };
+            }
+            {
+              "ConvertX" = {
+                icon = "sh-convertx.png";
+                href = "https://convert.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.convertx.port}";
+                description = "Convert any file";
+              };
+            }
+            {
+              "Omni-Tools" = {
+                icon = "omni-tools.png";
+                href = "https://tools.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.omni-tools.port}";
+                description = "General purpose tools";
+              };
+            }
+            {
+              "IT-Tools" = {
+                icon = "it-tools.svg";
+                href = "https://it-tools.${serverBaseUrl}/";
+                statusStyle = "dot";
+                siteMonitor = "http://localhost:${toString config.myconf.services.it-tools.port}";
+                description = "Collection of it tools";
               };
             }
           ];
