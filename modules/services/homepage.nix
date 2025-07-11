@@ -28,28 +28,49 @@ in {
       settings = {
         title = "Homelab Statuspage";
         useEqualHeights = true;
-        layout = {
-          "Services" = {
-            style = "row";
-            columns = "4";
-          };
-          "Tools" = {
-            style = "row";
-            columns = "4";
-          };
-          "*arr" = {
-            style = "row";
-            columns = "4";
-          };
-          "Network" = {
-            style = "row";
-            columns = "4";
-          };
-          "System" = {
-            style = "row";
-            columns = "4";
-          };
-        };
+
+        # optional other appearance settings:
+        theme = "dark";
+        color = "slate";
+        iconStyle = "theme";
+        statusStyle = "dot";
+
+        layout = [
+          {
+            "Network" = {
+              # style = "row";
+              style = "column";
+              columns = "1";
+            };
+          }
+          {
+            "System" = {
+              # style = "row";
+              style = "column";
+              columns = "1";
+            };
+          }
+          {
+            "*arr" = {
+              # style = "row";
+              # columns = "4";
+              style = "column";
+              columns = "1";
+            };
+          }
+          {
+            "Tools" = {
+              style = "column";
+              columns = "1";
+            };
+          }
+          {
+            "Services" = {
+              style = "row";
+              columns = "4";
+            };
+          }
+        ];
       };
       widgets = [
         {
@@ -95,7 +116,6 @@ in {
               Immich = {
                 icon = "immich.png";
                 href = "https://immich.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:2283";
                 description = "Photo Library";
                 widget = {
@@ -110,7 +130,6 @@ in {
               Jellyfin = {
                 icon = "jellyfin.png";
                 href = "https://jellyfin.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:8096/health";
                 description = "Media Streaming";
                 widget = {
@@ -128,7 +147,6 @@ in {
               Gitea = {
                 icon = "gitea.png";
                 href = "https://gitea.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:3002";
                 description = "Git Server";
                 widget = {
@@ -142,7 +160,6 @@ in {
               Tandoor = {
                 icon = "tandoor-recipes.png";
                 href = "https://recipes.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:9203";
                 description = "Recipe Manager";
                 widget = {
@@ -156,7 +173,6 @@ in {
               Paperless = {
                 icon = "paperless-ngx.svg";
                 href = "https://paperless.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.paperless.port}";
                 description = "Digital Document Mananger";
                 widget = {
@@ -171,7 +187,6 @@ in {
               SearX = {
                 href = "https://search.ts.pinkorca.de";
                 icon = "searx.svg";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.searx.port}";
                 description = "Meta Search Enging";
               };
@@ -180,7 +195,6 @@ in {
             #   Karakeep = {
             #     href = "https://karakeep.ts.pinkorca.de";
             #     icon = "karakeep.svg";
-            #     statusStyle = "dot";
             #     siteMonitor = "http://localhost:${toString config.myconf.services.karakeep.port}";
             #     description = "Bookmark Mananger";
             #   };
@@ -189,7 +203,6 @@ in {
               "Open WebUI" = {
                 icon = "open-webui.svg";
                 href = "https://llm.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.llm.port}";
                 description = "AI Chatbot";
               };
@@ -198,7 +211,6 @@ in {
               "Grocy" = {
                 icon = "grocy.svg";
                 href = "https://grocy.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.grocy.port}";
                 description = "Household Management";
               };
@@ -207,7 +219,6 @@ in {
               "Wallos" = {
                 icon = "sh-wallos.svg";
                 href = "https://wallos.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.wallos.port}";
                 description = "Subscription Management";
               };
@@ -220,7 +231,6 @@ in {
               "Metube" = {
                 icon = "metube.svg";
                 href = "https://metube.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.metube.port}";
                 description = "YouTube Downloader";
               };
@@ -229,7 +239,6 @@ in {
               "Stirling Pdf" = {
                 icon = "stirling-pdf.svg";
                 href = "https://pdf.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.stirling-pdf.port}";
                 description = "PDF Multitool";
               };
@@ -238,7 +247,6 @@ in {
               "ConvertX" = {
                 icon = "sh-convertx.png";
                 href = "https://convert.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.convertx.port}";
                 description = "Convert any file";
               };
@@ -247,7 +255,6 @@ in {
               "Omni-Tools" = {
                 icon = "omni-tools.png";
                 href = "https://tools.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.omni-tools.port}";
                 description = "General purpose tools";
               };
@@ -256,7 +263,6 @@ in {
               "IT-Tools" = {
                 icon = "it-tools.svg";
                 href = "https://it-tools.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:${toString config.myconf.services.it-tools.port}";
                 description = "Collection of it tools";
               };
@@ -269,7 +275,6 @@ in {
               Radarr = {
                 icon = "radarr.png";
                 href = "https://radarr.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:7878";
                 description = "Movie Manager";
                 widget = {
@@ -280,25 +285,23 @@ in {
                 };
               };
             }
-            {
-              Readarr = {
-                icon = "readarr.png";
-                href = "https://readarr.${serverBaseUrl}/";
-                statusStyle = "dot";
-                siteMonitor = "http://localhost:8787";
-                description = "Book Manager";
-                widget = {
-                  type = "readarr";
-                  url = "http://localhost:8787";
-                  key = "{{HOMEPAGE_VAR_READARR_API_KEY}}";
-                };
-              };
-            }
+            # {
+            #   Readarr = {
+            #     icon = "readarr.png";
+            #     href = "https://readarr.${serverBaseUrl}/";
+            #     siteMonitor = "http://localhost:8787";
+            #     description = "Book Manager";
+            #     widget = {
+            #       type = "readarr";
+            #       url = "http://localhost:8787";
+            #       key = "{{HOMEPAGE_VAR_READARR_API_KEY}}";
+            #     };
+            #   };
+            # }
             {
               Sonarr = {
                 icon = "sonarr.png";
                 href = "https://sonarr.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:8989";
                 description = "TV Show Manager";
                 widget = {
@@ -312,7 +315,6 @@ in {
               Prowlarr = {
                 icon = "prowlarr.png";
                 href = "https://prowlarr.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:9696";
                 description = "Index Manager";
                 widget = {
@@ -326,7 +328,6 @@ in {
               Jellyseerr = {
                 icon = "jellyseerr.png";
                 href = "https://jellyseerr.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:5055";
                 description = "Media Requests";
                 widget = {
@@ -340,7 +341,6 @@ in {
               qBittorrent = {
                 icon = "qbittorrent.png";
                 href = "https://qbittorrent.${serverBaseUrl}/";
-                statusStyle = "dot";
                 siteMonitor = "http://localhost:8055";
                 description = "Torrent Download Client";
                 widget = {
@@ -359,7 +359,6 @@ in {
               "OPNSense" = {
                 icon = "opnsense.png";
                 href = "https://10.1.1.1/";
-                statusStyle = "dot";
                 siteMonitor = "https://10.1.1.1";
                 description = "Router";
                 widget = {
@@ -375,7 +374,6 @@ in {
               "Unifi Controller" = {
                 icon = "unifi.svg";
                 href = "https://10.1.1.90:8443/";
-                statusStyle = "dot";
                 siteMonitor = "https://ant:8443";
                 description = "Unifi Controller";
                 widget = {
@@ -394,7 +392,6 @@ in {
               "Adguard Home" = {
                 icon = "adguard-home.svg";
                 href = "http://10.1.1.1:3000/";
-                statusStyle = "dot";
                 siteMonitor = "http://10.1.1.1:3000";
                 description = "DNS adblocker";
                 # widget = {
@@ -413,6 +410,14 @@ in {
         }
         {
           "System" = [
+            {
+              "Olivetin" = {
+                icon = "olivetin.svg";
+                href = "https://olivetin.${serverBaseUrl}/";
+                siteMonitor = "https://qbittorrent.${serverBaseUrl}/";
+                description = "Server Commands";
+              };
+            }
           ];
         }
       ];
