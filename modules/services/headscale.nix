@@ -54,13 +54,66 @@ in {
         policy.path = pkgs.writeText "acl.json" (
           builtins.toJSON {
             randomizeClientPort = true; # direct connection opnsense?
-            hosts = {};
-            groups = {};
+            # hosts = {
+            #
+            # };
+            groups = {
+              "group:trusted" = [
+                "Jona"
+                "Noah"
+                "Rahel"
+                "Sofie"
+              ];
+              "group:vpn" = [
+                "Jona"
+                "Sofie"
+              ];
+            };
             acls = [
               {
                 action = "accept";
-                src = ["*"];
-                dst = ["*:*"];
+                src = ["Jona"];
+                dst = ["Jona:*"];
+              }
+              # {
+              #   action = "accept";
+              #   src = ["Jona"];
+              #   dst = ["*:*"];
+              # }
+              {
+                action = "accept";
+                src = [
+                  "group:trusted"
+                ];
+                dst = [
+                  "Infra:*"
+                ];
+              }
+              # {
+              #   action = "accept";
+              #   src = [
+              #     "Infra:ant"
+              #   ];
+              #   dst = [
+              #     "group:trusted:*"
+              #   ];
+              # }
+              # {
+              #   action = "accept";
+              #   src = [
+              #     "group:trusted"
+              #   ];
+              #   dst = [
+              #     "Infra:ant:80"
+              #     "Infra:ant:443"
+              #   ];
+              # }
+              {
+                action = "accept";
+                src = [
+                  "group:vpn"
+                ];
+                dst = ["autogroup:internet:*"]; # allow exit-nodes
               }
             ];
           }

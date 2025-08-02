@@ -70,7 +70,7 @@ in {
           my-devices
           // {
             rahel-handy = {
-              id = "VY52ZGY-4WI5KHU-O3OS3DX-3IXMAOI-YB5KRRN-KE5QVK4-EU57MMQ-BXDWRQ3";
+              id = "NVEYE4A-SRAEVCP-AZRCIHA-VFHEQ7A-UL6ZRJ4-SPYGRMM-P4VRSTF-VQKDBAO";
             };
           };
         folders = {
@@ -108,6 +108,12 @@ in {
             id = "rahel-camera";
             label = "Android Camera Rahel";
             path = "${cfg.dataDir}/rahel/pictures/android-camera";
+            devices = ["rahel-handy" "ant"];
+          };
+          "rahel-notes" = {
+            id = "rahel-notes";
+            label = "Rahel Notes";
+            path = "${cfg.dataDir}/rahel/notes";
             devices = ["rahel-handy" "ant"];
           };
         };

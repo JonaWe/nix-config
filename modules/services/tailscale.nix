@@ -11,7 +11,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services.tailscale.enable = true;
+    services.tailscale = {
+      enable = true;
+      # useRoutingFeatures = "both";
+      # extraUpFlags = [
+      #   "--advertise-exit-node"
+      # ];
+    };
     networking.firewall = {
       checkReversePath = "loose";
       trustedInterfaces = ["tailscale0"];

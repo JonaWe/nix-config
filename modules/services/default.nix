@@ -24,5 +24,12 @@
     ./radicale.nix
     ./unifi-controller.nix
     ./karakeep.nix
+    ./searx.nix
+    ./metube.nix
+    ./it-tools.nix
+    ./seafile.nix
+    ./convertx.nix
+    ./omni-tools.nix
+    ./olivetin.nix
   ];
 }
