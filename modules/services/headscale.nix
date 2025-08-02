@@ -49,6 +49,11 @@ in {
               type = "A";
               value = "100.64.0.2";
             }
+            {
+              name = "*.ts.pinkorca";
+              type = "AAAA";
+              value = "fd7a:115c:a1e0::2";
+            }
           ];
         };
         policy.path = pkgs.writeText "acl.json" (
