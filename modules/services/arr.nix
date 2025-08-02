@@ -59,6 +59,11 @@ in {
         default = "${cfg.libDir.base}/bazarr";
         description = "Directory for bazarr runtime config";
       };
+      jellyfin = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/jellyfin2";
+        description = "Directory for bazarr runtime config";
+      };
     };
     dataDir = {
       base = lib.mkOption {
@@ -298,6 +303,13 @@ in {
           proxyPass = "http://localhost:${builtins.toString cfg.radarr.port}/";
         };
       };
+      "jellyfin2.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:9999/";
+        };
+      };
     };
 
     # users
@@ -321,6 +333,29 @@ in {
       };
     };
 
+    virtualisation.oci-containers.containers."jellyfin" = lib.mkIf cfg.sonarr.enable {
+      image = "jellyfin/jellyfin:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      ports = [
+        "9999:8096"
+        # More port mappings as needed
+      ];
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "${cfg.libDir.jellyfin}:/config:rw"
+        "${cfg.dataDir.tvshows}:/TVShows:rw"
+        "${cfg.dataDir.movies}:/Movies:rw"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+      ];
+    };
+
     # directories
     systemd.tmpfiles.rules =
       [
@@ -334,6 +369,9 @@ in {
       ]
       ++ lib.lists.optionals cfg.recommendarr.enable [
         "d ${cfg.libDir.recommendarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.recommendarr.enable [
+        "d ${cfg.libDir.jellyfin} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
       ++ lib.lists.optionals cfg.jellyseerr.enable [
         "d ${cfg.libDir.jellyseerr} 0700 ${cfg.user.user} ${cfg.user.group} -"
