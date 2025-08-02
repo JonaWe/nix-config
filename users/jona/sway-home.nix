@@ -27,6 +27,7 @@
       pkgs.kdePackages.xdg-desktop-portal-kde
     ];
   };
+
   home.packages = with pkgs; [
     signal-desktop
     element-desktop
@@ -36,7 +37,8 @@
     obsidian
     firefox
     syncthingtray
-    jetbrains.idea-ultimate
+    # jetbrains.idea-ultimate
+    jetbrains-toolbox
     keepassxc
     gparted
     polkit_gnome
@@ -53,9 +55,13 @@
     teamspeak3
     zoom-us
     gnome-calendar
+    gnome-contacts
+    # gnome-control-center
+    # gnome-desktop
     # kdePackages.merkuro
     jellyfin-media-player
     imv
     mongodb-compass
   ];
+
 }

@@ -55,6 +55,7 @@
     libnotify
     wl-color-picker
     wireshark
+    # davinci-resolve
   ];
 
   nixpkgs.config.allowUnfree = true;
