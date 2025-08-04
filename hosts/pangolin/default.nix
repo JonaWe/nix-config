@@ -22,7 +22,8 @@
     ../../modules/ssh.nix
     ../../modules/docker.nix
     ../../modules/fonts.nix
-    ../../modules/sway.nix
+    # ../../modules/sway.nix
+    ../../modules/hyprland.nix
     ../../modules/steam.nix
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
@@ -75,10 +76,9 @@
     };
   };
 
-  services.mullvad-vpn.enable = true;
   services.gnome = {
-    evolution-data-server.enable = true;
-    gnome-online-accounts.enable = true;
+    # evolution-data-server.enable = true;
+    # gnome-online-accounts.enable = true;
     gnome-keyring.enable = true;
   };
 
@@ -88,11 +88,13 @@
 
   networking.hostName = "pangolin";
 
-  services.fprintd.enable = true;
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+  # services.fprintd.enable = true;
+  # services.fprintd.tod.enable = true;
+  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   nixpkgs.config.rocmSupport = true;
+
+  # TODO: what is this?
   environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
 
   environment.systemPackages = with pkgs; [

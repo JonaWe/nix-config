@@ -7,7 +7,7 @@
     ./swaync.nix
     ./mimeapps.nix
     ./themes.nix
-    ./sway.nix
+    # ./sway.nix
     ./kanshi.nix
     ./swayidle.nix
   ];
