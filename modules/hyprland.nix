@@ -1,8 +1,9 @@
 {pkgs, ...}: {
-  environment.systemPackages = [
-    # configure-gtk
-    pkgs.kitty
-    pkgs.uwsm
+  environment.systemPackages = with pkgs; [
+    kitty
+    uwsm
+    hyprland
+    greetd.tuigreet
   ];
 
   xdg.portal = {
@@ -14,7 +15,6 @@
     enable = true;
     withUWSM = true;
     xwayland.enable = true;
-    # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   # Electron applications defaulting to X11 rather than Wayland
@@ -23,6 +23,7 @@
   services.gnome.gnome-keyring.enable = true;
 
   security.polkit.enable = true;
+  programs.uwsm.enable = true;
 
   # services.dbus.enable = true;
   # services.gvfs.enable = true;
@@ -30,14 +31,33 @@
   # services.devmon.enable = true;
   # services.tumbler.enable = true;
 
-  # programs.dconf.enable = true;
+  programs.dconf.enable = true;
   # programs.sway.enable = true;
+
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet \
+  #         --time --time-format '%I:%M %p | %a • %h | %F' \
+  #         --cmd 'uwsm start hyprland'";
+  #       user = "greeter";
+  #     };
+  #   };
+  # };
+  #
+  # users.users.greeter = {
+  #   isNormalUser = false;
+  #   description = "greetd greeter user";
+  #   extraGroups = ["video" "audio"];
+  #   linger = true;
+  # };
 
   services.greetd = {
     enable = true;
     settings = rec {
       initial_session = {
-        command = "${pkgs.uwsm}/bin/uwsm start hyprland";
+        command = "uwsm start -S -F /run/current-system/sw/bin/Hyprland";
         user = "jona";
       };
       default_session = initial_session;

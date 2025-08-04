@@ -2,10 +2,10 @@
 {
     "height": 30, // Waybar height (to be removed for auto height)
     "spacing": 4, // Gaps between modules (4px)
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "custom/media", "sway/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap", "hyprland/scratchpad", "hyprland/window"],
     "modules-center": [],
     "modules-right": ["custom/swayidle", "custom/notification", "mpd", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock",  "tray"],
-    "sway/workspaces": {
+    "hyprland/workspaces": {
         //     "disable-scroll": true,
         //     "all-outputs": true,
         //     "warp-on-scroll": false,
