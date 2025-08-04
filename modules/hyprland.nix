@@ -4,6 +4,8 @@
     uwsm
     hyprland
     greetd.tuigreet
+    playerctl
+    brightnessctl
   ];
 
   xdg.portal = {
@@ -25,7 +27,7 @@
   security.polkit.enable = true;
   programs.uwsm.enable = true;
 
-  # services.dbus.enable = true;
+  services.dbus.enable = true;
   # services.gvfs.enable = true;
   # services.udisks2.enable = true;
   # services.devmon.enable = true;
