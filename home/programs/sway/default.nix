@@ -29,7 +29,8 @@
     recursive = true;
   };
 
-  programs.waybar.enable = true;
+  # programs.waybar.enable = true;
+  # programs.waybar.systemd = "grapical.target";
 
   home.packages = with pkgs; [
     rofi-wayland

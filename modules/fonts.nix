@@ -8,6 +8,7 @@
       noto-fonts-emoji
 
       nerd-fonts.fira-code
+      jetbrains-mono
       # (nerdfonts.override {fonts = ["FiraCode"];})
     ];
 

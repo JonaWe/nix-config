@@ -2,8 +2,10 @@
   environment.systemPackages = with pkgs; [
     kitty
     uwsm
-    hyprland
     greetd.tuigreet
+    hyprpolkitagent
+    hyprland
+    hyprpaper
     playerctl
     brightnessctl
   ];
@@ -19,7 +21,13 @@
     xwayland.enable = true;
   };
 
-  # Electron applications defaulting to X11 rather than Wayland
+  programs.hyprlock.enable = true;
+  services.hypridle.enable = true;
+
+  programs.waybar.enable = true;
+  # programs.waybar.systemd.target = "grapical.target";
+
+  # electron applications defaulting to Wayland rather than X11
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   services.gnome.gnome-keyring.enable = true;
@@ -48,12 +56,12 @@
   #   };
   # };
   #
-  # users.users.greeter = {
-  #   isNormalUser = false;
-  #   description = "greetd greeter user";
-  #   extraGroups = ["video" "audio"];
-  #   linger = true;
-  # };
+  users.users.greeter = {
+    isNormalUser = false;
+    description = "greetd greeter user";
+    extraGroups = ["video" "audio"];
+    linger = true;
+  };
 
   services.greetd = {
     enable = true;
@@ -62,7 +70,13 @@
         command = "uwsm start -S -F /run/current-system/sw/bin/Hyprland";
         user = "jona";
       };
-      default_session = initial_session;
+      # default_session = initial_session;
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet \
+          --time --time-format '%I:%M %p | %a • %h | %F' \
+          --cmd 'uwsm start hyprland'";
+        user = "greeter";
+      };
     };
   };
 }
