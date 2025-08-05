@@ -6,6 +6,7 @@
     hyprpolkitagent
     hyprland
     hyprpaper
+    hyprsunset
     playerctl
     brightnessctl
   ];
