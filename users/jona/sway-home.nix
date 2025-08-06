@@ -43,7 +43,7 @@
     gparted
     polkit_gnome
     networkmanagerapplet
-    swaynotificationcenter
+    # swaynotificationcenter
     libnotify
     swaylock
     wl-clipboard

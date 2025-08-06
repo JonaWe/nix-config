@@ -6,9 +6,7 @@
     "modules-center": [],
     "modules-right": ["custom/swayidle", "custom/notification", "mpd", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock",  "tray"],
     "hyprland/workspaces": {
-        //     "disable-scroll": true,
         //     "all-outputs": true,
-        //     "warp-on-scroll": false,
         "format": "{icon}",
         "format-icons": {
             "1": "1",
@@ -169,20 +167,11 @@
             "dnd-inhibited-none": ""
         },
         "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "on-click-right": "swaync-client -d -sw",
+        // "exec-if": "which swaync-client",
+        "exec": "/run/current-system/sw/bin/swaync -swb",
+        "on-click": "/run/current-system/sw/bin/swaync -t -sw",
+        "on-click-right": "/run/current-system/sw/bin/swaync -d -sw",
         "escape": true
     }
-//    "custom/swayidle": {
-//        "format": "{} ",
-//        "exec": "if pgrep swayidle > /dev/null; then echo 'On'; else echo 'Off'; fi",
-//        "interval": 5,
-//        "tooltip": true,
-//        "tooltip-format": "Swayidle is currently '{}'",
-//        "on-click": "/bin/bash -c 'pgrep swayidle && ~/dotfiles/.local/bin/stop_swayidle.sh || ~/dotfiles/.local/bin/swayidle.sh'",
-//        "signal": 10
-//    }
 }
 

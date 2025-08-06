@@ -7,6 +7,8 @@
     hyprland
     hyprpaper
     hyprsunset
+    hyprshot
+    swaynotificationcenter
     playerctl
     brightnessctl
   ];
@@ -37,10 +39,10 @@
   programs.uwsm.enable = true;
 
   services.dbus.enable = true;
-  # services.gvfs.enable = true;
-  # services.udisks2.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
   # services.devmon.enable = true;
-  # services.tumbler.enable = true;
+  services.tumbler.enable = true;
 
   programs.dconf.enable = true;
   # programs.sway.enable = true;
