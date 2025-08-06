@@ -25,7 +25,7 @@ in {
     services.ollama = {
       enable = true;
       # package = pkgs-unstable.ollama;
-      loadModels = ["llama3.2:3b" "gemma3:4b" "gemma3:12b" "llama3.2-vision:11b" "deepseek-r1:7b" "deepseek-r1:8b" "phi4:14b" "nomic-embed-text" "dolphin3:8b"];
+      loadModels = ["llama3.2:3b" "gemma3:4b" "gemma3:12b" "llama3.2-vision:11b" "deepseek-r1:7b" "deepseek-r1:8b" "phi4:14b" "nomic-embed-text" "dolphin3:8b" "gpt-oss:20b"];
 
       acceleration = "cuda";
     };
