@@ -33,7 +33,7 @@ xkb_symbols "basic" {
     key <AD03>	{[ e, E, EuroSign ]};
     key <AD04>	{[ r, R, registered ]};
     key <AD06>	{[ z, Z ]};
-    key <AD08>	{[ i, I, infinity ]};
+    //key <AD08>	{[ i, I, infinity ]};
     key <AD11>	{[ asterisk, braceleft ]};
     key <AD12>	{[ plus, braceright, plusminus ]};
 
@@ -46,6 +46,14 @@ xkb_symbols "basic" {
     key <AC10>	{[ slash, apostrophe ]};
     key <AC11>	{[ parenleft, bracketleft ]};
     key <BKSL>	{[ parenright, bracketright ]};
+
+    key <AD07>  {[ u, U, bracketleft, bracketleft ]};       // AltGr+U → [
+    key <AD08>  {[ i, I, braceleft, braceleft ]};         // AltGr+I → {
+    key <AD09>  {[ o, O, braceright, braceright ]};        // AltGr+O → }
+    key <AD10>  {[ p, P, bracketright, bracketright ]};      // AltGr+P → ]
+    //key <AC07>  {[ j, J, parenleft, parenleft ]};         // AltGr+J → (
+    //key <AC08>  {[ k, K, parenright, parenright ]};        // AltGr+K → )
+    //key <AC10>  {[ odiaeresis, Odiaeresis, slash, slash ]}; // AltGr+Ö → /
 
     key <LSGT>	{[ backslash, bar ]};
     key <AB01>	{[ y, Y ]};

@@ -138,5 +138,75 @@
     in ["${automount_opts},uid=1000,gid=100"];
   };
 
+  services.kanata = {
+    enable = true;
+    keyboards = {
+      internalKeyboard = {
+        devices = [
+          "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
+        ];
+        extraDefCfg = "process-unmapped-keys yes";
+        # tap-time 150
+        # hold-time 200
+        # a (tap-hold $tap-time $hold-time a lmet)
+        # s (tap-hold $tap-time $hold-time s lalt)
+        # d (tap-hold $tap-time $hold-time d lsft)
+        # f (tap-hold $tap-time $hold-time f lctl)
+        # j (tap-hold $tap-time $hold-time j rctl)
+        # k (tap-hold $tap-time $hold-time k rsft)
+        # l (tap-hold $tap-time $hold-time l ralt)
+        # ; (tap-hold $tap-time $hold-time ; rmet)
+        config = ''
+          (defsrc
+          a s d f j k l ;
+          )
+
+          (deftemplate homerowmod (timeout char mod)
+            (switch
+              ((key-timing 3 less-than 200)) $char break
+              () (tap-hold-release 0 $timeout $char $mod) break
+            )
+          )
+
+          (deflayermap (main)
+            caps (tap-hold 250 250 esc esc)
+            a (t! homerowmod 250 a lalt)
+            s (t! homerowmod 250 s lmet)
+            d (t! homerowmod 200 d lsft)
+            f (t! homerowmod 250 f lctl)
+            j (t! homerowmod 250 j rctl)
+            k (t! homerowmod 200 k rsft)
+            l (t! homerowmod 250 l rmet)
+            ; (t! homerowmod 250 ; ralt)
+          )
+        '';
+        # config = ''
+        #   (defsrc
+        #    caps a s d f j k l ;
+        #   )
+        #   (defvar
+        #    tap-time 200
+        #    hold-time 200
+        #   )
+        #   (defalias
+        #    caps (tap-hold $tap-time $hold-time esc lctl)
+        #    a (tap-hold $tap-time $hold-time a lalt)
+        #    s (tap-hold $tap-time $hold-time s lmet)
+        #    d (tap-hold $tap-time $hold-time d lsft)
+        #    f (tap-hold $tap-time $hold-time f lctl)
+        #    j (tap-hold $tap-time $hold-time j rctl)
+        #    k (tap-hold $tap-time $hold-time k rsft)
+        #    l (tap-hold $tap-time $hold-time l rmet)
+        #    ; (tap-hold $tap-time $hold-time ; ralt)
+        #   )
+        #
+        #   (deflayer base
+        #    @caps @a  @s  @d  @f  @j  @k  @l  @;
+        #   )
+        # '';
+      };
+    };
+  };
+
   system.stateVersion = "24.11";
 }

@@ -8,7 +8,7 @@
     isNormalUser = true;
     description = username;
     initialPassword = "changeme";
-    extraGroups = ["networkmanager" "wheel" "input" "video"];
+    extraGroups = ["networkmanager" "wheel" "input" "video" "uinput"];
   };
   users.users.root.initialPassword = "changeme";
 

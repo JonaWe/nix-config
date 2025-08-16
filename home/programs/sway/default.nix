@@ -56,6 +56,7 @@
     libnotify
     wl-color-picker
     wireshark
+    vscode
     # davinci-resolve
   ];
 
