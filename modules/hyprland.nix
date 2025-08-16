@@ -11,6 +11,8 @@
     swaynotificationcenter
     playerctl
     brightnessctl
+    ghostty
+    yazi
   ];
 
   xdg.portal = {
