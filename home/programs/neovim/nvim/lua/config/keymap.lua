@@ -16,10 +16,19 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 -- Better escape using jk in insert and terminal mode
 vim.keymap.set("i", "jk", "<ESC>")
 vim.keymap.set("t", "jk", "<C-\\><C-n>")
-vim.keymap.set("t", "<C-w>h", "<C-\\><C-n><C-w>h")
-vim.keymap.set("t", "<C-w>j", "<C-\\><C-n><C-w>j")
-vim.keymap.set("t", "<C-w>k", "<C-\\><C-n><C-w>k")
-vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l")
+vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
+vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
+vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
+-- vim.keymap.set("t", "<C-w>h", "<C-\\><C-n><C-w>h")
+-- vim.keymap.set("t", "<C-w>j", "<C-\\><C-n><C-w>j")
+-- vim.keymap.set("t", "<C-w>k", "<C-\\><C-n><C-w>k")
+-- vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l")
+--
+vim.keymap.set({"n", "i"}, "<C-h>", "<C-w>h")
+vim.keymap.set({"n", "i"}, "<C-j>", "<C-w>j")
+vim.keymap.set({"n", "i"}, "<C-k>", "<C-w>k")
+vim.keymap.set({"n", "i"}, "<C-l>", "<C-w>l")
 
 -- Add undo break-points
 vim.keymap.set("i", ",", ",<c-g>u")
