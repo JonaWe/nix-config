@@ -11,6 +11,7 @@
     swaynotificationcenter
     playerctl
     brightnessctl
+    pavucontrol
     ghostty
     yazi
   ];
