@@ -94,7 +94,7 @@ return {
                     "clangd",
                     "volar",
                     "lua_ls",
-                    "rust_analyzer",
+                    -- "rust_analyzer",
                     "jdtls",
                     "tailwindcss",
                     "eslint",
@@ -146,6 +146,7 @@ return {
         opts = {
             formatters_by_ft = {
                 lua = { "stylua" },
+                rust = { "rustfmt", lsp_format = "fallback" },
                 -- tex = { "latexindent" },
                 python = { "isort", "black" },
             },
