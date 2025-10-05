@@ -13,6 +13,12 @@ in {
       default = false;
       description = "Opens ports for llm";
     };
+    dataDir = lib.mkOption {
+      type = lib.types.path;
+      default = "/var/lib/open-webui";
+      example = "/var/lib/open-webui";
+      description = "Base directory that is used to store open-webui data";
+    };
     port = lib.mkOption {
       type = lib.types.port;
       default = 8085;
@@ -30,10 +36,28 @@ in {
       acceleration = "cuda";
     };
 
-    services.open-webui = {
-      enable = true;
-      package = pkgs-unstable.open-webui;
-      port = cfg.port;
+    virtualisation.oci-containers.containers."open-webui" = {
+      image = "ghcr.io/open-webui/open-webui";
+      environment = {
+        "TZ" = "Europe/Berlin";
+        "OLLAMA_BASE_URL" = "http://host.docker.internal:${toString 11434}";
+        "WEBUI_SECRET_KEY" = "not-important-right-now-for-this-setup";
+        "ANONYMIZED_TELEMETRY" = "False";
+        "DO_NOT_TRACK" = "True";
+        "SCARF_NO_ANALYTICS" = "True";
+      };
+      ports = [
+        "${toString cfg.port}:8080"
+      ];
+      volumes = [
+        "${cfg.dataDir}:/app/backend/data"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        # "--network=host"
+        "--add-host=host.docker.internal:10.1.1.90"
+      ];
     };
 
     services.nginx.virtualHosts."llm.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
