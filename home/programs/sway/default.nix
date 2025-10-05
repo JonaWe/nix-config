@@ -57,6 +57,11 @@
     wl-color-picker
     wireshark
     vscode
+    darktable
+    rust-analyzer
+    rustc
+    rustfmt
+    ffmpeg
     # davinci-resolve
   ];
 
