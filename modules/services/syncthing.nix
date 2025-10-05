@@ -64,15 +64,21 @@ in {
           octopus = {
             id = "B7VXQ7Y-E57K6BJ-IX37GNP-P34K33S-POJAZJI-NLGZFH6-KXVYAVO-5O2TKQT";
           };
+          wombat = {
+            id = "CDMXT6Q-EWEAQES-QXAZLG7-3QQJUC4-UGXQXY6-GSH3P4B-TKXZ5HJ-ZLIJBAC";
+          };
         };
         my-device-names = builtins.attrNames my-devices;
         server-only-devices = {
-            rahel-handy = {
-              id = "NVEYE4A-SRAEVCP-AZRCIHA-VFHEQ7A-UL6ZRJ4-SPYGRMM-P4VRSTF-VQKDBAO";
-            };
+          rahel-handy = {
+            id = "NVEYE4A-SRAEVCP-AZRCIHA-VFHEQ7A-UL6ZRJ4-SPYGRMM-P4VRSTF-VQKDBAO";
+          };
         };
       in {
-        devices = if cfg.server then my-devices // server-only-devices else my-devices;
+        devices =
+          if cfg.server
+          then my-devices // server-only-devices
+          else my-devices;
         folders = {
           "keepass" = {
             id = "keepass";
@@ -104,13 +110,19 @@ in {
             path = "${cfg.dataDir}/paperless-consume";
             devices = my-device-names;
           };
-          "rahel-camera" = {
+          "vault-work" = {
+            id = "vault-work";
+            label = "Vault for wor pc";
+            path = "${cfg.dataDir}/vault-work";
+            devices = ["ant" "pangolin" "wombat"];
+          };
+          "rahel-camera" = lib.mkIf cfg.server {
             id = "rahel-camera";
             label = "Android Camera Rahel";
             path = "${cfg.dataDir}/rahel/pictures/android-camera";
             devices = ["rahel-handy" "ant"];
           };
-          "rahel-notes" = {
+          "rahel-notes" = lib.mkIf cfg.server {
             id = "rahel-notes";
             label = "Rahel Notes";
             path = "${cfg.dataDir}/rahel/notes";
