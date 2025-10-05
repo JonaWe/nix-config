@@ -100,6 +100,7 @@
     };
     syncthing = {
       enable = true;
+      server = true;
       dataDir = "/data/syncthing";
       user = "syncthing";
       group = "syncthing";

@@ -7,6 +7,7 @@
 in {
   options.myconf.services.syncthing = {
     enable = lib.mkEnableOption "Enable Syncthing to share files between devices";
+    server = lib.mkEnableOption "Enable server mode which syncs some extra external folders";
     user = lib.mkOption {
       type = lib.types.str;
       default = "syncthing";
@@ -65,14 +66,13 @@ in {
           };
         };
         my-device-names = builtins.attrNames my-devices;
-      in {
-        devices =
-          my-devices
-          // {
+        server-only-devices = {
             rahel-handy = {
               id = "NVEYE4A-SRAEVCP-AZRCIHA-VFHEQ7A-UL6ZRJ4-SPYGRMM-P4VRSTF-VQKDBAO";
             };
-          };
+        };
+      in {
+        devices = if cfg.server then my-devices // server-only-devices else my-devices;
         folders = {
           "keepass" = {
             id = "keepass";

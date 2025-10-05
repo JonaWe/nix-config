@@ -18,6 +18,7 @@
   myconf.services = {
     syncthing = {
       enable = true;
+      server = false;
       dataDir = "/home/jona";
       user = "jona";
       group = "users";
