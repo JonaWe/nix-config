@@ -33,11 +33,11 @@
     # networking tools
     # mtr # A network diagnostic tool
     # iperf3
-    # dnsutils # `dig` + `nslookup`
+    dnsutils # `dig` + `nslookup`
     # ldns # replacement of `dig`, it provide the command `drill`
     # aria2 # A lightweight multi-protocol & multi-source command-line download utility
     # socat # replacement of openbsd-netcat
-    # nmap # A utility for network discovery and security auditing
+    nmap # A utility for network discovery and security auditing
     # ipcalc # it is a calculator for the IPv4/v6 addresses
 
     # misc
@@ -78,6 +78,12 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    zsh-fzf-tab
+    zsh-vi-mode
+    # zsh-vi-mode
+
+    tldr
   ];
 
   programs.git = {
@@ -95,22 +101,47 @@
   programs.fd.enable = true;
   programs.ripgrep.enable = true;
   programs.lazygit.enable = true;
+  programs.lazydocker.enable = true;
   programs.lsd = {
     enable = true;
     enableZshIntegration = true;
   };
-
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    syntaxHighlighting.enable = true;
     oh-my-zsh.enable = true;
+    plugins = [
+      # {
+      #   name = "zsh-vi-mode";
+      #   src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
+      # }
+      {
+        name = "fzf-tab";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+      {
+        name = "vi-mode";
+        src = pkgs.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      }
+    ];
+
     shellAliases = {
       v = "nvim";
       nrs = "sudo nixos-rebuild switch --flake /home/jona/nix-config";
+      lg = "lazygit";
+      lzd = "lazydocker";
     };
   };
 
   home.sessionVariables = {
-   EDITOR = "nvim";
+    EDITOR = "nvim";
   };
 
   home.stateVersion = "24.11";
