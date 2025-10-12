@@ -148,8 +148,13 @@
     seafile.enable = false;
     seafile.zfsIntegration.enable = true;
     seafile.zfsIntegration.enableBackups = true;
+    monitoring = {
+      enable = true;
+    };
     actual = {
       enable = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
     };
     wallos = {
       enable = true;

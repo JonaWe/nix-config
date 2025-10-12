@@ -31,5 +31,6 @@
     ./convertx.nix
     ./omni-tools.nix
     ./olivetin.nix
+    ./monitoring.nix
   ];
 }
