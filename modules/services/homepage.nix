@@ -144,6 +144,14 @@ in {
               };
             }
             {
+              Actual = {
+                icon = "actual.png";
+                href = "https://actual.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:9284";
+                description = "Money Budgeting";
+              };
+            }
+            {
               Gitea = {
                 icon = "gitea.png";
                 href = "https://gitea.${serverBaseUrl}/";
