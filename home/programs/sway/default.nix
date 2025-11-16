@@ -62,6 +62,7 @@
     rustc
     rustfmt
     ffmpeg
+    gimp3
     # davinci-resolve
   ];
 
