@@ -33,13 +33,13 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
+    pattern = { "*.cpp", "*.hpp", "*.cc", "*.cxx", "*.h", ".glsl" },
     callback = function (event)
-        -- require("conform").format({
-        --     bufnr = event.buf,
-        --     timeout_ms = 2000,
-        --     lsp_fallback = true,
-        -- })
+        require("conform").format({
+            bufnr = event.buf,
+            timeout_ms = 2000,
+            lsp_fallback = true,
+        })
     end
 })
 
