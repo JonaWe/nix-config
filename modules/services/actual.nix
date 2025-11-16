@@ -19,6 +19,8 @@ in {
       example = "/var/lib/actual-server";
       description = "Base directory that is used to store actual-server data";
     };
+    zfsIntegration.enable = lib.mkEnableOption "Enable zfs integration that creates datasets etc.";
+    zfsIntegration.enableBackups = lib.mkEnableOption "Enables zfs backups for the created datasets";
   };
 
   config = lib.mkIf cfg.enable {
@@ -44,6 +46,20 @@ in {
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://localhost:${toString cfg.port}/";
+      };
+    };
+
+    myconf.disk.dataPool.extraDatasets = lib.mkIf cfg.zfsIntegration.enable {
+      "enc/services/actual" = {
+        type = "zfs_fs";
+        mountpoint = cfg.dataDir;
+        options.mountpoint = "legacy";
+      };
+    };
+
+    services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
+      datasets = {
+        "zdata/enc/services/actual".useTemplate = ["default"];
       };
     };
   };
