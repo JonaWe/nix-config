@@ -32,6 +32,23 @@
     tailscale.enable = true;
   };
 
+  # environment.systemPackages = with pkgs; [
+  #   socat
+  # ];
+
+  # systemd.services.minecraft-forward = {
+  #   description = "Forward Minecraft traffic to home server via Tailscale";
+  #   after = ["network-online.target" "tailscale.service"];
+  #   wantedBy = ["multi-user.target"];
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:25565,reuseaddr,fork TCP:100.64.0.2:25565";
+  #     Restart = "always";
+  #     RestartSec = 5;
+  #   };
+  # };
+  #
+  # networking.firewall.allowedTCPPorts = [25565];
+
   networking.hostName = "albatross";
 
   networking.firewall = {

@@ -85,6 +85,24 @@ in {
               #   src = ["Jona"];
               #   dst = ["*:*"];
               # }
+              # {
+              #   action = "accept";
+              #   src = [
+              #     "Infra:*"
+              #   ];
+              #   dst = [
+              #     "*"
+              #   ];
+              # }
+              {
+                action = "accept";
+                src = [
+                  "Infra"
+                ];
+                dst = [
+                  "Infra:*"
+                ];
+              }
               {
                 action = "accept";
                 src = [
