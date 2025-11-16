@@ -19,6 +19,7 @@
     gnumake
     texlab
     ltex-ls
+    lua-language-server
     glsl_analyzer
   ];
 }

@@ -78,6 +78,7 @@ return {
                 },
             })
             require('lspconfig').glsl_analyzer.setup({})
+            require('lspconfig').lua_ls.setup({})
 
             -- this is the language tool language server
             require("lspconfig").ltex.setup({
@@ -96,7 +97,7 @@ return {
                     "pyright",
                     -- "clangd",
                     "volar",
-                    "lua_ls",
+                    -- "lua_ls",
                     -- "rust_analyzer",
                     "jdtls",
                     "tailwindcss",
