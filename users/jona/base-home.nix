@@ -88,6 +88,7 @@
 
   programs.git = {
     enable = true;
+    lfs.enable = true;
     userName = "Jona";
     userEmail = "jona.wessendorf1@uni-bielefeld.de";
     extraConfig = {
