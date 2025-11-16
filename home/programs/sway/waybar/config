@@ -4,7 +4,7 @@
     "spacing": 4, // Gaps between modules (4px)
     "modules-left": ["hyprland/workspaces", "hyprland/submap", "hyprland/scratchpad", "hyprland/window"],
     "modules-center": [],
-    "modules-right": ["custom/swayidle", "custom/notification", "mpd", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock",  "tray"],
+    "modules-right": ["custom/notification", "custom/kanata", "mpd", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock",  "tray"],
     "hyprland/workspaces": {
         //     "all-outputs": true,
         "format": "{icon}",
@@ -172,6 +172,12 @@
         "on-click": "/run/current-system/sw/bin/swaync-client -t -sw",
         "on-click-right": "/run/current-system/sw/bin/swaync-client -d -sw",
         "escape": true
+    },
+    "custom/kanata": {
+        "interval": 2,
+        "exec": "/home/jona/nix-config/home/programs/hyprland/kanata-status.sh",
+        "return-type": "json",
+        "on-click": "/home/jona/nix-config/home/programs/hyprland/kanata-toggle.sh"
     }
 }
 

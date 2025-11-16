@@ -140,6 +140,22 @@
     in ["${automount_opts},uid=1000,gid=100"];
   };
 
+  # allow users of the wheel group to manage the kanata service
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.isInGroup("wheel") &&
+          (action.id == "org.freedesktop.systemd1.manage-units" ||
+           action.id == "org.freedesktop.systemd1.restart-unit" ||
+           action.id == "org.freedesktop.systemd1.start-unit" ||
+           action.id == "org.freedesktop.systemd1.stop-unit")) {
+
+        if (action.lookup("unit") == "kanata-internalKeyboard.service") {
+          return polkit.Result.YES;
+        }
+      }
+    });
+  '';
+
   services.kanata = {
     enable = true;
     keyboards = {
