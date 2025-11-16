@@ -18,9 +18,19 @@ return {
                         i = {
                             ["<esc>"] = require("telescope.actions").close,
                             ["qq"] = require("telescope.actions").close,
+                            ["<C-o>"] = function(prompt_bufnr)
+                                local entry = require("telescope.actions.state").get_selected_entry()
+                                require("telescope.actions").close(prompt_bufnr)
+                                vim.fn.jobstart({"xdg-open", entry.path}, {detach = true})
+                            end,
                         },
                         n = {
                             ["q"] = require("telescope.actions").close,
+                            ["<C-o>"] = function(prompt_bufnr)
+                                local entry = require("telescope.actions.state").get_selected_entry()
+                                require("telescope.actions").close(prompt_bufnr)
+                                vim.fn.jobstart({"xdg-open", entry.path}, {detach = true})
+                            end,
                         },
                     },
                     file_ignore_patterns = {
@@ -63,6 +73,23 @@ return {
                     require("telescope.builtin").live_grep()
                 end,
                 desc = "[G]rep",
+            },
+            {
+                "<leader>fd",
+                "<cmd>Telescope diagnostics<cr>",
+                desc = "[D]iagnostics",
+            },
+            {
+                "<leader>fc",
+                function()
+                    require("telescope.builtin").git_commits()
+                end,
+                desc = "[C]ommits",
+            },
+            {
+                "<leader>ft",
+                "<cmd>TodoTelescope<cr>",
+                desc = "[T]odos",
             },
             {
                 "<leader>fh",
