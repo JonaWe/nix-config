@@ -19,5 +19,6 @@
     gnumake
     texlab
     ltex-ls
+    glsl_analyzer
   ];
 }

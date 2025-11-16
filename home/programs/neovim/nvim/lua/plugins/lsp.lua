@@ -77,21 +77,24 @@ return {
                     },
                 },
             })
+            require('lspconfig').glsl_analyzer.setup({})
+
             -- this is the language tool language server
             require("lspconfig").ltex.setup({
                 --         filetypes = { "tex" },
                 settings = {
                     ltex = {
-                        language = "en-US",
-                        -- language = "de-DE",
+                        -- language = "en-US",
+                        language = "de-DE",
                     },
                 },
             })
             require("lspconfig").texlab.setup({})
+            require("lspconfig").clangd.setup({})
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     "pyright",
-                    "clangd",
+                    -- "clangd",
                     "volar",
                     "lua_ls",
                     -- "rust_analyzer",
@@ -149,6 +152,7 @@ return {
                 rust = { "rustfmt", lsp_format = "fallback" },
                 -- tex = { "latexindent" },
                 python = { "isort", "black" },
+                cpp = { "clang-format" },
             },
             -- formatters = {
             --     latexindent = {
@@ -164,6 +168,7 @@ return {
                 markdown = { "markdownlint" },
                 python = { "pylint" },
                 vue = { "eslint" },
+                cpp = { "clangtidy" },
             }
 
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
