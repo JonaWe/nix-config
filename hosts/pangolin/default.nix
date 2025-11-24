@@ -180,14 +180,14 @@
 
           (deflayermap (main)
             caps (tap-hold 250 250 esc esc)
-            a (t! homerowmod 250 a lalt)
-            s (t! homerowmod 250 s lmet)
-            d (t! homerowmod 200 d lsft)
-            f (t! homerowmod 200 f lctl)
-            j (t! homerowmod 200 j rctl)
-            k (t! homerowmod 200 k rsft)
-            l (t! homerowmod 250 l rmet)
-            ; (t! homerowmod 250 ; ralt)
+            a (t! homerowmod 200 a lalt)
+            s (t! homerowmod 200 s lmet)
+            d (t! homerowmod 170 d lsft)
+            f (t! homerowmod 170 f lctl)
+            j (t! homerowmod 170 j rctl)
+            k (t! homerowmod 170 k rsft)
+            l (t! homerowmod 200 l rmet)
+            ; (t! homerowmod 200 ; ralt)
           )
         '';
       };
