@@ -1,3 +1,4 @@
+#!/bin/sh
 #!/run/current-system/sw/bin/bash
 
 SERVICE="kanata-internalKeyboard.service"

@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/sh
+# !/usr/bin/env bash
 
 # name of the workspace that should be moved
 WORKSPACE="$1"
