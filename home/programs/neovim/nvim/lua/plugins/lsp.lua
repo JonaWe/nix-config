@@ -85,8 +85,8 @@ return {
                 --         filetypes = { "tex" },
                 settings = {
                     ltex = {
-                        -- language = "en-US",
-                        language = "de-DE",
+                        language = "en-US",
+                        -- language = "de-DE",
                     },
                 },
             })
