@@ -27,13 +27,13 @@
             scale = 1.0;
             adaptiveSync = true;
             mode = "2560x1440@144";
-            position = "0,0";
+            position = "1920,0";
           }
           {
             criteria = home_sec;
             status = "enable";
             scale = 1.0;
-            position = "2560,180";
+            position = "0,0";
           }
         ];
       }
@@ -42,10 +42,10 @@
         profile.outputs = [
           {
             criteria = internal;
-            status = "enable";
-            scale = 1.0;
-            mode = "1920x1200@60";
-            position = "1080,1920";
+            status = "disable";
+            # scale = 1.0;
+            # mode = "1920x1200@60";
+            # position = "1080,1920";
           }
           {
             criteria = home_main;
@@ -53,7 +53,7 @@
             scale = 1.0;
             adaptiveSync = true;
             mode = "2560x1440@144";
-            position = "1080,480";
+            position = "1920,0";
           }
           {
             criteria = home_sec;
@@ -61,7 +61,7 @@
             scale = 1.0;
             mode = "1920x1080@60";
             position = "0,0";
-            transform = "90";
+            # transform = "90";
           }
         ];
       }
