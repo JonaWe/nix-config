@@ -42,10 +42,10 @@
         profile.outputs = [
           {
             criteria = internal;
-            status = "disable";
-            # scale = 1.0;
-            # mode = "1920x1200@60";
-            # position = "1080,1920";
+            status = "enable";
+            scale = 1.0;
+            mode = "1920x1200@60";
+            position = "1920,1440";
           }
           {
             criteria = home_main;
