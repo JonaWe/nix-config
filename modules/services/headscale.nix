@@ -68,6 +68,10 @@ in {
                 "Noah"
                 "Rahel"
                 "Sofie"
+                "Anton"
+                "Johannes"
+                "Niklas"
+                "Aaron"
               ];
               "group:vpn" = [
                 "Jona"
