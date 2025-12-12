@@ -30,6 +30,10 @@ vim.keymap.set({"n", "i"}, "<C-j>", "<C-w>j")
 vim.keymap.set({"n", "i"}, "<C-k>", "<C-w>k")
 vim.keymap.set({"n", "i"}, "<C-l>", "<C-w>l")
 
+-- Center pos jumping
+vim.keymap.set("n", "<C-i>", "<C-i>zzzv")
+vim.keymap.set("n", "<C-o>", "<C-o>zzzv")
+
 -- Add undo break-points
 vim.keymap.set("i", ",", ",<c-g>u")
 vim.keymap.set("i", ".", ".<c-g>u")
