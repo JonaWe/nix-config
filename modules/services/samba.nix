@@ -50,7 +50,7 @@ in {
           "read only" = "no";
           browsable = "yes";
           writable = "yes";
-          "guest ok" = "yes";
+          "guest ok" = "no";
           "create mask" = 0644;
           "directory mask" = 0755;
           "force user" = cfg.user;
@@ -61,7 +61,7 @@ in {
           "read only" = "no";
           browsable = "yes";
           writable = "yes";
-          "guest ok" = "yes";
+          "guest ok" = "no";
           "create mask" = 0644;
           "directory mask" = 0755;
           "force user" = cfg.user;
