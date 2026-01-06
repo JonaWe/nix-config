@@ -243,6 +243,10 @@
         enable = false;
         openFirewall = true;
       };
+      slskd = {
+        enable = false;
+        openFirewall = true;
+      };
       flaresolverr = {
         enable = true;
       };

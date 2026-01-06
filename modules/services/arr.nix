@@ -59,6 +59,11 @@ in {
         default = "${cfg.libDir.base}/bazarr";
         description = "Directory for bazarr runtime config";
       };
+      slskd = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/slskd";
+        description = "Directory for slskd runtime config";
+      };
       jellyfin = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/jellyfin2";
@@ -208,6 +213,15 @@ in {
         description = "Default port for bazarr web ui";
       };
     };
+    slskd = {
+      enable = lib.mkEnableOption "Enable slskd service";
+      openFirewall = lib.mkEnableOption "Open firewall for slskd web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 9951;
+        description = "Default port for slskd web ui";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable (let
@@ -287,6 +301,13 @@ in {
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.bazarr.port}/";
+        };
+      };
+      "slskd.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:5030";
         };
       };
       "lidarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
@@ -396,6 +417,9 @@ in {
       ]
       ++ lib.lists.optionals cfg.bazarr.enable [
         "d ${cfg.libDir.bazarr} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.slskd.enable [
+        "d ${cfg.libDir.slskd} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ];
 
     services.audiobookshelf = {
@@ -455,6 +479,12 @@ in {
         ]
         ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.jellyseerr.port}:5055/tcp"
+        ]
+        ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
+          "127.0.0.1:5030:5030/tcp"
+        ]
+        ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
+          "127.0.0.1:5031:5031/tcp"
         ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.bazarr.port}:6767/tcp"
@@ -585,6 +615,31 @@ in {
       volumes = [
         "${cfg.libDir.qbittorrent}:/config:rw"
         "${cfg.dataDir.downloads}:/downloads:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
+    systemd.services."docker-slskd" = lib.mkIf cfg.radarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."slskd" = lib.mkIf cfg.radarr.enable {
+      image = "slskd/slskd:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+        "SLSKD_REMOTE_CONFIGURATION"="true";
+        "SLSKD_SHARED_DIR"="/Music";
+      };
+      volumes = [
+        "/etc/localtime:/etc/localtime:ro"
+        "${cfg.libDir.slskd}:/app:rw"
+        "${cfg.dataDir.music}:/Music:rw"
       ];
       dependsOn = [
         "gluetun"
