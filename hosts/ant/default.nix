@@ -180,7 +180,6 @@
       enable = true;
       exitNode = true;
     };
-    };
     jellyfin = {
       enable = true;
       openFirewall = true;
@@ -227,6 +226,10 @@
         enable = true;
         openFirewall = true;
       };
+      lidarr = {
+        enable = true;
+        openFirewall = true;
+      };
       radarr = {
         enable = true;
         openFirewall = true;
@@ -244,7 +247,15 @@
         openFirewall = true;
       };
       slskd = {
-        enable = false;
+        enable = true;
+        openFirewall = true;
+      };
+      navidrome = {
+        enable = true;
+        openFirewall = true;
+      };
+      picard = {
+        enable = true;
         openFirewall = true;
       };
       flaresolverr = {

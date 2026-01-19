@@ -64,6 +64,16 @@ in {
         default = "${cfg.libDir.base}/slskd";
         description = "Directory for slskd runtime config";
       };
+      navidrome = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/navidrome";
+        description = "Directory for navidrome config";
+      };
+      picard = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/picard";
+        description = "Directory for picard config";
+      };
       jellyfin = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/jellyfin2";
@@ -222,6 +232,24 @@ in {
         description = "Default port for slskd web ui";
       };
     };
+    navidrome = {
+      enable = lib.mkEnableOption "Enable navidrome service";
+      openFirewall = lib.mkEnableOption "Open firewall for navidrome web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 4533;
+        description = "Default port for navidrome web ui";
+      };
+    };
+    picard = {
+      enable = lib.mkEnableOption "Enable picard service";
+      openFirewall = lib.mkEnableOption "Open firewall for picard web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 5800;
+        description = "Default port for picard web ui";
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable (let
@@ -308,6 +336,20 @@ in {
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:5030";
+        };
+      };
+      "navidrome.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.navidrome.port}";
+        };
+      };
+      "picard.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.picard.port}";
         };
       };
       "lidarr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
@@ -420,6 +462,12 @@ in {
       ]
       ++ lib.lists.optionals cfg.slskd.enable [
         "d ${cfg.libDir.slskd} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.navidrome.enable [
+        "d ${cfg.libDir.navidrome} 0700 ${cfg.user.user} ${cfg.user.group} -"
+      ]
+      ++ lib.lists.optionals cfg.picard.enable [
+        "d ${cfg.libDir.picard} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ];
 
     services.audiobookshelf = {
@@ -486,6 +534,12 @@ in {
         ++ lib.lists.optionals cfg.jellyseerr.openFirewall [
           "127.0.0.1:5031:5031/tcp"
         ]
+        ++ lib.lists.optionals cfg.navidrome.openFirewall [
+          "127.0.0.1:${builtins.toString cfg.navidrome.port}:4533/tcp"
+        ]
+        ++ lib.lists.optionals cfg.picard.openFirewall [
+          "127.0.0.1:${builtins.toString cfg.picard.port}:${builtins.toString cfg.picard.port}/tcp"
+        ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.bazarr.port}:6767/tcp"
         ];
@@ -536,6 +590,54 @@ in {
       ];
     };
 
+    systemd.services."docker-navidrome" = lib.mkIf cfg.navidrome.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."navidrome" = lib.mkIf cfg.navidrome.enable {
+      image = "deluan/navidrome:latest";
+      # user = "arr:arr";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.navidrome}:/data:rw"
+        "${cfg.dataDir.music}/Library:/music:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
+    systemd.services."docker-picard" = lib.mkIf cfg.picard.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."picard" = lib.mkIf cfg.picard.enable {
+      image = "mikenye/picard:latest";
+      environment = {
+        # "USER_ID" = builtins.toString cfg.user.gid;
+        # "GROUP_ID" = builtins.toString cfg.user.uid;
+        "USER_ID" = "0";
+        "GROUP_ID" = "0";
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.picard}:/config:rw"
+        "${cfg.dataDir.music}:/Music:rw"
+        # "${cfg.libDir.slskd}/downloads:/downloads:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
     systemd.services."docker-lidarr" = lib.mkIf cfg.lidarr.enable defaultSystemDConfig;
     virtualisation.oci-containers.containers."lidarr" = lib.mkIf cfg.lidarr.enable {
       image = "lscr.io/linuxserver/lidarr:latest";
@@ -558,6 +660,29 @@ in {
         "--network=container:gluetun"
       ];
     };
+
+    # systemd.services."docker-lidarr" = lib.mkIf cfg.lidarr.enable defaultSystemDConfig;
+    # virtualisation.oci-containers.containers."lidarr" = lib.mkIf cfg.lidarr.enable {
+    #   image = "linuxserver/lidarr:latest";
+    #   environment = {
+    #     "PGID" = builtins.toString cfg.user.gid;
+    #     "PUID" = builtins.toString cfg.user.uid;
+    #     "TZ" = "Europe/Berlin";
+    #   };
+    #   volumes = [
+    #     "${cfg.libDir.lidarr}:/app/config:rw"
+    #     "${cfg.dataDir.downloads}:/downloads:rw"
+    #     "${cfg.dataDir.music}:/Music:rw"
+    #   ];
+    #   dependsOn = [
+    #     "gluetun"
+    #   ];
+    #   log-driver = "journald";
+    #   extraOptions = [
+    #     "--pull=always"
+    #     "--network=container:gluetun"
+    #   ];
+    # };
 
     systemd.services."docker-jellyseerr" = lib.mkIf cfg.jellyseerr.enable defaultSystemDConfig;
     virtualisation.oci-containers.containers."jellyseerr" = lib.mkIf cfg.jellyseerr.enable {
@@ -626,15 +751,16 @@ in {
       ];
     };
 
-    systemd.services."docker-slskd" = lib.mkIf cfg.radarr.enable defaultSystemDConfig;
-    virtualisation.oci-containers.containers."slskd" = lib.mkIf cfg.radarr.enable {
+    systemd.services."docker-slskd" = lib.mkIf cfg.slskd.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."slskd" = lib.mkIf cfg.slskd.enable {
       image = "slskd/slskd:latest";
+      # user = "arr:arr";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
         "PUID" = builtins.toString cfg.user.uid;
         "TZ" = "Europe/Berlin";
-        "SLSKD_REMOTE_CONFIGURATION"="true";
-        "SLSKD_SHARED_DIR"="/Music";
+        "SLSKD_REMOTE_CONFIGURATION" = "true";
+        "SLSKD_SHARED_DIR" = "/Music";
       };
       volumes = [
         "/etc/localtime:/etc/localtime:ro"
