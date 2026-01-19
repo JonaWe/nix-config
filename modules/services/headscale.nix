@@ -83,7 +83,7 @@ in {
             acls = [
               {
                 action = "accept";
-                src = ["autogroup:member"];
+                src = ["*"];
                 dst = ["autogroup:self:*"];
               }
               {
