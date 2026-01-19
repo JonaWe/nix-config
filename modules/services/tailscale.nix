@@ -17,7 +17,7 @@ in {
       useRoutingFeatures = lib.mkIf cfg.exitNode "server";
     };
     networking.firewall = {
-      checkReversePath = "loose";
+      checkReversePath = if cfg.exitNode then false else "loose";
       trustedInterfaces = ["tailscale0"];
       allowedUDPPorts = [config.services.tailscale.port];
       extraCommands = lib.mkIf cfg.exitNode ''
@@ -26,6 +26,11 @@ in {
         iptables -t nat -I POSTROUTING -s 100.64.0.0/10 -o tailscale0 -j RETURN
         iptables -t nat -I POSTROUTING -s 100.64.0.0/10 ! -o tailscale0 -j MASQUERADE
       '';
+    };
+
+    boot.kernel.sysctl = lib.mkIf cfg.exitNode {
+      "net.ipv4.ip_forward" = 1;
+      "net.ipv6.conf.all.forwarding" = 1;
     };
 
     environment.systemPackages = [config.services.tailscale.package];
