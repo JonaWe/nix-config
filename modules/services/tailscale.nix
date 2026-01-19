@@ -23,8 +23,7 @@ in {
       extraCommands = lib.mkIf cfg.exitNode ''
         iptables -I FORWARD -i tailscale0 -j ACCEPT
         iptables -I FORWARD -o tailscale0 -j ACCEPT
-        iptables -t nat -I POSTROUTING -s 100.64.0.0/10 -o tailscale0 -j RETURN
-        iptables -t nat -I POSTROUTING -s 100.64.0.0/10 ! -o tailscale0 -j MASQUERADE
+        iptables -t nat -I POSTROUTING -o enp1s0 -j MASQUERADE
       '';
     };
 
