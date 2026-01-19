@@ -21,8 +21,10 @@ in {
       trustedInterfaces = ["tailscale0"];
       allowedUDPPorts = [config.services.tailscale.port];
       extraCommands = lib.mkIf cfg.exitNode ''
-        iptables -A FORWARD -i tailscale0 -j ACCEPT
-        iptables -A FORWARD -o tailscale0 -j ACCEPT
+        iptables -I FORWARD -i tailscale0 -j ACCEPT
+        iptables -I FORWARD -o tailscale0 -j ACCEPT
+        iptables -t nat -I POSTROUTING -s 100.64.0.0/10 -o tailscale0 -j RETURN
+        iptables -t nat -I POSTROUTING -s 100.64.0.0/10 ! -o tailscale0 -j MASQUERADE
       '';
     };
 
