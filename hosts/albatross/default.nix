@@ -29,7 +29,10 @@
     # };
     headscale.enable = true;
     headscale.openFirewall = true;
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      exitNode = true;
+    };
   };
 
   # environment.systemPackages = with pkgs; [

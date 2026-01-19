@@ -104,13 +104,6 @@ in {
                   "Infra:*"
                 ];
               }
-              {
-                action = "accept";
-                src = [
-                  "group:vpn"
-                ];
-                dst = ["autogroup:internet:*"]; # allow exit-nodes
-              }
             ];
           }
         );

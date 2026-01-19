@@ -8,15 +8,13 @@
 in {
   options.myconf.services.tailscale = {
     enable = lib.mkEnableOption "Enable headscale tailscale";
+    exitNode = lib.mkEnableOption "Enable exit node routing features";
   };
 
   config = lib.mkIf cfg.enable {
     services.tailscale = {
       enable = true;
-      # useRoutingFeatures = "both";
-      # extraUpFlags = [
-      #   "--advertise-exit-node"
-      # ];
+      useRoutingFeatures = lib.mkIf cfg.exitNode "server";
     };
     networking.firewall = {
       checkReversePath = "loose";
