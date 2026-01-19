@@ -107,7 +107,7 @@ in {
               {
                 action = "accept";
                 src = [
-                  "group:trusted"
+                  "group:vpn"
                 ];
                 dst = [
                   "0.0.0.0/0:*"
