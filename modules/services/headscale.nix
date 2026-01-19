@@ -23,6 +23,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
+      # needed when setting up acme
       # 80
       443
     ];
@@ -72,6 +73,7 @@ in {
                 "Johannes"
                 "Niklas"
                 "Aaron"
+                "Ulli"
               ];
               "group:vpn" = [
                 "Jona"
@@ -84,20 +86,6 @@ in {
                 src = ["Jona"];
                 dst = ["Jona:*"];
               }
-              # {
-              #   action = "accept";
-              #   src = ["Jona"];
-              #   dst = ["*:*"];
-              # }
-              # {
-              #   action = "accept";
-              #   src = [
-              #     "Infra:*"
-              #   ];
-              #   dst = [
-              #     "*"
-              #   ];
-              # }
               {
                 action = "accept";
                 src = [
@@ -116,25 +104,6 @@ in {
                   "Infra:*"
                 ];
               }
-              # {
-              #   action = "accept";
-              #   src = [
-              #     "Infra:ant"
-              #   ];
-              #   dst = [
-              #     "group:trusted:*"
-              #   ];
-              # }
-              # {
-              #   action = "accept";
-              #   src = [
-              #     "group:trusted"
-              #   ];
-              #   dst = [
-              #     "Infra:ant:80"
-              #     "Infra:ant:443"
-              #   ];
-              # }
               {
                 action = "accept";
                 src = [
