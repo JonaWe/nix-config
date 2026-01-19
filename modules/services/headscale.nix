@@ -104,6 +104,16 @@ in {
                   "Infra:*"
                 ];
               }
+              {
+                action = "accept";
+                src = [
+                  "group:trusted"
+                ];
+                dst = [
+                  "0.0.0.0/0:*"
+                  "::/0:*"
+                ];
+              }
             ];
           }
         );
