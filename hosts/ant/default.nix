@@ -178,6 +178,8 @@
     };
     tailscale = {
       enable = true;
+      exitNode = true;
+    };
     };
     jellyfin = {
       enable = true;
