@@ -110,8 +110,7 @@ in {
                   "group:vpn"
                 ];
                 dst = [
-                  "0.0.0.0/0:*"
-                  "::/0:*"
+                  "autogroup:internet:*"
                 ];
               }
             ];
