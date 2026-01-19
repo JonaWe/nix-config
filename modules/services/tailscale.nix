@@ -20,6 +20,10 @@ in {
       checkReversePath = "loose";
       trustedInterfaces = ["tailscale0"];
       allowedUDPPorts = [config.services.tailscale.port];
+      extraCommands = lib.mkIf cfg.exitNode ''
+        iptables -A FORWARD -i tailscale0 -j ACCEPT
+        iptables -A FORWARD -o tailscale0 -j ACCEPT
+      '';
     };
 
     environment.systemPackages = [config.services.tailscale.package];
