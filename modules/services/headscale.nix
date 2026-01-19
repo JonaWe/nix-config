@@ -81,11 +81,11 @@ in {
               ];
             };
             acls = [
-              # {
-              #   action = "accept";
-              #   src = ["autogroup:member"];
-              #   dst = ["autogroup:self:*"];
-              # }
+              {
+                action = "accept";
+                src = ["autogroup:member"];
+                dst = ["autogroup:self:*"];
+              }
               {
                 action = "accept";
                 src = [
