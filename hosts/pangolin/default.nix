@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 # let
@@ -102,6 +103,8 @@
     cifs-utils
     dnsutils
     fprintd
+    feishin
+    pkgs-unstable.gemini-cli
     # libnotify
     # # lowBatteryNotifier
     # acpi
