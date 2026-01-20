@@ -46,6 +46,7 @@ in {
         logtail.enabled = false;
         dns = {
           base_domain = "tail.net";
+          nameservers.global = ["9.9.9.9"];
           extra_records = [
             {
               name = "*.ts.pinkorca";
