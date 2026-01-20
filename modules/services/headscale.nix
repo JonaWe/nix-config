@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }: let
   cfg = config.myconf.services.headscale;
@@ -37,6 +38,7 @@ in {
       enable = true;
       port = cfg.port;
       address = "0.0.0.0";
+      package = pkgs-unstable.headscale;
       settings = {
         tls_key_path = "/var/lib/acme/pinkorca.de/key.pem";
         tls_cert_path = "/var/lib/acme/pinkorca.de/cert.pem";
@@ -83,7 +85,7 @@ in {
             acls = [
               {
                 action = "accept";
-                src = ["*"];
+                src = ["autogroup:member"];
                 dst = ["autogroup:self:*"];
               }
               {
@@ -149,7 +151,6 @@ in {
         #   #   - alice@example.com
         # };
       };
-      package = pkgs.headscale;
     };
 
     environment.systemPackages = [pkgs.headscale];
