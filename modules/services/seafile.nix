@@ -29,17 +29,17 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services.seafile = {
-      enable = true;
-      # dataDir = cfg.directory;
-      adminEmail = "jona@pinkorca.de";
-      initialAdminPassword = "password";
-      ccnetSettings = {
-        General = {
-          SERVICE_URL = "http://127.0.0.1:${toString cfg.port}";
-        };
-      };
-    };
+    # services.seafile = {
+    #   enable = true;
+    #   # dataDir = cfg.directory;
+    #   adminEmail = "jona@pinkorca.de";
+    #   initialAdminPassword = "password";
+    #   ccnetSettings = {
+    #     General = {
+    #       SERVICE_URL = "http://127.0.0.1:${toString cfg.port}";
+    #     };
+    #   };
+    # };
 
     myconf.disk.dataPool.extraDatasets = lib.mkIf cfg.zfsIntegration.enable {
       "enc/services/seafile" = {
