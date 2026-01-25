@@ -20,7 +20,7 @@ in {
     sops.secrets."homepage/environment" = {};
 
     services.homepage-dashboard = {
-      package = pkgs-unstable.homepage-dashboard;
+      package = pkgs.homepage-dashboard;
       enable = true;
       allowedHosts = "homepage.home.pinkorca.de,homepage.ts.pinkorca.de";
       environmentFile = config.sops.secrets."homepage/environment".path;
@@ -131,7 +131,7 @@ in {
                 icon = "jellyfin.png";
                 href = "https://jellyfin.${serverBaseUrl}/";
                 siteMonitor = "http://localhost:8096/health";
-                description = "Media Streaming";
+                description = "Movies and TV shows";
                 widget = {
                   type = "jellyfin";
                   url = "http://localhost:8096";
@@ -144,8 +144,23 @@ in {
               };
             }
             {
+              Navidrome = {
+                icon = "navidrome.png";
+                href = "https://navidrome.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:4533/health";
+                description = "Music Streaming";
+                widget = {
+                  type = "navidrome";
+                  url = "http://localhost:4533";
+                  user = "{{HOMEPAGE_VAR_NAVIDROME_USER}}";
+                  token = "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}";
+                  salt = "{{HOMEPAGE_VAR_NAVIDROME_SALT}}";
+                };
+              };
+            }
+            {
               Actual = {
-                icon = "actual.png";
+                icon = "actual-budget.png";
                 href = "https://actual.${serverBaseUrl}/";
                 siteMonitor = "http://localhost:9284";
                 description = "Money Budgeting";
@@ -161,6 +176,19 @@ in {
                   type = "gitea";
                   url = "http://localhost:3002";
                   key = "{{HOMEPAGE_VAR_GITEA_API_KEY}}";
+                };
+              };
+            }
+            {
+              Audiobookshelf = {
+                icon = "audiobookshelf.png";
+                href = "https://audiobookshelf.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:8654";
+                description = "Audio Books and Books";
+                widget = {
+                  type = "audiobookshelf";
+                  url = "http://localhost:8654";
+                  key = "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}";
                 };
               };
             }
@@ -235,6 +263,14 @@ in {
         }
         {
           "Tools" = [
+            {
+              "Picard" = {
+                icon = "sh-musicbrainz-picard.png";
+                href = "https://picard.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:5800";
+                description = "Music Metadata Management";
+              };
+            }
             {
               "Metube" = {
                 icon = "metube.svg";
@@ -330,6 +366,27 @@ in {
                   url = "http://localhost:9696";
                   key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
                 };
+              };
+            }
+            {
+              slskd = {
+                icon = "slskd.png";
+                href = "https://slskd.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:5030";
+                description = "Music Sharing";
+                widget = {
+                  type = "slskd";
+                  url = "http://localhost:5030";
+                  key = "{{HOMEPAGE_VAR_SLSKD_API_KEY}}";
+                };
+              };
+            }
+            {
+              dispatcharr = {
+                icon = "dispatcharr.png";
+                href = "https://dispatcharr.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:9191";
+                description = "IPTV Aggregation";
               };
             }
             {

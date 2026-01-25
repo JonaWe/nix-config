@@ -74,6 +74,11 @@ in {
         default = "${cfg.libDir.base}/picard";
         description = "Directory for picard config";
       };
+      dispatcharr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/dispatcharr";
+        description = "Directory for dispatcharr config";
+      };
       jellyfin = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/jellyfin2";
@@ -241,6 +246,15 @@ in {
         description = "Default port for navidrome web ui";
       };
     };
+    dispatcharr = {
+      enable = lib.mkEnableOption "Enable dispatcharr service";
+      openFirewall = lib.mkEnableOption "Open firewall for dispatcharr web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 9191;
+        description = "Default port for dispatcharr web ui";
+      };
+    };
     picard = {
       enable = lib.mkEnableOption "Enable picard service";
       openFirewall = lib.mkEnableOption "Open firewall for picard web ui";
@@ -336,6 +350,14 @@ in {
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:5030";
+        };
+      };
+      "dispatcharr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.dispatcharr.port}";
+          proxyWebsockets = true;
         };
       };
       "navidrome.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
@@ -466,6 +488,9 @@ in {
       ++ lib.lists.optionals cfg.navidrome.enable [
         "d ${cfg.libDir.navidrome} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
+      ++ lib.lists.optionals cfg.dispatcharr.enable [
+        "d ${cfg.libDir.dispatcharr} 0755 ${cfg.user.user} ${cfg.user.group} -"
+      ]
       ++ lib.lists.optionals cfg.picard.enable [
         "d ${cfg.libDir.picard} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ];
@@ -540,6 +565,9 @@ in {
         ++ lib.lists.optionals cfg.picard.openFirewall [
           "127.0.0.1:${builtins.toString cfg.picard.port}:${builtins.toString cfg.picard.port}/tcp"
         ]
+        ++ lib.lists.optionals cfg.dispatcharr.openFirewall [
+          "127.0.0.1:${builtins.toString cfg.dispatcharr.port}:${builtins.toString cfg.dispatcharr.port}/tcp"
+        ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.bazarr.port}:6767/tcp"
         ];
@@ -579,6 +607,27 @@ in {
       };
       volumes = [
         "${cfg.libDir.bazarr}:/app/config:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
+
+    systemd.services."docker-dispatcharr" = lib.mkIf cfg.dispatcharr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."dispatcharr" = lib.mkIf cfg.dispatcharr.enable {
+      image = "ghcr.io/dispatcharr/dispatcharr:latest";
+      # user = "2010:2010";
+      environment = {
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.dispatcharr}:/data:rw"
       ];
       dependsOn = [
         "gluetun"
