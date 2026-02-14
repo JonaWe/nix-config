@@ -62,9 +62,14 @@ in {
       extraPackages = with pkgs; [
         intel-media-driver
         intel-vaapi-driver
-        vaapiVdpau
+        libva-vdpau-driver
         intel-compute-runtime
-        intel-media-sdk
+        # intel-media-sdk - Known issues: End of life with various local privilege escalation vulnerabilites:
+        # - CVE-2023-22656
+        # - CVE-2023-45221
+        # - CVE-2023-47169
+        # - CVE-2023-47282
+        # - CVE-2023-48368
       ];
     };
 
