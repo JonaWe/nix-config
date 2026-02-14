@@ -254,6 +254,14 @@
         enable = true;
         openFirewall = true;
       };
+      dispatcharr = {
+        enable = true;
+        openFirewall = true;
+      };
+      sabnzbd = {
+        enable = true;
+        openFirewall = true;
+      };
       picard = {
         enable = true;
         openFirewall = true;
