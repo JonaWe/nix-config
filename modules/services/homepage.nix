@@ -403,6 +403,19 @@ in {
               };
             }
             {
+              sabnzbd = {
+                icon = "sabnzbd.png";
+                href = "https://sabnzbd.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:${toString config.myconf.services.arr.sabnzbd.port}";
+                description = "NZB Download Client";
+                widget = {
+                  type = "sabnzbd";
+                  url = "http://localhost:${toString config.myconf.services.arr.sabnzbd.port}";
+                  key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}";
+                };
+              };
+            }
+            {
               qBittorrent = {
                 icon = "qbittorrent.png";
                 href = "https://qbittorrent.${serverBaseUrl}/";

@@ -79,6 +79,11 @@ in {
         default = "${cfg.libDir.base}/dispatcharr";
         description = "Directory for dispatcharr config";
       };
+      sabnzbd = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/sabnzbd";
+        description = "Directory for sabnzbd config";
+      };
       jellyfin = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/jellyfin2";
@@ -255,6 +260,15 @@ in {
         description = "Default port for dispatcharr web ui";
       };
     };
+    sabnzbd = {
+      enable = lib.mkEnableOption "Enable sabnzbd service";
+      openFirewall = lib.mkEnableOption "Open firewall for sabnzbd web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 8513;
+        description = "Default port for sabnzbd web ui";
+      };
+    };
     picard = {
       enable = lib.mkEnableOption "Enable picard service";
       openFirewall = lib.mkEnableOption "Open firewall for picard web ui";
@@ -388,6 +402,13 @@ in {
           proxyPass = "http://localhost:${builtins.toString cfg.radarr.port}/";
         };
       };
+      "sabnzbd.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.sabnzbd.port}/";
+        };
+      };
       "jellyfin2.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
@@ -491,6 +512,9 @@ in {
       ++ lib.lists.optionals cfg.dispatcharr.enable [
         "d ${cfg.libDir.dispatcharr} 0755 ${cfg.user.user} ${cfg.user.group} -"
       ]
+      ++ lib.lists.optionals cfg.sabnzbd.enable [
+        "d ${cfg.libDir.sabnzbd} 0755 ${cfg.user.user} ${cfg.user.group} -"
+      ]
       ++ lib.lists.optionals cfg.picard.enable [
         "d ${cfg.libDir.picard} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ];
@@ -568,6 +592,9 @@ in {
         ++ lib.lists.optionals cfg.dispatcharr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.dispatcharr.port}:${builtins.toString cfg.dispatcharr.port}/tcp"
         ]
+        ++ lib.lists.optionals cfg.sabnzbd.openFirewall [
+          "127.0.0.1:${builtins.toString cfg.sabnzbd.port}:8080/tcp"
+        ]
         ++ lib.lists.optionals cfg.bazarr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.bazarr.port}:6767/tcp"
         ];
@@ -639,6 +666,28 @@ in {
       ];
     };
 
+    systemd.services."docker-sabnzbd" = lib.mkIf cfg.sabnzbd.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."sabnzbd" = lib.mkIf cfg.sabnzbd.enable {
+      image = "lscr.io/linuxserver/sabnzbd:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.sabnzbd}:/config:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
     systemd.services."docker-navidrome" = lib.mkIf cfg.navidrome.enable defaultSystemDConfig;
     virtualisation.oci-containers.containers."navidrome" = lib.mkIf cfg.navidrome.enable {
       image = "deluan/navidrome:latest";
@@ -689,7 +738,8 @@ in {
 
     systemd.services."docker-lidarr" = lib.mkIf cfg.lidarr.enable defaultSystemDConfig;
     virtualisation.oci-containers.containers."lidarr" = lib.mkIf cfg.lidarr.enable {
-      image = "lscr.io/linuxserver/lidarr:latest";
+      image = "blampe/lidarr:latest";
+      # image = "lscr.io/linuxserver/lidarr:latest";
       environment = {
         "PGID" = builtins.toString cfg.user.gid;
         "PUID" = builtins.toString cfg.user.uid;
