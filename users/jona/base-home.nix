@@ -89,10 +89,12 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName = "Jona";
-    userEmail = "jona.wessendorf1@uni-bielefeld.de";
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
+      user = {
+        name = "Jona";
+        email = "jonawe@users.noreply.github.com";
+      };
     };
   };
 
