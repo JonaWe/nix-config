@@ -17,7 +17,7 @@
   nix.gc = {
     automatic = lib.mkDefault true;
     dates = lib.mkDefault "weekly";
-    options = lib.mkDefault "--delete-older-than 7d";
+    options = lib.mkDefault "--delete-older-than 365d";
   };
 
   nix.settings.allowed-users = ["@wheel"];
