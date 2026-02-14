@@ -29,11 +29,6 @@ in {
       443
     ];
 
-    # networking.firewall.allowedUDPPorts = lib.mkIf cfg.openFirewall [
-    #   3478
-    #   41641
-    # ];
-
     services.headscale = {
       enable = true;
       port = cfg.port;
@@ -62,25 +57,27 @@ in {
         };
         policy.path = pkgs.writeText "acl.json" (
           builtins.toJSON {
-            randomizeClientPort = true; # direct connection opnsense?
+            #randomizeClientPort = true; # direct connection opnsense?
             # hosts = {
             #
             # };
             groups = {
               "group:trusted" = [
-                "Jona"
-                "Noah"
-                "Rahel"
-                "Sofie"
-                "Anton"
-                "Johannes"
-                "Niklas"
-                "Aaron"
-                "Ulli"
+                "Jona@pinkorca.de"
+                "Noah@pinkorca.de"
+                "Rahel@pinkorca.de"
+                "Sofie@pinkorca.de"
+                "Anton@pinkorca.de"
+                "Johannes@pinkorca.de"
+                "Niklas@pinkorca.de"
+                "Aaron@pinkorca.de"
+                "Ulli@pinkorca.de"
               ];
               "group:vpn" = [
-                "Jona"
-                "Sofie"
+                "Jona@pinkorca.de"
+                "Sofie@pinkorca.de"
+                "Ulli@pinkorca.de"
+                "Noah@pinkorca.de"
               ];
             };
             acls = [
@@ -92,10 +89,10 @@ in {
               {
                 action = "accept";
                 src = [
-                  "Infra"
+                  "Infra@pinkorca.de"
                 ];
                 dst = [
-                  "Infra:*"
+                  "Infra@pinkorca.de:*"
                 ];
               }
               {
@@ -104,7 +101,7 @@ in {
                   "group:trusted"
                 ];
                 dst = [
-                  "Infra:*"
+                  "Infra@pinkorca.de:*"
                 ];
               }
               {
