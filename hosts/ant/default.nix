@@ -133,7 +133,7 @@
       zfsIntegration.enableBackups = true;
     };
     minecraft-servers = {
-      enable = true;
+      enable = false;
       openFirewall = true;
     };
     searx = {
