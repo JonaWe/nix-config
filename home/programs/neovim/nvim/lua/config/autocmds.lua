@@ -78,7 +78,15 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
 -- })
 
 -- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd("FocusGained", { command = "checktime" })
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { "*" },
+})
+
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+  command = "echomsg 'File changed on disk. Buffer reloaded.'",
+  pattern = { "*" },
+})
 
 -- Go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPre", {
