@@ -53,25 +53,25 @@ in {
       };
     };
 
-    nixpkgs.config.packageOverrides = pkgs: {
-      vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
-    };
+    # nixpkgs.config.packageOverrides = pkgs: {
+    #   vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
+    # };
 
-    hardware.graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        intel-vaapi-driver
-        libva-vdpau-driver
-        intel-compute-runtime
-        # intel-media-sdk - Known issues: End of life with various local privilege escalation vulnerabilites:
-        # - CVE-2023-22656
-        # - CVE-2023-45221
-        # - CVE-2023-47169
-        # - CVE-2023-47282
-        # - CVE-2023-48368
-      ];
-    };
+    # hardware.graphics = {
+    #   enable = true;
+    #   extraPackages = with pkgs; [
+    #     intel-media-driver
+    #     intel-vaapi-driver
+    #     libva-vdpau-driver
+    #     intel-compute-runtime
+    #     # intel-media-sdk - Known issues: End of life with various local privilege escalation vulnerabilites:
+    #     # - CVE-2023-22656
+    #     # - CVE-2023-45221
+    #     # - CVE-2023-47169
+    #     # - CVE-2023-47282
+    #     # - CVE-2023-48368
+    #   ];
+    # };
 
     nixpkgs.overlays = [
       (
