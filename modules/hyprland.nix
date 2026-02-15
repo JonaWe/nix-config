@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     kitty
     uwsm
-    greetd.tuigreet
+    tuigreet
     hyprpolkitagent
     hyprland
     hyprpaper
@@ -78,7 +78,7 @@
       };
       # default_session = initial_session;
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet \
+        command = "${pkgs.tuigreet}/bin/tuigreet \
           --time --time-format '%I:%M %p | %a • %h | %F' \
           --cmd 'uwsm start hyprland'";
         user = "greeter";
