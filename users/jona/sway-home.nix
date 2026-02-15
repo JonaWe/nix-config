@@ -52,7 +52,7 @@
     ncdu
     mangohud
     texlive.combined.scheme-full
-    teamspeak3
+    # teamspeak3 # disabled because it uses qt5 which is unmaintained
     zoom-us
     gnome-calendar
     gnome-contacts
