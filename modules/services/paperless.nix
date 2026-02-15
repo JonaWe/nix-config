@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.myconf.services.paperless;
@@ -23,10 +24,13 @@ in {
   config = lib.mkIf cfg.enable {
     # environment.etc."paperless-admin-pass".text = "admin";
     services.paperless = {
-      # passwordFile = "/etc/paperless-admin-pass";
       port = cfg.port;
       enable = true;
-      # dataDir = "/var/lib/paperless";
+
+      package = pkgs.paperless-ngx.overrideAttrs (oldAttrs: {
+        doCheck = false;
+        doInstallCheck = false;
+      });
       consumptionDir = "/data/syncthing/paperless-consume";
       consumptionDirIsPublic = true;
       settings = {
