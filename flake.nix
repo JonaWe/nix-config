@@ -53,6 +53,7 @@
 
           inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
+          inputs.authentik-nix.nixosModules.default
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -94,6 +95,7 @@
 
           inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
+          inputs.authentik-nix.nixosModules.default
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -113,6 +115,7 @@
 
           inputs.disko.nixosModules.disko
           home-manager.nixosModules.home-manager
+          inputs.authentik-nix.nixosModules.default
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
