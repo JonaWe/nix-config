@@ -437,11 +437,11 @@ in {
               "OPNSense" = {
                 icon = "opnsense.png";
                 href = "https://10.1.1.1/";
-                siteMonitor = "https://10.1.1.1";
+                siteMonitor = "http://10.1.1.1";
                 description = "Router";
                 widget = {
                   type = "opnsense";
-                  url = "https://10.1.1.1";
+                  url = "http://10.1.1.1";
                   username = "{{HOMEPAGE_VAR_OPNSENSE_USERNAME}}";
                   password = "{{HOMEPAGE_VAR_OPNSENSE_PASSWORD}}";
                   key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
