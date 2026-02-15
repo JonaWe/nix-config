@@ -37,6 +37,7 @@ in {
       nginx = {
         enable = true;
         enableACME = true;
+        # useACMEHost = "auth.pinkorca.de";
         host = "auth.pinkorca.de";
       };
     };

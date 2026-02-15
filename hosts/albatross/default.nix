@@ -23,10 +23,10 @@
   };
 
   myconf.services = {
-    # nginx = {
-    #   enable = true;
-    #   openFirewall = true;
-    # };
+    nginx = {
+      enable = true;
+      openFirewall = true;
+    };
     headscale = {
       enable = true;
       openFirewall = true;

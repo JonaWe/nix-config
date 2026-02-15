@@ -79,10 +79,6 @@ in {
         };
       };
       certs."pinkorca.de".extraDomainNames = [
-        "*.pinkorca.de"
-        "*.home.pinkorca.de"
-        "*.winkelsheim.pinkorca.de"
-        "*.ts.pinkorca.de"
       ];
     };
   };

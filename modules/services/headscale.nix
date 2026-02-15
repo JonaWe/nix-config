@@ -11,8 +11,8 @@ in {
     enable = lib.mkEnableOption "Enable headscale service";
     port = lib.mkOption {
       type = lib.types.port;
-      default = 443;
-      example = 443;
+      default = 5313;
+      example = 5313;
       description = "Port that is used for headscale";
     };
     openFirewall = lib.mkOption {
@@ -23,20 +23,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
-      # needed when setting up acme
-      # 80
-      443
-    ];
-
     services.headscale = {
       enable = true;
       port = cfg.port;
-      address = "0.0.0.0";
+      address = "127.0.0.1";
       package = pkgs-unstable.headscale;
       settings = {
-        tls_key_path = "/var/lib/acme/pinkorca.de/key.pem";
-        tls_cert_path = "/var/lib/acme/pinkorca.de/cert.pem";
         server_url = "https://headscale.pinkorca.de";
         logtail.enabled = false;
         dns = {
@@ -57,10 +49,6 @@ in {
         };
         policy.path = pkgs.writeText "acl.json" (
           builtins.toJSON {
-            #randomizeClientPort = true; # direct connection opnsense?
-            # hosts = {
-            #
-            # };
             groups = {
               "group:trusted" = [
                 "Jona@pinkorca.de"
@@ -119,6 +107,21 @@ in {
       };
     };
 
+    services.nginx.virtualHosts."headscale.pinkorca.de" = {
+      forceSSL = true;
+      useACMEHost = "pinkorca.de";
+
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_buffering off;
+          proxy_read_timeout 600s;
+          proxy_send_timeout 600s;
+        '';
+      };
+    };
+
     environment.systemPackages = [pkgs-unstable.headscale];
 
     sops.secrets."porkbun/api-key" = {};
@@ -127,19 +130,9 @@ in {
     users.users.headscale.extraGroups = ["acme"];
 
     security.acme = {
-      acceptTerms = true;
-      defaults = {
-        email = "dev@pinkorca.de";
-        dnsProvider = "porkbun";
-        reloadServices = ["headscale"];
-        credentialFiles = {
-          "PORKBUN_API_KEY_FILE" = config.sops.secrets."porkbun/api-key".path;
-          "PORKBUN_SECRET_API_KEY_FILE" = config.sops.secrets."porkbun/secret-api-key".path;
-        };
-      };
       certs."pinkorca.de".extraDomainNames = [
         "headscale.pinkorca.de"
-        "*.ts.pinkorca.de"
+        "auth.pinkorca.de"
       ];
     };
   };

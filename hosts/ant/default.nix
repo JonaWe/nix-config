@@ -274,6 +274,12 @@
     };
   };
 
+  security.acme = {
+    certs."pinkorca.de".extraDomainNames = [
+      "*.ts.pinkorca.de"
+    ];
+  };
+
   networking.hostName = "ant";
 
   networking.firewall = {
