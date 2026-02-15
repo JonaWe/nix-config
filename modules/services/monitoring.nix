@@ -10,8 +10,8 @@ in {
     enable = lib.mkEnableOption "Enable monitoring service";
     grafanaPort = lib.mkOption {
       type = lib.types.port;
-      default = 3030;
-      example = 3030;
+      default = 3031;
+      example = 3031;
       description = "Ports for grafana service";
     };
     # directory = lib.mkOption {
