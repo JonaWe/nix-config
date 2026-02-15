@@ -33,7 +33,7 @@
   # programs.waybar.systemd = "grapical.target";
 
   home.packages = with pkgs; [
-    rofi-wayland
+    rofi
     pcmanfm
     kitty
     wlsunset
