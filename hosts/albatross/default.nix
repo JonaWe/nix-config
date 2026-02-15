@@ -27,8 +27,11 @@
     #   enable = true;
     #   openFirewall = true;
     # };
-    headscale.enable = true;
-    headscale.openFirewall = true;
+    headscale = {
+      enable = true;
+      openFirewall = true;
+    };
+    authentik.enable = true;
     tailscale = {
       enable = true;
       exitNode = true;

@@ -32,5 +32,6 @@
     ./omni-tools.nix
     ./olivetin.nix
     ./monitoring.nix
+    ./authentik.nix
   ];
 }
