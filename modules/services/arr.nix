@@ -89,6 +89,11 @@ in {
         default = "${cfg.libDir.base}/jellyfin2";
         description = "Directory for bazarr runtime config";
       };
+      readmeabook = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/readmeabook";
+        description = "Directory for readmeabook runtime config";
+      };
     };
     dataDir = {
       base = lib.mkOption {
@@ -269,6 +274,15 @@ in {
         description = "Default port for sabnzbd web ui";
       };
     };
+    readmeabook = {
+      enable = lib.mkEnableOption "Enable readmeabook service";
+      openFirewall = lib.mkEnableOption "Open firewall for readmeabook web ui";
+      port = lib.mkOption {
+        type = lib.types.port;
+        default = 3030;
+        description = "Default port for readmeabook web ui";
+      };
+    };
     picard = {
       enable = lib.mkEnableOption "Enable picard service";
       openFirewall = lib.mkEnableOption "Open firewall for picard web ui";
@@ -409,6 +423,14 @@ in {
           proxyPass = "http://localhost:${builtins.toString cfg.sabnzbd.port}/";
         };
       };
+      "readmeabook.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString cfg.readmeabook.port}/";
+          # proxyWebsockets = true;
+        };
+      };
       "jellyfin2.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
@@ -515,6 +537,9 @@ in {
       ++ lib.lists.optionals cfg.sabnzbd.enable [
         "d ${cfg.libDir.sabnzbd} 0755 ${cfg.user.user} ${cfg.user.group} -"
       ]
+      ++ lib.lists.optionals cfg.readmeabook.enable [
+        "d ${cfg.libDir.readmeabook} 0755 ${cfg.user.user} ${cfg.user.group} -"
+      ]
       ++ lib.lists.optionals cfg.picard.enable [
         "d ${cfg.libDir.picard} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ];
@@ -592,6 +617,9 @@ in {
         ++ lib.lists.optionals cfg.dispatcharr.openFirewall [
           "127.0.0.1:${builtins.toString cfg.dispatcharr.port}:${builtins.toString cfg.dispatcharr.port}/tcp"
         ]
+        # ++ lib.lists.optionals cfg.readmeabook.openFirewall [
+        #   "127.0.0.1:${builtins.toString cfg.readmeabook.port}:${builtins.toString cfg.readmeabook.port}/tcp"
+        # ]
         ++ lib.lists.optionals cfg.sabnzbd.openFirewall [
           "127.0.0.1:${builtins.toString cfg.sabnzbd.port}:8080/tcp"
         ]
@@ -644,7 +672,6 @@ in {
         "--network=container:gluetun"
       ];
     };
-
 
     systemd.services."docker-dispatcharr" = lib.mkIf cfg.dispatcharr.enable defaultSystemDConfig;
     virtualisation.oci-containers.containers."dispatcharr" = lib.mkIf cfg.dispatcharr.enable {
@@ -897,6 +924,35 @@ in {
       extraOptions = [
         "--pull=always"
         "--network=container:gluetun"
+      ];
+    };
+
+    systemd.services."docker-readmeabook" = lib.mkIf cfg.readmeabook.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."readmeabook" = lib.mkIf cfg.readmeabook.enable {
+      image = "ghcr.io/kikootwo/readmeabook:latest";
+      environment = {
+        "PGID" = builtins.toString cfg.user.gid;
+        "PUID" = builtins.toString cfg.user.uid;
+        "TZ" = "Europe/Berlin";
+        "PUBLIC_URL" = "https://readmeabook.ts.pinkorca.de";
+      };
+      volumes = [
+        "${cfg.libDir.readmeabook}/config:/app/config:rw"
+        "${cfg.libDir.readmeabook}/cache:/app/cache:rw"
+        "${cfg.dataDir.books}:/Books:rw"
+        "${cfg.dataDir.audiobooks}:/Audiobooks:rw"
+        "${cfg.dataDir.downloads}:/downloads:rw"
+      ];
+      ports = [
+        "127.0.0.1:${toString cfg.readmeabook.port}:3030"
+      ];
+      # dependsOn = [
+      #   "gluetun"
+      # ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        # "--network=container:gluetun"
       ];
     };
 

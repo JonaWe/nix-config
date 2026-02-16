@@ -403,6 +403,14 @@ in {
               };
             }
             {
+              ReadMeABook = {
+                icon = "sh-readmeabook.png";
+                href = "https://readmeabook.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:${toString config.myconf.services.arr.readmeabook.port}";
+                description = "Audiobook Management";
+              };
+            }
+            {
               sabnzbd = {
                 icon = "sabnzbd.png";
                 href = "https://sabnzbd.${serverBaseUrl}/";

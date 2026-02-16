@@ -240,6 +240,9 @@
         enable = false;
         openFirewall = true;
       };
+      readmeabook = {
+        enable = true;
+      };
       jellyseerr = {
         enable = true;
         openFirewall = true;
