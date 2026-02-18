@@ -18,6 +18,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     sops.secrets."authentik/env" = {};
+    # sops.secrets."authentik/ldap/env" = {};
 
     services.authentik = {
       enable = true;
@@ -40,6 +41,12 @@ in {
         # useACMEHost = "auth.pinkorca.de";
         host = "auth.pinkorca.de";
       };
+    };
+
+    services.authentik-ldap = {
+      enable = true;
+      # environmentFile = config.sops.secrets."authentik/env".path;
+      # AUTHENTIK_TOKEN=<token from authentik for this outpost>
     };
   };
 }
