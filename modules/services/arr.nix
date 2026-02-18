@@ -131,6 +131,11 @@ in {
         default = "${cfg.dataDir.base}/Audiobooks";
         description = "Directory for audiobooks";
       };
+      podcasts = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.dataDir.base}/Podcasts";
+        description = "Directory for podcasts";
+      };
     };
     user = {
       user = lib.mkOption {
@@ -493,6 +498,7 @@ in {
         "d ${cfg.dataDir.tvshows} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.books} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.audiobooks} 0700 ${cfg.user.user} ${cfg.user.group} -"
+        "d ${cfg.dataDir.podcasts} 0700 ${cfg.user.user} ${cfg.user.group} -"
         "d ${cfg.dataDir.music} 0700 ${cfg.user.user} ${cfg.user.group} -"
       ]
       ++ lib.lists.optionals cfg.recommendarr.enable [
