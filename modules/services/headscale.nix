@@ -20,9 +20,13 @@ in {
       default = false;
       description = "Open firewall for headscale. Port 80, 443 and 3478 for STUN.";
     };
+    derp = {
+      enable = lib.mkEnableOption "embedded DERP server and open STUN port";
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    networking.firewall.allowedUDPPorts = lib.mkIf cfg.derp.enable [3478];
     services.headscale = {
       enable = true;
       port = cfg.port;
@@ -31,6 +35,15 @@ in {
       settings = {
         server_url = "https://headscale.pinkorca.de";
         logtail.enabled = false;
+        derp = lib.mkIf cfg.derp.enable {
+          server = {
+            enabled = true;
+            region_id = 999;
+            region_code = "headscale";
+            region_name = "Headscale Embedded DERP";
+            stun_listen_addr = "0.0.0.0:3478";
+          };
+        };
         dns = {
           base_domain = "tail.net";
           nameservers.global = ["9.9.9.9"];

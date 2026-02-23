@@ -30,6 +30,7 @@
     headscale = {
       enable = true;
       openFirewall = true;
+      derp.enable = true;
     };
     authentik.enable = true;
     tailscale = {
