@@ -36,6 +36,8 @@ in {
         server_url = "https://headscale.pinkorca.de";
         logtail.enabled = false;
         derp = lib.mkIf cfg.derp.enable {
+          # this disables the public derp servers
+          urls = [];
           server = {
             enabled = true;
             region_id = 999;
