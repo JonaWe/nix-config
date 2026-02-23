@@ -48,7 +48,9 @@ in {
         };
         dns = {
           base_domain = "tail.net";
-          nameservers.global = ["9.9.9.9"];
+          nameservers.global = [];
+          magic_dns = true;
+          override_local_dns = false;
           extra_records = [
             {
               name = "*.ts.pinkorca";
