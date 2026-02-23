@@ -14,6 +14,7 @@ in {
     #   authentik = 9999;
     #   description = "Opens ports for authentik service";
     # };
+    ldap-outpost.enable = lib.mkEnableOption "Enable ldap outpost for authentik";
   };
 
   config = lib.mkIf cfg.enable {
@@ -44,7 +45,7 @@ in {
     };
 
     services.authentik-ldap = {
-      enable = true;
+      enable = cfg.ldap-outpost.enable;
       # environmentFile = config.sops.secrets."authentik/env".path;
       # AUTHENTIK_TOKEN=<token from authentik for this outpost>
     };
