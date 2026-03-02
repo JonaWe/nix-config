@@ -369,6 +369,19 @@ in {
               };
             }
             {
+              bazarr = {
+                icon = "bazarr.png";
+                href = "https://bazarr.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:6767";
+                description = "Subtitle Manager";
+                widget = {
+                  type = "bazarr";
+                  url = "http://localhost:6767";
+                  key = "{{HOMEPAGE_VAR_BAZARR_API_KEY}}";
+                };
+              };
+            }
+            {
               slskd = {
                 icon = "slskd.png";
                 href = "https://slskd.${serverBaseUrl}/";
