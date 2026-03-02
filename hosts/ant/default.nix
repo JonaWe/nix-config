@@ -248,7 +248,7 @@
         openFirewall = true;
       };
       bazarr = {
-        enable = false;
+        enable = true;
         openFirewall = true;
       };
       slskd = {
