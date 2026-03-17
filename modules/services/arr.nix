@@ -375,6 +375,11 @@ in {
       "jellyseerr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
+        globalRedirect = "seerr.ts.pinkorca.de";
+      };
+      "seerr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
         locations."/" = {
           proxyPass = "http://localhost:${builtins.toString cfg.jellyseerr.port}/";
         };
@@ -849,9 +854,10 @@ in {
     #   ];
     # };
 
-    systemd.services."docker-jellyseerr" = lib.mkIf cfg.jellyseerr.enable defaultSystemDConfig;
-    virtualisation.oci-containers.containers."jellyseerr" = lib.mkIf cfg.jellyseerr.enable {
-      image = "fallenbagel/jellyseerr:latest";
+    systemd.services."docker-seerr" = lib.mkIf cfg.jellyseerr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."seerr" = lib.mkIf cfg.jellyseerr.enable {
+      image = "ghcr.io/seerr-team/seerr:latest";
+      user = "2010:2010";
       environment = {
         "LOG_LEVEL" = "info";
         "PORT" = "5055";
@@ -866,6 +872,7 @@ in {
       log-driver = "journald";
       extraOptions = [
         "--pull=always"
+        "--init"
         "--network=container:gluetun"
       ];
     };
