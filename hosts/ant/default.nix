@@ -27,6 +27,13 @@
     enable = true;
   };
 
+  # enable FQ and BBR
+  boot.kernelModules = [ "tcp_bbr" ];
+  boot.kernel.sysctl = {
+    "net.core.default_qdisc" = "fq";
+    "net.ipv4.tcp_congestion_control" = "bbr";
+  };
+
   zramSwap.enable = true;
 
   # Load nvidia driver for Xorg and Wayland
@@ -272,6 +279,9 @@
         openFirewall = true;
       };
       flaresolverr = {
+        enable = true;
+      };
+      recyclarr = {
         enable = true;
       };
     };
