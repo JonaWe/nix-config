@@ -599,7 +599,7 @@ in {
         FIREWALL_OUTBOUND_SUBNETS = "10.1.1.0/24";
       };
       ports =
-        ["8096" "11434" "443"]
+        ["8096" "11434" "443" "2586"]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
           "127.0.0.1:${builtins.toString cfg.recommendarr.port}:8765/tcp"
         ]
