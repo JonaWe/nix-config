@@ -53,3 +53,15 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 -- don't move cursor
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+
+vim.filetype.add({
+  extension = {
+    container = "systemd",
+    volume    = "systemd",
+    network   = "systemd",
+    kube      = "systemd",
+    pod       = "systemd",
+    build     = "systemd",
+    image     = "systemd",
+  },
+})
