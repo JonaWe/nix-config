@@ -79,6 +79,11 @@ in {
         default = "${cfg.libDir.base}/dispatcharr";
         description = "Directory for dispatcharr config";
       };
+      recyclarr = lib.mkOption {
+        type = lib.types.path;
+        default = "${cfg.libDir.base}/recyclarr";
+        description = "Directory for recyclarr config";
+      };
       sabnzbd = lib.mkOption {
         type = lib.types.path;
         default = "${cfg.libDir.base}/sabnzbd";
@@ -270,6 +275,9 @@ in {
         description = "Default port for dispatcharr web ui";
       };
     };
+    recyclarr = {
+      enable = lib.mkEnableOption "Enable recyclarr service";
+    };
     sabnzbd = {
       enable = lib.mkEnableOption "Enable sabnzbd service";
       openFirewall = lib.mkEnableOption "Open firewall for sabnzbd web ui";
@@ -365,6 +373,11 @@ in {
         };
       };
       "jellyseerr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+        useACMEHost = "pinkorca.de";
+        forceSSL = true;
+        globalRedirect = "seerr.ts.pinkorca.de";
+      };
+      "seerr.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
         useACMEHost = "pinkorca.de";
         forceSSL = true;
         locations."/" = {
@@ -540,6 +553,9 @@ in {
       ++ lib.lists.optionals cfg.dispatcharr.enable [
         "d ${cfg.libDir.dispatcharr} 0755 ${cfg.user.user} ${cfg.user.group} -"
       ]
+      ++ lib.lists.optionals cfg.recyclarr.enable [
+        "d ${cfg.libDir.recyclarr} 0755 ${cfg.user.user} ${cfg.user.group} -"
+      ]
       ++ lib.lists.optionals cfg.sabnzbd.enable [
         "d ${cfg.libDir.sabnzbd} 0755 ${cfg.user.user} ${cfg.user.group} -"
       ]
@@ -583,7 +599,7 @@ in {
         FIREWALL_OUTBOUND_SUBNETS = "10.1.1.0/24";
       };
       ports =
-        ["8096" "11434" "443"]
+        ["8096" "11434" "443" "2586"]
         ++ lib.lists.optionals cfg.qbittorrent.openFirewall [
           "127.0.0.1:${builtins.toString cfg.recommendarr.port}:8765/tcp"
         ]
@@ -670,6 +686,26 @@ in {
         "${cfg.libDir.bazarr}:/app/config:rw"
         "${cfg.dataDir.movies}:/Movies:rw"
         "${cfg.dataDir.tvshows}:/TVShows:rw"
+      ];
+      dependsOn = [
+        "gluetun"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--pull=always"
+        "--network=container:gluetun"
+      ];
+    };
+
+    systemd.services."docker-recyclarr" = lib.mkIf cfg.recyclarr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."recyclarr" = lib.mkIf cfg.recyclarr.enable {
+      image = "ghcr.io/recyclarr/recyclarr:latest";
+      user = "2010:2010";
+      environment = {
+        "TZ" = "Europe/Berlin";
+      };
+      volumes = [
+        "${cfg.libDir.recyclarr}:/config:rw"
       ];
       dependsOn = [
         "gluetun"
@@ -818,9 +854,10 @@ in {
     #   ];
     # };
 
-    systemd.services."docker-jellyseerr" = lib.mkIf cfg.jellyseerr.enable defaultSystemDConfig;
-    virtualisation.oci-containers.containers."jellyseerr" = lib.mkIf cfg.jellyseerr.enable {
-      image = "fallenbagel/jellyseerr:latest";
+    systemd.services."docker-seerr" = lib.mkIf cfg.jellyseerr.enable defaultSystemDConfig;
+    virtualisation.oci-containers.containers."seerr" = lib.mkIf cfg.jellyseerr.enable {
+      image = "ghcr.io/seerr-team/seerr:latest";
+      user = "2010:2010";
       environment = {
         "LOG_LEVEL" = "info";
         "PORT" = "5055";
@@ -835,6 +872,7 @@ in {
       log-driver = "journald";
       extraOptions = [
         "--pull=always"
+        "--init"
         "--network=container:gluetun"
       ];
     };

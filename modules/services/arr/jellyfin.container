@@ -1,0 +1,22 @@
+[Unit]
+Description=Jellyfin Media Server
+After=network-online.target
+
+[Container]
+Image=lscr.io/linuxserver/jellyfin:latest
+ContainerName=jellyfin
+AutoUpdate=registry
+PublishPort=127.0.0.1:8099:8096
+
+Volume=/opt/services/jellyfin/config:/config:Z
+; Volume=/opt/media:/data:ro
+
+AddDevice=/dev/dri:/dev/dri
+
+[Service]
+Restart=always
+User=arr
+Group=arr
+
+[Install]
+WantedBy=multi-user.target
