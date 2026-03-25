@@ -668,6 +668,8 @@ in {
       };
       volumes = [
         "${cfg.libDir.bazarr}:/app/config:rw"
+        "${cfg.dataDir.movies}:/Movies:rw"
+        "${cfg.dataDir.tvshows}:/TVShows:rw"
       ];
       dependsOn = [
         "gluetun"
