@@ -34,5 +34,6 @@
     ./monitoring.nix
     ./authentik.nix
     ./ntfy.nix
+    ./arr/jellyfin.nix
   ];
 }
