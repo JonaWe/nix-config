@@ -68,6 +68,9 @@ in {
       mapAttrs' (
         name: svc:
           nameValuePair svc.nginx.domain {
+            useACMEHost = "pinkorca.de";
+            forceSSL = true;
+            http2 = true;
             locations."/" = {
               proxyPass = "http://127.0.0.1:${toString svc.port}";
               proxyWebsockets = svc.nginx.websockets;
@@ -84,7 +87,6 @@ in {
               nameValuePair mountPoint {
                 inherit device;
                 fsType = "zfs";
-                # options = ["zfsutil"];
               }
           )
           svc.zfsMounts

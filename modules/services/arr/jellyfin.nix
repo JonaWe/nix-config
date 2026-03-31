@@ -4,19 +4,51 @@
   ...
 }: {
   imports = [../homelab.nix];
+
+  users.users.arr = {
+    isNormalUser = true;
+    home = "/opt/data/media";
+    group = "arr";
+    description = "User for the arr apps";
+    uid = 2010;
+    linger = true;
+  };
+  users.groups.arr = {
+    gid = 2010;
+  };
+
+  fileSystems."/opt/data/media" = {
+    device = "/data/media/jellyfin";
+    options = ["bind"];
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /opt/data/media 0755 arr arr -"
+  ];
+
+  hardware.nvidia-container-toolkit.enable = true;
+  environment.etc."cdi/nvidia-container-toolkit.json".source = "/run/cdi/nvidia-container-toolkit.json";
+
+  networking.firewall.allowedTCPPorts = [8096];
+  # auto discovery
+  networking.firewall.allowedUDPPorts = [7359];
+
   homelab.services.jellyfin = {
-    port = 8099;
+    port = 8096;
     nginx = {
       enable = true;
-      domain = "jellyfin3.ts.pinkorca.de";
+      domain = "jellyfin.ts.pinkorca.de";
       websockets = true;
+      extraConfig = ''
+        proxy_buffering off;
+      '';
     };
     containerFile = ./jellyfin.container;
     user = "arr";
     group = "arr";
     zfsMounts = {
       "/opt/services/jellyfin/config" = "zdata/enc/services/jellyfin3/config";
-      # "/opt/data/media" = "zdata/enc/services/jellyfin/media";
+      "/opt/services/jellyfin/cache" = "zdata/enc/services/jellyfin3/cache";
     };
   };
 }

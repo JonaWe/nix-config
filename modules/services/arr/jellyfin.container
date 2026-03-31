@@ -3,15 +3,19 @@ Description=Jellyfin Media Server
 After=network-online.target
 
 [Container]
-Image=lscr.io/linuxserver/jellyfin:latest
+Image=docker.io/jellyfin/jellyfin:latest
 ContainerName=jellyfin
 AutoUpdate=registry
-PublishPort=127.0.0.1:8099:8096
+PublishPort=8096:8096
+PublishPort=7359:7359/udp
 
 Volume=/opt/services/jellyfin/config:/config:Z
-; Volume=/opt/media:/data:ro
+Volume=/opt/services/jellyfin/cache:/cache:Z
+Mount=type=tmpfs,destination=/cache/transcodes,tmpfs-size=4G
 
-AddDevice=/dev/dri:/dev/dri
+Volume=/opt/media/jellyfin:/data/media/jellyfin:ro
+
+AddDevice=nvidia.com/gpu=all
 
 [Service]
 Restart=always

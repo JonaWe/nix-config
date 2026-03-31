@@ -458,18 +458,6 @@ in {
       };
     };
 
-    # users
-    users.users.${cfg.user.user} = {
-      isNormalUser = true;
-      home = cfg.dataDir.base;
-      group = cfg.user.group;
-      description = "User for the arr apps";
-      uid = cfg.user.uid;
-    };
-
-    users.groups.${cfg.user.group} = {
-      gid = cfg.user.gid;
-    };
 
     myconf.disk.dataPool.extraDatasets = lib.mkIf config.myconf.services.jellyfin.zfsIntegration.enable {
       "enc/services/arr" = {

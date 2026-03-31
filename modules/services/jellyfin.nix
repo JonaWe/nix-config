@@ -38,20 +38,20 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    services.nginx.virtualHosts."jellyfin.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:8096/";
-      };
-    };
-    services.nginx.virtualHosts."jellyfin.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
-      useACMEHost = "pinkorca.de";
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://localhost:8096/";
-      };
-    };
+    # services.nginx.virtualHosts."jellyfin.home.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    #   useACMEHost = "pinkorca.de";
+    #   forceSSL = true;
+    #   locations."/" = {
+    #     proxyPass = "http://localhost:8096/";
+    #   };
+    # };
+    # services.nginx.virtualHosts."jellyfin.ts.pinkorca.de" = lib.mkIf config.myconf.services.nginx.enable {
+    #   useACMEHost = "pinkorca.de";
+    #   forceSSL = true;
+    #   locations."/" = {
+    #     proxyPass = "http://localhost:8096/";
+    #   };
+    # };
 
     # nixpkgs.config.packageOverrides = pkgs: {
     #   vaapiIntel = pkgs.vaapiIntel.override {enableHybridCodec = true;};
@@ -73,25 +73,25 @@ in {
     #   ];
     # };
 
-    nixpkgs.overlays = [
-      (
-        final: prev: {
-          jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
-            installPhase = ''
-              runHook preInstall
-
-              # this is the important line
-              sed -i "s#</head>#<script src=\"configurationpage?name=skip-intro-button.js\"></script></head>#" dist/index.html
-
-              mkdir -p $out/share
-              cp -a dist $out/share/jellyfin-web
-
-              runHook postInstall
-            '';
-          });
-        }
-      )
-    ];
+    # nixpkgs.overlays = [
+    #   (
+    #     final: prev: {
+    #       jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
+    #         installPhase = ''
+    #           runHook preInstall
+    #
+    #           # this is the important line
+    #           sed -i "s#</head>#<script src=\"configurationpage?name=skip-intro-button.js\"></script></head>#" dist/index.html
+    #
+    #           mkdir -p $out/share
+    #           cp -a dist $out/share/jellyfin-web
+    #
+    #           runHook postInstall
+    #         '';
+    #       });
+    #     }
+    #   )
+    # ];
 
     environment.systemPackages = with pkgs; [
       jellyfin
@@ -100,7 +100,7 @@ in {
     ];
 
     services.jellyfin = {
-      enable = true;
+      enable = false;
       openFirewall = cfg.openFirewall;
       user = cfg.user;
       group = cfg.group;
