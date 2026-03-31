@@ -16,32 +16,33 @@ in {
           type = types.int;
           description = "Internal localhost port";
         };
+        containerFile = mkOption {type = types.path;};
+
+        user = mkOption {type = types.str;};
+        group = mkOption {type = types.str;};
+        uid = mkOption {
+          type = types.nullOr types.int;
+          default = null;
+        };
+        gid = mkOption {
+          type = types.nullOr types.int;
+          default = null;
+        };
+
         nginx = {
           enable = mkEnableOption "Enable Nginx for this service";
           domain = mkOption {
             type = types.str;
-            description = "Subdomain for Nginx";
+            default = "";
           };
           websockets = mkOption {
             type = types.bool;
             default = false;
-            description = "Enable websockets for virtual host";
           };
           extraConfig = mkOption {
             type = types.str;
-            default = '''';
-            description = "Extra config for virtual host";
+            default = "";
           };
-        };
-        containerFile = mkOption {
-          type = types.path;
-          description = "Path to the .container file";
-        };
-        user = mkOption {
-          type = types.str;
-        };
-        group = mkOption {
-          type = types.str;
         };
 
         zfsMounts = mkOption {
@@ -55,6 +56,25 @@ in {
   config = mkIf (cfg.services != {}) {
     virtualisation.podman.enable = true;
 
+    users.users = mkMerge (mapAttrsToList (name: svc: {
+        ${svc.user} =
+          {
+            isNormalUser = true;
+            group = svc.group;
+            home = "/var/lib/${svc.user}";
+            createHome = true;
+            # required for podman to automatically start the containers
+            linger = true;
+          }
+          // optionalAttrs (svc.uid != null) {uid = svc.uid;};
+      })
+      cfg.services);
+
+    users.groups = mkMerge (mapAttrsToList (name: svc: {
+        ${svc.group} = optionalAttrs (svc.gid != null) {gid = svc.gid;};
+      })
+      cfg.services);
+
     environment.etc =
       mapAttrs' (
         name: svc:
@@ -62,21 +82,22 @@ in {
       )
       cfg.services;
 
-    services.nginx.virtualHosts =
-      mapAttrs' (
+    services.nginx.virtualHosts = mkMerge (mapAttrsToList (
         name: svc:
-          nameValuePair svc.nginx.domain {
-            useACMEHost = "pinkorca.de";
-            forceSSL = true;
-            http2 = true;
-            locations."/" = {
-              proxyPass = "http://127.0.0.1:${toString svc.port}";
-              proxyWebsockets = svc.nginx.websockets;
-              extraConfig = svc.nginx.extraConfig;
+          optionalAttrs svc.nginx.enable {
+            ${svc.nginx.domain} = {
+              useACMEHost = "pinkorca.de";
+              forceSSL = true;
+              http2 = true;
+              locations."/" = {
+                proxyPass = "http://127.0.0.1:${toString svc.port}";
+                proxyWebsockets = svc.nginx.websockets;
+                extraConfig = svc.nginx.extraConfig;
+              };
             };
           }
       )
-      cfg.services;
+      cfg.services);
 
     fileSystems = mkMerge (mapAttrsToList (
         name: svc:
