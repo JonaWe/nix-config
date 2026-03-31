@@ -7,7 +7,7 @@
 
   users.users.arr = {
     isNormalUser = true;
-    home = "/opt/data/media";
+    home = "/var/lib/arr";
     group = "arr";
     description = "User for the arr apps";
     uid = 2010;

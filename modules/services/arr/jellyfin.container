@@ -13,7 +13,7 @@ Volume=/opt/services/jellyfin/config:/config:Z
 Volume=/opt/services/jellyfin/cache:/cache:Z
 Mount=type=tmpfs,destination=/cache/transcodes,tmpfs-size=4G
 
-Volume=/opt/media/jellyfin:/data/media/jellyfin:ro
+Volume=/opt/data/media:/data/media/jellyfin:ro
 
 AddDevice=nvidia.com/gpu=all
 
