@@ -39,11 +39,9 @@ in {
         };
         user = mkOption {
           type = types.str;
-          default = "root";
         };
         group = mkOption {
           type = types.str;
-          default = "root";
         };
 
         zfsMounts = mkOption {

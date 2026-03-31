@@ -179,12 +179,12 @@
       enable = true;
       # openFirewall = true;
     };
-    home-assistant = {
-      enable = true;
-      openFirewall = true;
-      zfsIntegration.enable = true;
-      zfsIntegration.enableBackups = true;
-    };
+    # home-assistant = {
+    #   enable = true;
+    #   openFirewall = true;
+    #   zfsIntegration.enable = true;
+    #   zfsIntegration.enableBackups = true;
+    # };
     tailscale = {
       enable = true;
       exitNode = true;
