@@ -1,6 +1,7 @@
 [Unit]
 Description=Zigbee2mqtt
-After=network-online.target
+After=network-online.target mosquitto.service
+Requires=mosquitto.service
 
 [Container]
 Image=ghcr.io/koenkk/zigbee2mqtt:latest
