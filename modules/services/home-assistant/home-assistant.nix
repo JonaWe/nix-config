@@ -5,6 +5,9 @@
 }: {
   imports = [../homelab.nix];
 
+  # allow mDNS through the firewall
+  networking.firewall.allowedUDPPorts = [5353];
+
   homelab.services.home-assistant = {
     port = 8123;
     containerFile = ./home-assistant.container;

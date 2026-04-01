@@ -114,9 +114,10 @@ in {
 
     systemd.tmpfiles.rules = flatten (mapAttrsToList (
         name: svc:
-          mapAttrsToList (
-            mountPoint: device: "d ${mountPoint} 0775 ${svc.user} ${svc.group} -"
-          )
+          mapAttrsToList (mountPoint: device: [
+            "d ${mountPoint} 0775 ${svc.user} ${svc.group} -"
+            "Z ${mountPoint} 0775 ${svc.user} ${svc.group} -"
+          ])
           svc.zfsMounts
       )
       cfg.services);

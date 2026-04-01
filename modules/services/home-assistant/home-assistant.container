@@ -6,15 +6,12 @@ After=network-online.target
 Image=ghcr.io/home-assistant/home-assistant:stable
 ContainerName=home-assistant
 AutoUpdate=registry
-PublishPort=127.0.0.1:8123:8123
+Network=host
 
 Environment=TZ=Europe/Berlin
 
 Volume=/opt/services/home-assistant/config:/config:Z
 Volume=/etc/localtime:/etc/localtime:ro
-
-; AddDevice=/dev/serial/by-id/device_name:/dev/ttyACM0
-
 
 [Service]
 Restart=always

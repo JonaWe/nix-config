@@ -189,14 +189,14 @@
       enable = true;
       exitNode = true;
     };
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-      user = "arr";
-      group = "arr";
-      zfsIntegration.enable = true;
-      zfsIntegration.enableBackups = true;
-    };
+    # jellyfin = {
+    #   enable = true;
+    #   openFirewall = true;
+    #   user = "arr";
+    #   group = "arr";
+    #   zfsIntegration.enable = true;
+    #   zfsIntegration.enableBackups = true;
+    # };
     nginx = {
       enable = true;
       openFirewall = true;

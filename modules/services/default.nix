@@ -2,11 +2,11 @@
   imports = [
     ./syncthing.nix
     ./teamspeak.nix
-    ./jellyfin.nix
+    # ./jellyfin.nix
     ./immich.nix
     ./samba.nix
     ./minecraft-servers.nix
-    ./home-assistant.nix
+    # ./home-assistant.nix
     ./homepage.nix
     ./adguardhome.nix
     ./arr.nix
@@ -35,5 +35,8 @@
     ./authentik.nix
     ./ntfy.nix
     ./arr/jellyfin.nix
+    ./home-assistant/home-assistant.nix
+    ./home-assistant/mosquitto.nix
+    ./home-assistant/zigbee2mqtt.nix
   ];
 }
