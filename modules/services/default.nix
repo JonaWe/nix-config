@@ -39,5 +39,6 @@
     ./home-assistant/mosquitto.nix
     ./home-assistant/zigbee2mqtt.nix
     ./home-assistant/wyoming-whisper.nix
+    ./home-assistant/wyoming-piper.nix
   ];
 }
