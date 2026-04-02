@@ -2,7 +2,7 @@
   imports = [
     ./syncthing.nix
     ./teamspeak.nix
-    # ./jellyfin.nix
+    ./jellyfin.nix
     ./immich.nix
     ./samba.nix
     ./minecraft-servers.nix
@@ -40,5 +40,6 @@
     ./home-assistant/zigbee2mqtt.nix
     ./home-assistant/wyoming-whisper.nix
     ./home-assistant/wyoming-piper.nix
+    ./llm/ollama.nix
   ];
 }

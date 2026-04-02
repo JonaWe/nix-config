@@ -1,0 +1,21 @@
+[Unit]
+Description=Ollama LLM Server
+After=network-online.target
+
+[Container]
+Image=docker.io/ollama/ollama:latest
+ContainerName=ollama
+AutoUpdate=registry
+PublishPort=11434:11434
+
+Volume=/opt/services/ollama/config:/root/.ollama:Z
+
+AddDevice=nvidia.com/gpu=all
+
+[Service]
+Restart=always
+User=ollama
+Group=ollama
+
+[Install]
+WantedBy=multi-user.target

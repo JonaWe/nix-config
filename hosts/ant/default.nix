@@ -28,7 +28,7 @@
   };
 
   # enable FQ and BBR
-  boot.kernelModules = [ "tcp_bbr" ];
+  boot.kernelModules = ["tcp_bbr"];
   boot.kernel.sysctl = {
     "net.core.default_qdisc" = "fq";
     "net.ipv4.tcp_congestion_control" = "bbr";
@@ -189,14 +189,14 @@
       enable = true;
       exitNode = true;
     };
-    # jellyfin = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   user = "arr";
-    #   group = "arr";
-    #   zfsIntegration.enable = true;
-    #   zfsIntegration.enableBackups = true;
-    # };
+    jellyfin = {
+      enable = true;
+      #   openFirewall = true;
+      #   user = "arr";
+      #   group = "arr";
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
     nginx = {
       enable = true;
       openFirewall = true;
@@ -210,7 +210,7 @@
       enable = true;
     };
     llm = {
-      enable = true;
+      enable = false;
     };
     paperless = {
       enable = true;
