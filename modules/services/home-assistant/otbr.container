@@ -1,0 +1,45 @@
+[Unit]
+Description=OpenThread Border Router
+After=network-online.target
+
+[Container]
+Image=docker.io/openthread/otbr:latest
+ContainerName=otbr
+AutoUpdate=registry
+
+Network=host
+
+AddCapability=CAP_NET_ADMIN
+AddCapability=CAP_NET_RAW
+
+; Volume=/run/udev:/run/udev:ro
+AddDevice=/dev/net/tun
+; right now sudo chmod a+rw /dev/ttyUSB1 the device
+AddDevice=/dev/serial/by-id/usb-SONOFF_SONOFF_Dongle_Plus_MG24_88256a7faca2ef1199928c6661ce3355-if00-port0:/dev/ttyACM0
+
+PodmanArgs=--group-add=keep-groups
+
+; Environment=OT_RCP_DEVICE=spinel+hdlc+uart:///dev/ttyUSB0?uart-baudrate=460800
+; ; Environment=OT_RCP_DEVICE=spinel+hdlc+uart:///dev/ttyUSB1?uart-baudrate=460800
+; ; Environment=OT_RCP_DEVICE=spinel+hdlc+uart:///dev/ttyUSB0?uart-baudrate=115200
+; Environment=OT_INFRA_IF=enp5s0
+; Environment=OT_THREAD_IF=wpan0
+; Environment=OT_LOG_LEVEL=5
+Environment=RADIO_URL=spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=460800
+; Environment=RADIO_URL=spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=115200
+; Environment=RADIO_URL=spinel+hdlc+uart:///dev/ttyACM0?uart-baudrate=460800&uart-flow-control
+Environment=BACKBONE_INTERFACE=enp5s0
+Environment=TUN_INTERFACE_NAME=wpan0
+Environment=DEBUG_LEVEL=5
+
+Environment=FIREWALL=0
+Environment=NAT64=0
+Environment=DNS64=0
+
+[Service]
+Restart=always
+; User=otbr
+; Group=otbr
+
+[Install]
+WantedBy=multi-user.target
