@@ -3,19 +3,20 @@ Description=Wyoming Whisper
 After=network-online.target
 
 [Container]
-Image=docker.io/rhasspy/wyoming-whisper:latest
+Image=lscr.io/linuxserver/faster-whisper:gpu-legacy
 ContainerName=wyoming-whisper
 AutoUpdate=registry
 PublishPort=127.0.0.1:10300:10300
 
+Environment=WHISPER_LANG=de
+Environment=WHISPER_MODEL=small
+; Environment=WHISPER_MODEL=medium
 Environment=TZ=Europe/Berlin
 
-Volume=/opt/services/wyoming-whisper/config:/data:Z
+Volume=/opt/services/wyoming-whisper/config:/config:Z
 Volume=/etc/localtime:/etc/localtime:ro
 
 AddDevice=nvidia.com/gpu=all
-
-Exec=--model small --language de --device cuda --data-dir /data
 
 [Service]
 Restart=always
