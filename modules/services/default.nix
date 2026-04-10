@@ -43,5 +43,6 @@
     ./home-assistant/matter.nix
     ./home-assistant/otbr.nix
     ./llm/ollama.nix
+    ./llm/open-webui.nix
   ];
 }

@@ -112,14 +112,35 @@ in {
       )
       cfg.services);
 
-    systemd.tmpfiles.rules = flatten (mapAttrsToList (
+    systemd.services = mkMerge (flatten (mapAttrsToList (
         name: svc:
-          mapAttrsToList (mountPoint: device: [
-            "d ${mountPoint} 0775 ${svc.user} ${svc.group} -"
-            "Z ${mountPoint} 0775 ${svc.user} ${svc.group} -"
-          ])
+          mapAttrsToList (
+            mountPoint: device: let
+              cleanPath = replaceStrings ["/"] ["-"] (removePrefix "/" mountPoint);
+            in {
+              "${name}-perms-${cleanPath}" = {
+                description = "Set permissions for ${name} mount ${mountPoint}";
+                wantedBy = ["multi-user.target"];
+
+                unitConfig.RequiresMountsFor = [mountPoint];
+
+                before = ["${name}.service"];
+                requiredBy = ["${name}.service"];
+
+                serviceConfig = {
+                  Type = "oneshot";
+                  RemainAfterExit = true;
+                };
+
+                script = ''
+                  chown -R ${svc.user}:${svc.group} ${mountPoint}
+                  chmod -R 0775 ${mountPoint}
+                '';
+              };
+            }
+          )
           svc.zfsMounts
       )
-      cfg.services);
+      cfg.services));
   };
 }

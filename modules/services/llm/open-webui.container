@@ -1,0 +1,24 @@
+[Unit]
+Description=Open WebUI
+After=network-online.target
+
+[Container]
+Image=ghcr.io/open-webui/open-webui:main
+ContainerName=open-webui
+AutoUpdate=registry
+PublishPort=8014:8080
+
+Volume=/opt/services/open-webui/config:/app/backend/data:Z
+
+Environment=OLLAMA_BASE_URL=http://host.containers.internal:11434
+Environment=WEBUI_AUTH=True
+
+; AddDevice=nvidia.com/gpu=all
+
+[Service]
+Restart=always
+User=openwebui
+Group=openwebui
+
+[Install]
+WantedBy=multi-user.target
