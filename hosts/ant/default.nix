@@ -104,8 +104,8 @@
 
   myconf.services = {
     teamspeak = {
-      enable = true;
-      openFirewall = true;
+      enable = false;
+      openFirewall = false;
     };
     syncthing = {
       enable = true;
@@ -165,16 +165,16 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    wallos = {
-      enable = true;
-    };
+    # wallos = {
+    #   enable = true;
+    # };
     metube = {
       enable = true;
     };
     it-tools.enable = true;
-    grocy = {
-      enable = true;
-    };
+    # grocy = {
+    #   enable = true;
+    # };
     homepage = {
       enable = true;
       # openFirewall = true;

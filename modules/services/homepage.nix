@@ -130,11 +130,11 @@ in {
               Jellyfin = {
                 icon = "jellyfin.png";
                 href = "https://jellyfin.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:8096/health";
+                siteMonitor = "http://127.0.0.1:8096/health";
                 description = "Movies and TV shows";
                 widget = {
                   type = "jellyfin";
-                  url = "http://localhost:8096";
+                  url = "http://127.0.0.1:8096";
                   enableBlocks = true;
                   enableNowPlaying = true;
                   enableUser = false;
@@ -156,14 +156,6 @@ in {
                   token = "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}";
                   salt = "{{HOMEPAGE_VAR_NAVIDROME_SALT}}";
                 };
-              };
-            }
-            {
-              Actual = {
-                icon = "actual-budget.png";
-                href = "https://actual.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:9284";
-                description = "Money Budgeting";
               };
             }
             {
@@ -220,6 +212,20 @@ in {
               };
             }
             {
+              "Home Assistant" = {
+                icon = "home-assistant.svg";
+                href = "https://hass.${serverBaseUrl}/";
+                siteMonitor = "http://127.0.0.1:8123";
+                description = "Smart Home Automations";
+                # widget = {
+                #   type = "paperlessngx";
+                #   url = "http://localhost:${toString config.myconf.services.paperless.port}";
+                #   username = "{{HOMEPAGE_VAR_PAPERLESS_USERNAME}}";
+                #   password = "{{HOMEPAGE_VAR_PAPERLESS_PASSWORD}}";
+                # };
+              };
+            }
+            {
               SearX = {
                 href = "https://search.ts.pinkorca.de";
                 icon = "searx.svg";
@@ -239,24 +245,24 @@ in {
               "Open WebUI" = {
                 icon = "open-webui.svg";
                 href = "https://llm.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.llm.port}";
+                siteMonitor = "http://127.0.0.1:8014";
                 description = "AI Chatbot";
               };
             }
             {
-              "Grocy" = {
-                icon = "grocy.svg";
-                href = "https://grocy.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.grocy.port}";
-                description = "Household Management";
+              "Zigbee 2 Mqtt" = {
+                icon = "sh-zigbee2mqtt.svg";
+                href = "https://z2m.${serverBaseUrl}/";
+                siteMonitor = "http://127.0.0.1:8929";
+                description = "Zigbee 2 Mqtt";
               };
             }
             {
-              "Wallos" = {
-                icon = "sh-wallos.svg";
-                href = "https://wallos.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.wallos.port}";
-                description = "Subscription Management";
+              Actual = {
+                icon = "actual-budget.png";
+                href = "https://actual.${serverBaseUrl}/";
+                siteMonitor = "http://localhost:9284";
+                description = "Money Budgeting";
               };
             }
           ];
