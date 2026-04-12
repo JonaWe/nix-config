@@ -141,59 +141,33 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    minecraft-servers = {
-      enable = false;
-      openFirewall = true;
-    };
     searx = {
       enable = true;
     };
-    # karakeep = {
-    #   enable = true;
-    # };
     olivetin.enable = true;
     convertx.enable = true;
     omni-tools.enable = true;
     seafile.enable = false;
     seafile.zfsIntegration.enable = true;
     seafile.zfsIntegration.enableBackups = true;
-    monitoring = {
-      enable = true;
-    };
     actual = {
       enable = true;
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    # wallos = {
-    #   enable = true;
-    # };
     metube = {
       enable = true;
     };
     it-tools.enable = true;
-    # grocy = {
-    #   enable = true;
-    # };
     homepage = {
       enable = true;
-      # openFirewall = true;
     };
-    # home-assistant = {
-    #   enable = true;
-    #   openFirewall = true;
-    #   zfsIntegration.enable = true;
-    #   zfsIntegration.enableBackups = true;
-    # };
     tailscale = {
       enable = true;
       exitNode = true;
     };
     jellyfin = {
       enable = true;
-      #   openFirewall = true;
-      #   user = "arr";
-      #   group = "arr";
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
@@ -208,9 +182,6 @@
     };
     stirling-pdf = {
       enable = true;
-    };
-    llm = {
-      enable = false;
     };
     paperless = {
       enable = true;

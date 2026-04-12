@@ -56,12 +56,15 @@ in {
   config = mkIf (cfg.services != {}) {
     virtualisation.podman.enable = true;
 
+    hardware.nvidia-container-toolkit.enable = true;
+
     users.users = mkMerge (mapAttrsToList (name: svc: {
         ${svc.user} =
           {
             isNormalUser = true;
             group = svc.group;
-            home = "/var/lib/${svc.user}";
+            # podman container locations
+            home = "/var/lib/homes/${svc.user}";
             createHome = true;
             # required for podman to automatically start the containers
             linger = true;
@@ -76,11 +79,15 @@ in {
       cfg.services);
 
     environment.etc =
-      mapAttrs' (
-        name: svc:
-          nameValuePair "containers/systemd/${name}.container" {source = svc.containerFile;}
-      )
-      cfg.services;
+      (mapAttrs' (
+          name: svc:
+            nameValuePair "containers/systemd/${name}.container" {source = svc.containerFile;}
+        )
+        cfg.services)
+      // {
+        # make nvidia container toolkit available
+        "cdi/nvidia-container-toolkit.json".source = "/run/cdi/nvidia-container-toolkit.json";
+      };
 
     services.nginx.virtualHosts = mkMerge (mapAttrsToList (
         name: svc:

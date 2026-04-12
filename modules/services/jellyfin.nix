@@ -99,14 +99,14 @@ in {
       jellyfin-ffmpeg
     ];
 
-    services.jellyfin = {
-      enable = false;
-      openFirewall = cfg.openFirewall;
-      user = cfg.user;
-      group = cfg.group;
-      dataDir = cfg.directory;
-      cacheDir = "${cfg.directory}/cache";
-    };
+    # services.jellyfin = {
+    #   enable = false;
+    #   openFirewall = cfg.openFirewall;
+    #   user = cfg.user;
+    #   group = cfg.group;
+    #   dataDir = cfg.directory;
+    #   cacheDir = "${cfg.directory}/cache";
+    # };
 
     myconf.disk.dataPool.extraDatasets = lib.mkIf cfg.zfsIntegration.enable {
       "enc/services/jellyfin" = {

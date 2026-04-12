@@ -12,8 +12,6 @@
 
   systemd.tmpfiles.rules = ["d /opt/data/media 0755 arr arr -"];
 
-  hardware.nvidia-container-toolkit.enable = true;
-  environment.etc."cdi/nvidia-container-toolkit.json".source = "/run/cdi/nvidia-container-toolkit.json";
 
   networking.firewall.allowedTCPPorts = [8096];
   # auto discovery

@@ -5,25 +5,18 @@
     ./jellyfin.nix
     ./immich.nix
     ./samba.nix
-    ./minecraft-servers.nix
-    # ./home-assistant.nix
     ./homepage.nix
-    ./adguardhome.nix
     ./arr.nix
     ./nginx.nix
     ./gitea.nix
     ./tandoor-recipes.nix
-    ./llm.nix
     ./stirling-pdf.nix
     ./paperless.nix
-    ./grocy.nix
-    ./wallos.nix
     ./actual.nix
     ./headscale.nix
     ./tailscale.nix
     ./radicale.nix
     ./unifi-controller.nix
-    ./karakeep.nix
     ./searx.nix
     ./metube.nix
     ./it-tools.nix
@@ -31,7 +24,6 @@
     ./convertx.nix
     ./omni-tools.nix
     ./olivetin.nix
-    ./monitoring.nix
     ./authentik.nix
     ./ntfy.nix
     ./arr/jellyfin.nix
