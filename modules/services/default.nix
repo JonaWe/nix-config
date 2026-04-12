@@ -18,10 +18,8 @@
     ./unifi-controller.nix
     ./searx.nix
     ./metube.nix
-    ./it-tools.nix
     ./seafile.nix
     ./convertx.nix
-    ./omni-tools.nix
     ./olivetin.nix
     ./authentik.nix
     ./ntfy.nix
@@ -37,5 +35,6 @@
     ./llm/open-webui.nix
     ./monitoring/ntfy.nix
     ./stirling-pdf/stirling-pdf.nix
+    ./omni-tools/omni-tools.nix
   ];
 }

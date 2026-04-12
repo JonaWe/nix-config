@@ -1,0 +1,17 @@
+[Unit]
+Description=Omni Tools
+After=network-online.target
+
+[Container]
+Image=docker.io/iib0011/omni-tools:latest
+ContainerName=omni-tools
+AutoUpdate=registry
+PublishPort=8315:80
+
+[Service]
+Restart=always
+User=omni-tools
+Group=omni-tools
+
+[Install]
+WantedBy=multi-user.target

@@ -305,16 +305,8 @@ in {
               "Omni-Tools" = {
                 icon = "omni-tools.png";
                 href = "https://tools.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.omni-tools.port}";
+                siteMonitor = "http://127.0.0.1:8315";
                 description = "General purpose tools";
-              };
-            }
-            {
-              "IT-Tools" = {
-                icon = "it-tools.svg";
-                href = "https://it-tools.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.it-tools.port}";
-                description = "Collection of it tools";
               };
             }
           ];
