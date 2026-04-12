@@ -1,0 +1,22 @@
+[Unit]
+Description=ntfy Notifications
+After=network-online.target
+
+[Container]
+Image=docker.io/binwiederhier/ntfy:latest
+ContainerName=ntfy
+AutoUpdate=registry
+PublishPort=8019:80
+
+Exec=serve
+
+Volume=/opt/services/ntfy/config:/var/cache/ntfy:Z
+Volume=/opt/services/ntfy/cache:/etc/ntfy:Z
+
+[Service]
+Restart=always
+User=ntfy
+Group=ntfy
+
+[Install]
+WantedBy=multi-user.target

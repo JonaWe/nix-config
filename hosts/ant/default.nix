@@ -256,7 +256,7 @@
         enable = true;
       };
     };
-    ntfy.enable = true;
+    # ntfy.enable = true;
   };
 
   security.acme = {
