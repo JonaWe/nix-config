@@ -180,9 +180,6 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    stirling-pdf = {
-      enable = true;
-    };
     paperless = {
       enable = true;
     };

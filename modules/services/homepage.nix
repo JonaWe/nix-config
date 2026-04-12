@@ -289,7 +289,7 @@ in {
               "Stirling Pdf" = {
                 icon = "stirling-pdf.svg";
                 href = "https://pdf.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.stirling-pdf.port}";
+                siteMonitor = "http://127.0.0.1:8314";
                 description = "PDF Multitool";
               };
             }

@@ -1,0 +1,19 @@
+[Unit]
+Description=Stirling PDF Modifications
+After=network-online.target
+
+[Container]
+Image=docker.io/stirlingtools/stirling-pdf:latest
+ContainerName=stirling-pdf
+AutoUpdate=registry
+PublishPort=8314:8080
+
+Volume=/opt/services/stirling-pdf/config:/configs:Z
+
+[Service]
+Restart=always
+User=stirling-pdf
+Group=stirling-pdf
+
+[Install]
+WantedBy=multi-user.target
