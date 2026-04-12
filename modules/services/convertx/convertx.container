@@ -1,0 +1,23 @@
+[Unit]
+Description=ConvertX File Conversion
+After=network-online.target
+
+[Container]
+Image=docker.io/c4illin/convertx:latest
+ContainerName=convertx
+AutoUpdate=registry
+PublishPort=8317:3000
+
+Environment=ALLOW_UNAUTHENTICATED=true
+Environment=ACCOUNT_REGISTRATION=false
+Environment=HTTP_ALLOWED=true
+
+Volume=/opt/services/convertx/config:/app/data:Z
+
+[Service]
+Restart=always
+User=convertx
+Group=convertx
+
+[Install]
+WantedBy=multi-user.target

@@ -19,7 +19,6 @@
     ./searx.nix
     ./metube.nix
     ./seafile.nix
-    ./convertx.nix
     ./olivetin.nix
     ./authentik.nix
     ./ntfy.nix
@@ -36,5 +35,6 @@
     ./monitoring/ntfy.nix
     ./stirling-pdf/stirling-pdf.nix
     ./omni-tools/omni-tools.nix
+    ./convertx/convertx.nix
   ];
 }

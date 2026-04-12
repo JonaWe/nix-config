@@ -297,7 +297,7 @@ in {
               "ConvertX" = {
                 icon = "sh-convertx.png";
                 href = "https://convert.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.convertx.port}";
+                siteMonitor = "http://127.0.0.1:8317";
                 description = "Convert any file";
               };
             }
