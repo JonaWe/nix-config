@@ -7,6 +7,7 @@
 
   # allow mDNS through the firewall
   networking.firewall.allowedUDPPorts = [5353];
+  networking.firewall.allowedTCPPorts = [8123];
 
   homelab.services.home-assistant = {
     port = 8123;

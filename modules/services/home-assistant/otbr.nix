@@ -11,6 +11,7 @@
     "net.ipv4.conf.all.forwarding" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
   };
+  networking.firewall.trustedInterfaces = [ "wpan0" ];
 
   users.users.otbr.extraGroups = [ "dialout" ];
 
