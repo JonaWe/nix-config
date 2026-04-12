@@ -13,13 +13,25 @@ in {
     type = types.attrsOf (types.submodule {
       options = {
         port = mkOption {
-          type = types.int;
+          type = types.nullOr types.int;
+          default = null;
           description = "Internal localhost port";
+        };
+        openFirewall = mkOption {
+          type = types.bool;
+          default = false;
+          description = "Open the firewall for the specified port";
         };
         containerFile = mkOption {type = types.path;};
 
-        user = mkOption {type = types.str;};
-        group = mkOption {type = types.str;};
+        user = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+        };
+        group = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+        };
         uid = mkOption {
           type = types.nullOr types.int;
           default = null;
@@ -58,25 +70,31 @@ in {
 
     hardware.nvidia-container-toolkit.enable = true;
 
-    users.users = mkMerge (mapAttrsToList (name: svc: {
-        ${svc.user} =
-          {
-            isNormalUser = true;
-            group = svc.group;
-            # podman container locations
-            home = "/var/lib/homes/${svc.user}";
-            createHome = true;
-            # required for podman to automatically start the containers
-            linger = true;
-          }
-          // optionalAttrs (svc.uid != null) {uid = svc.uid;};
-      })
-      cfg.services);
+    networking.firewall.allowedTCPPorts = flatten (mapAttrsToList (
+      name: svc:
+        optional (svc.openFirewall && svc.port != null) svc.port
+    ) cfg.services);
 
-    users.groups = mkMerge (mapAttrsToList (name: svc: {
+    users.users = mkMerge (mapAttrsToList (name: svc:
+      optionalAttrs (svc.user != null) {
+        ${svc.user} = {
+          isNormalUser = true;
+          # podman container locations
+          home = "/var/lib/homes/${svc.user}";
+          createHome = true;
+          # required for podman to automatically start the containers
+          linger = true;
+        }
+        // optionalAttrs (svc.group != null) {group = svc.group;}
+        // optionalAttrs (svc.uid != null) {uid = svc.uid;};
+      }
+    ) cfg.services);
+
+    users.groups = mkMerge (mapAttrsToList (name: svc:
+      optionalAttrs (svc.group != null) {
         ${svc.group} = optionalAttrs (svc.gid != null) {gid = svc.gid;};
-      })
-      cfg.services);
+      }
+    ) cfg.services);
 
     environment.etc =
       (mapAttrs' (
@@ -97,9 +115,10 @@ in {
               forceSSL = true;
               http2 = true;
               locations."/" = {
-                proxyPass = "http://127.0.0.1:${toString svc.port}";
                 proxyWebsockets = svc.nginx.websockets;
                 extraConfig = svc.nginx.extraConfig;
+              } // optionalAttrs (svc.port != null) {
+                proxyPass = "http://127.0.0.1:${toString svc.port}";
               };
             };
           }
@@ -124,6 +143,9 @@ in {
           mapAttrsToList (
             mountPoint: device: let
               cleanPath = replaceStrings ["/"] ["-"] (removePrefix "/" mountPoint);
+              # fallback
+              chownUser = if svc.user != null then svc.user else "root";
+              chownGroup = if svc.group != null then svc.group else "root";
             in {
               "${name}-perms-${cleanPath}" = {
                 description = "Set permissions for ${name} mount ${mountPoint}";
@@ -140,7 +162,7 @@ in {
                 };
 
                 script = ''
-                  chown -R ${svc.user}:${svc.group} ${mountPoint}
+                  chown -R ${chownUser}:${chownGroup} ${mountPoint}
                   chmod -R 0775 ${mountPoint}
                 '';
               };
