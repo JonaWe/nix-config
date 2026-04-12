@@ -35,6 +35,9 @@
       }
     ];
     extraConfig = ''
+      set -g allow-passthrough on
+      set -s set-clipboard on
+
       bind q kill-pane
       bind-key -n C-b send-prefix
 
