@@ -1,0 +1,19 @@
+[Unit]
+Description=Actual Budget
+After=network-online.target
+
+[Container]
+Image=docker.io/actualbudget/actual-server:latest
+ContainerName=actual
+AutoUpdate=registry
+PublishPort=127.0.0.1:9284:5006
+
+Volume=/opt/services/actual/config:/data:Z
+
+[Service]
+Restart=always
+User=actual
+Group=actual
+
+[Install]
+WantedBy=multi-user.target

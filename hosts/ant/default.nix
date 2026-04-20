@@ -148,11 +148,6 @@
     seafile.enable = false;
     seafile.zfsIntegration.enable = true;
     seafile.zfsIntegration.enableBackups = true;
-    actual = {
-      enable = true;
-      zfsIntegration.enable = true;
-      zfsIntegration.enableBackups = true;
-    };
     homepage = {
       enable = true;
     };

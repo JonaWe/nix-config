@@ -11,7 +11,7 @@
     ./gitea.nix
     ./tandoor-recipes.nix
     ./paperless.nix
-    ./actual.nix
+    ./actual/actual.nix
     ./headscale.nix
     ./tailscale.nix
     ./radicale.nix
