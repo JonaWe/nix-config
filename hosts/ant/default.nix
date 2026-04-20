@@ -250,6 +250,8 @@
     # ntfy.enable = true;
   };
 
+  homelab.enable = true;
+
   security.acme = {
     certs."pinkorca.de".extraDomainNames = [
       "*.ts.pinkorca.de"

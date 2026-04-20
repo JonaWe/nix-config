@@ -1,29 +1,32 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
   imports = [../homelab.nix];
 
-  # allow mDNS through the firewall
-  networking.firewall.allowedUDPPorts = [5353];
-  networking.firewall.allowedTCPPorts = [8123];
+  config = lib.mkIf config.homelab.enable {
+    # allow mDNS through the firewall
+    networking.firewall.allowedUDPPorts = [5353];
+    networking.firewall.allowedTCPPorts = [8123];
 
-  homelab.services.home-assistant = {
-    port = 8123;
-    containerFile = ./home-assistant.container;
+    homelab.services.home-assistant = {
+      port = 8123;
+      containerFile = ./home-assistant.container;
 
-    user = "hass";
-    group = "hass";
+      user = "hass";
+      group = "hass";
 
-    nginx = {
-      enable = true;
-      domain = "hass.ts.pinkorca.de";
-      websockets = true;
-    };
+      nginx = {
+        enable = true;
+        domain = "hass.ts.pinkorca.de";
+        websockets = true;
+      };
 
-    zfsMounts = {
-      "/opt/services/home-assistant/config" = "zdata/enc/services/home-assistant/config";
+      zfsMounts = {
+        "/opt/services/home-assistant/config" = "zdata/enc/services/home-assistant/config";
+      };
     };
   };
 }

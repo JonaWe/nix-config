@@ -7,6 +7,8 @@
 with lib; let
   cfg = config.homelab;
 in {
+  options.homelab.enable = mkEnableOption "Enable homelab service stack";
+
   options.homelab.services = mkOption {
     description = "Declarative Homelab Services";
     default = {};
@@ -65,7 +67,7 @@ in {
     });
   };
 
-  config = mkIf (cfg.services != {}) {
+  config = mkIf (cfg.enable && cfg.services != {}) {
     virtualisation.podman.enable = true;
 
     hardware.nvidia-container-toolkit.enable = true;
