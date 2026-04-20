@@ -153,9 +153,6 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    metube = {
-      enable = true;
-    };
     homepage = {
       enable = true;
     };

@@ -17,7 +17,7 @@
     ./radicale.nix
     ./unifi-controller.nix
     ./searx.nix
-    ./metube.nix
+    ./metube/metube.nix
     ./seafile.nix
     ./olivetin.nix
     ./authentik.nix

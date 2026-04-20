@@ -281,7 +281,7 @@ in {
               "Metube" = {
                 icon = "metube.svg";
                 href = "https://metube.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.metube.port}";
+                siteMonitor = "http://127.0.0.1:9209";
                 description = "YouTube Downloader";
               };
             }

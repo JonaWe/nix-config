@@ -1,0 +1,23 @@
+[Unit]
+Description=MeTube YouTube Downloader
+After=network-online.target
+
+[Container]
+Image=ghcr.io/alexta69/metube:latest
+ContainerName=metube
+AutoUpdate=registry
+PublishPort=9209:8081
+
+Environment=TZ=Europe/Berlin
+Environment=UID=2028
+Environment=GID=2028
+
+Volume=/opt/services/metube/downloads:/downloads:Z
+
+[Service]
+Restart=always
+User=metube
+Group=metube
+
+[Install]
+WantedBy=multi-user.target
