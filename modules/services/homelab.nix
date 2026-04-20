@@ -63,6 +63,19 @@ in {
           type = types.attrsOf types.str;
           default = {};
         };
+
+        snapshots = {
+          enable = mkOption {
+            type = types.bool;
+            default = true;
+            description = "Enable Sanoid snapshots for this service's ZFS datasets.";
+          };
+          template = mkOption {
+            type = types.str;
+            default = "default";
+            description = "Sanoid template name used for this service's ZFS datasets.";
+          };
+        };
       };
     });
   };
@@ -137,6 +150,18 @@ in {
               }
           )
           svc.zfsMounts
+      )
+      cfg.services);
+
+    services.sanoid.datasets = mkMerge (mapAttrsToList (
+        name: svc:
+          optionalAttrs svc.snapshots.enable (mapAttrs' (
+              mountPoint: dataset:
+                nameValuePair dataset {
+                  useTemplate = [svc.snapshots.template];
+                }
+            )
+            svc.zfsMounts)
       )
       cfg.services);
 
