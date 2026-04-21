@@ -22,6 +22,7 @@
     ./olivetin.nix
     ./authentik.nix
     ./ntfy.nix
+    ./restic-backup.nix
     ./arr/jellyfin.nix
     ./home-assistant/home-assistant.nix
     ./home-assistant/mosquitto.nix

@@ -24,7 +24,11 @@
       };
 
       zfsMounts = {
-        "/opt/services/zigbee2mqtt/config" = "zdata/enc/services/zigbee2mqtt/config";
+        "/opt/services/zigbee2mqtt/config" = {
+          dataset = "zdata/enc/services/zigbee2mqtt/config";
+          snapshot = true;
+          backup = true;
+        };
       };
     };
   };

@@ -25,7 +25,11 @@
       group = "otbr";
 
       zfsMounts = {
-        "/opt/services/otbr/config" = "zdata/enc/services/otbr/config";
+        "/opt/services/otbr/config" = {
+          dataset = "zdata/enc/services/otbr/config";
+          snapshot = true;
+          backup = true;
+        };
       };
     };
   };

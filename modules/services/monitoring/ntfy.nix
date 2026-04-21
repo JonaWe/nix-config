@@ -32,8 +32,16 @@
     };
 
     zfsMounts = {
-      "/opt/services/ntfy/config" = "zdata/enc/services/ntfy/config";
-      "/opt/services/ntfy/cache" = "zdata/enc/services/ntfy/cache";
+      "/opt/services/ntfy/config" = {
+        dataset = "zdata/enc/services/ntfy/config";
+        snapshot = true;
+        backup = true;
+      };
+      "/opt/services/ntfy/cache" = {
+        dataset = "zdata/enc/services/ntfy/cache";
+        snapshot = true;
+        backup = false;
+      };
     };
   };
 }

@@ -12,7 +12,11 @@
     group = "wyoming-piper";
 
     zfsMounts = {
-      "/opt/services/wyoming-piper/config" = "zdata/enc/services/wyoming-piper/config";
+      "/opt/services/wyoming-piper/config" = {
+        dataset = "zdata/enc/services/wyoming-piper/config";
+        snapshot = true;
+        backup = false;
+      };
     };
   };
 }

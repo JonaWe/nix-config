@@ -60,8 +60,24 @@ in {
         };
 
         zfsMounts = mkOption {
-          type = types.attrsOf types.str;
           default = {};
+          description = "Mapping of mountpoints to ZFS datasets with snapshot and backup policies.";
+          type = types.attrsOf (types.submodule {
+            options = {
+              dataset = mkOption {
+                type = types.str;
+                description = "The raw ZFS dataset name (e.g., zdata/enc/services/app).";
+              };
+              snapshot = mkOption {
+                type = types.bool;
+                description = "Enable or disable Sanoid snapshots for this dataset.";
+              };
+              backup = mkOption {
+                type = types.bool;
+                description = "Include or exclude this dataset from the Restic backup.";
+              };
+            };
+          });
         };
 
         snapshots = {
@@ -86,30 +102,36 @@ in {
     hardware.nvidia-container-toolkit.enable = true;
 
     networking.firewall.allowedTCPPorts = flatten (mapAttrsToList (
-      name: svc:
-        optional (svc.openFirewall && svc.port != null) svc.port
-    ) cfg.services);
+        name: svc:
+          optional (svc.openFirewall && svc.port != null) svc.port
+      )
+      cfg.services);
 
-    users.users = mkMerge (mapAttrsToList (name: svc:
-      optionalAttrs (svc.user != null) {
-        ${svc.user} = {
-          isNormalUser = true;
-          # podman container locations
-          home = "/var/lib/homes/${svc.user}";
-          createHome = true;
-          # required for podman to automatically start the containers
-          linger = true;
-        }
-        // optionalAttrs (svc.group != null) {group = svc.group;}
-        // optionalAttrs (svc.uid != null) {uid = svc.uid;};
-      }
-    ) cfg.services);
+    users.users = mkMerge (mapAttrsToList (
+        name: svc:
+          optionalAttrs (svc.user != null) {
+            ${svc.user} =
+              {
+                isNormalUser = true;
+                # podman container locations
+                home = "/var/lib/homes/${svc.user}";
+                createHome = true;
+                # required for podman to automatically start the containers
+                linger = true;
+              }
+              // optionalAttrs (svc.group != null) {group = svc.group;}
+              // optionalAttrs (svc.uid != null) {uid = svc.uid;};
+          }
+      )
+      cfg.services);
 
-    users.groups = mkMerge (mapAttrsToList (name: svc:
-      optionalAttrs (svc.group != null) {
-        ${svc.group} = optionalAttrs (svc.gid != null) {gid = svc.gid;};
-      }
-    ) cfg.services);
+    users.groups = mkMerge (mapAttrsToList (
+        name: svc:
+          optionalAttrs (svc.group != null) {
+            ${svc.group} = optionalAttrs (svc.gid != null) {gid = svc.gid;};
+          }
+      )
+      cfg.services);
 
     environment.etc =
       (mapAttrs' (
@@ -129,12 +151,14 @@ in {
               useACMEHost = "pinkorca.de";
               forceSSL = true;
               http2 = true;
-              locations."/" = {
-                proxyWebsockets = svc.nginx.websockets;
-                extraConfig = svc.nginx.extraConfig;
-              } // optionalAttrs (svc.port != null) {
-                proxyPass = "http://127.0.0.1:${toString svc.port}";
-              };
+              locations."/" =
+                {
+                  proxyWebsockets = svc.nginx.websockets;
+                  extraConfig = svc.nginx.extraConfig;
+                }
+                // optionalAttrs (svc.port != null) {
+                  proxyPass = "http://127.0.0.1:${toString svc.port}";
+                };
             };
           }
       )
@@ -143,9 +167,9 @@ in {
     fileSystems = mkMerge (mapAttrsToList (
         name: svc:
           mapAttrs' (
-            mountPoint: device:
+            mountPoint: mountOpts:
               nameValuePair mountPoint {
-                inherit device;
+                device = mountOpts.dataset;
                 fsType = "zfs";
               }
           )
@@ -155,24 +179,34 @@ in {
 
     services.sanoid.datasets = mkMerge (mapAttrsToList (
         name: svc:
-          optionalAttrs svc.snapshots.enable (mapAttrs' (
-              mountPoint: dataset:
-                nameValuePair dataset {
-                  useTemplate = [svc.snapshots.template];
-                }
-            )
-            svc.zfsMounts)
+          optionalAttrs svc.snapshots.enable (
+            let
+              snapMounts = filterAttrs (mp: opts: opts.snapshot) svc.zfsMounts;
+            in
+              mapAttrs' (
+                mountPoint: mountOpts:
+                  nameValuePair mountOpts.dataset {
+                    useTemplate = [svc.snapshots.template];
+                  }
+              )
+              snapMounts
+          )
       )
       cfg.services);
 
     systemd.services = mkMerge (flatten (mapAttrsToList (
         name: svc:
           mapAttrsToList (
-            mountPoint: device: let
+            mountPoint: mountOpts: let
               cleanPath = replaceStrings ["/"] ["-"] (removePrefix "/" mountPoint);
-              # fallback
-              chownUser = if svc.user != null then svc.user else "root";
-              chownGroup = if svc.group != null then svc.group else "root";
+              chownUser =
+                if svc.user != null
+                then svc.user
+                else "root";
+              chownGroup =
+                if svc.group != null
+                then svc.group
+                else "root";
             in {
               "${name}-perms-${cleanPath}" = {
                 description = "Set permissions for ${name} mount ${mountPoint}";

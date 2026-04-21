@@ -13,9 +13,21 @@
     group = "mosquitto";
 
     zfsMounts = {
-      "/opt/services/mosquitto/config" = "zdata/enc/services/mosquitto/config";
-      "/opt/services/mosquitto/data" = "zdata/enc/services/mosquitto/data";
-      "/opt/services/mosquitto/log" = "zdata/enc/services/mosquitto/log";
+        "/opt/services/mosquitto/config" = {
+          dataset = "zdata/enc/services/mosquitto/config";
+          snapshot = true;
+          backup = true;
+        };
+        "/opt/services/mosquitto/data" = {
+          dataset = "zdata/enc/services/mosquitto/data";
+          snapshot = true;
+          backup = true;
+        };
+        "/opt/services/mosquitto/log" = {
+          dataset = "zdata/enc/services/mosquitto/log";
+          snapshot = true;
+          backup = true;
+        };
     };
   };
 }

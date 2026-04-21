@@ -20,7 +20,11 @@
     };
 
     zfsMounts = {
-      "/opt/services/open-webui/config" = "zdata/enc/services/open-webui/config";
+      "/opt/services/open-webui/config" = {
+        dataset = "zdata/enc/services/open-webui/config";
+        snapshot = true;
+        backup = true;
+      };
     };
   };
 }

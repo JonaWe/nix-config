@@ -12,7 +12,11 @@
     group = "ollama";
 
     zfsMounts = {
-      "/opt/services/ollama/config" = "zdata/enc/services/ollama/config";
+      "/opt/services/ollama/config" = {
+        dataset = "zdata/enc/services/ollama/config";
+        snapshot = true;
+        backup = false;
+      };
     };
   };
 }

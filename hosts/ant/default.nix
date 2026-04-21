@@ -261,6 +261,7 @@
     allowedTCPPorts = [3001 5200];
     allowedUDPPorts = [5201];
   };
+  environment.systemPackages = with pkgs; [restic];
 
   system.stateVersion = "24.11";
 }

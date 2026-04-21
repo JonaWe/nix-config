@@ -19,7 +19,11 @@
     };
 
     zfsMounts = {
-      "/opt/services/stirling-pdf/config" = "zdata/enc/services/stirling-pdf/config";
+      "/opt/services/stirling-pdf/config" = {
+        dataset = "zdata/enc/services/stirling-pdf/config";
+        snapshot = true;
+        backup = true;
+      };
     };
   };
 }

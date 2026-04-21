@@ -25,7 +25,11 @@
       };
 
       zfsMounts = {
-        "/opt/services/home-assistant/config" = "zdata/enc/services/home-assistant/config";
+        "/opt/services/home-assistant/config" = {
+          dataset = "zdata/enc/services/home-assistant/config";
+          snapshot = true;
+          backup = true;
+        };
       };
     };
   };

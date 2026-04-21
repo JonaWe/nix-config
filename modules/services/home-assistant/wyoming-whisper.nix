@@ -12,7 +12,11 @@
     group = "wyoming-whisper";
 
     zfsMounts = {
-      "/opt/services/wyoming-whisper/config" = "zdata/enc/services/wyoming-whisper/config";
+      "/opt/services/wyoming-whisper/config" = {
+        dataset = "zdata/enc/services/wyoming-whisper/config";
+        snapshot = true;
+        backup = false;
+      };
     };
   };
 }

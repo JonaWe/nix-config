@@ -19,7 +19,11 @@
     };
 
     zfsMounts = {
-      "/opt/services/actual/config" = "zdata/enc/services/actual/config";
+      "/opt/services/actual/config" = {
+        dataset = "zdata/enc/services/actual/config";
+        snapshot = true;
+        backup = true;
+      };
     };
   };
 }

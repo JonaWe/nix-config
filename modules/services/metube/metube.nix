@@ -21,7 +21,11 @@
     };
 
     zfsMounts = {
-      "/opt/services/metube/downloads" = "zdata/enc/services/metube/downloads";
+      "/opt/services/metube/downloads" = {
+        dataset = "zdata/enc/services/metube/downloads";
+        snapshot = true;
+        backup = false;
+      };
     };
   };
 }

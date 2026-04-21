@@ -60,7 +60,11 @@
       group = "matter";
 
       zfsMounts = {
-        "/opt/services/matter/config" = "zdata/enc/services/matter/config";
+        "/opt/services/matter/config" = {
+          dataset = "zdata/enc/services/matter/config";
+          snapshot = true;
+          backup = true;
+        };
       };
     };
   };

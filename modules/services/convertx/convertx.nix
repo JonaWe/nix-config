@@ -19,7 +19,11 @@
     };
 
     zfsMounts = {
-      "/opt/services/convertx/config" = "zdata/enc/services/convertx/config";
+      "/opt/services/convertx/config" = {
+        dataset = "zdata/enc/services/convertx/config";
+        snapshot = true;
+        backup = false;
+      };
     };
   };
 }

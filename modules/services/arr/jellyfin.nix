@@ -35,8 +35,16 @@
       };
 
       zfsMounts = {
-        "/opt/services/jellyfin/config" = "zdata/enc/services/jellyfin3/config";
-        "/opt/services/jellyfin/cache" = "zdata/enc/services/jellyfin3/cache";
+        "/opt/services/jellyfin/config" = {
+          dataset = "zdata/enc/services/jellyfin3/config";
+          snapshot = true;
+          backup = true;
+        };
+        "/opt/services/jellyfin/cache" = {
+          dataset = "zdata/enc/services/jellyfin3/cache";
+          snapshot = true;
+          backup = false;
+        };
       };
     };
   };
