@@ -10,7 +10,7 @@
     ./nginx.nix
     ./gitea.nix
     ./tandoor-recipes.nix
-    ./paperless.nix
+    ./paperless/paperless.nix
     ./actual/actual.nix
     ./headscale.nix
     ./tailscale.nix

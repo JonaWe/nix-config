@@ -169,9 +169,6 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
-    paperless = {
-      enable = true;
-    };
     arr = {
       enable = true;
       dataDir.base = "/data/media/jellyfin";

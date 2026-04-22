@@ -201,11 +201,11 @@ in {
               Paperless = {
                 icon = "paperless-ngx.svg";
                 href = "https://paperless.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:${toString config.myconf.services.paperless.port}";
+                siteMonitor = "http://127.0.0.1:8000";
                 description = "Digital Document Mananger";
                 widget = {
                   type = "paperlessngx";
-                  url = "http://localhost:${toString config.myconf.services.paperless.port}";
+                  url = "http://127.0.0.1:8000";
                   username = "{{HOMEPAGE_VAR_PAPERLESS_USERNAME}}";
                   password = "{{HOMEPAGE_VAR_PAPERLESS_PASSWORD}}";
                 };
@@ -219,7 +219,7 @@ in {
                 description = "Smart Home Automations";
                 # widget = {
                 #   type = "paperlessngx";
-                #   url = "http://localhost:${toString config.myconf.services.paperless.port}";
+                #   url = "http://127.0.0.1:28981";
                 #   username = "{{HOMEPAGE_VAR_PAPERLESS_USERNAME}}";
                 #   password = "{{HOMEPAGE_VAR_PAPERLESS_PASSWORD}}";
                 # };
