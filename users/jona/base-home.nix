@@ -84,6 +84,8 @@
     # zsh-vi-mode
 
     tldr
+
+    delta
   ];
 
   programs.git = {
@@ -103,7 +105,30 @@
   programs.bat.enable = true;
   programs.fd.enable = true;
   programs.ripgrep.enable = true;
-  programs.lazygit.enable = true;
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui = {
+        showIcons = true;
+        nerdFontsVersion = "3";
+        border = "rounded"; # Options: "single" | "double" | "rounded" | "hidden"
+        theme = {
+          activeBorderColor = ["yellow" "bold"];
+          inactiveBorderColor = ["white"];
+          searchingActiveBorderColor = ["cyan" "bold"];
+        };
+      };
+      git = {
+        parseEmoji = true;
+        pagers = [
+          {
+            # Added --line-numbers to the delta command string
+            pager = "delta --dark --paging=never --line-numbers";
+          }
+        ];
+      };
+    };
+  };
   programs.lazydocker.enable = true;
   programs.lsd = {
     enable = true;
