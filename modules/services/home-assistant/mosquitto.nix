@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [../homelab.nix];
+  networking.firewall.interfaces."enp5s0".allowedTCPPorts = [ 1883 ];
 
   homelab.services.mosquitto = {
     port = 1883;
@@ -13,21 +14,21 @@
     group = "mosquitto";
 
     zfsMounts = {
-        "/opt/services/mosquitto/config" = {
-          dataset = "zdata/enc/services/mosquitto/config";
-          snapshot = true;
-          backup = true;
-        };
-        "/opt/services/mosquitto/data" = {
-          dataset = "zdata/enc/services/mosquitto/data";
-          snapshot = true;
-          backup = true;
-        };
-        "/opt/services/mosquitto/log" = {
-          dataset = "zdata/enc/services/mosquitto/log";
-          snapshot = true;
-          backup = true;
-        };
+      "/opt/services/mosquitto/config" = {
+        dataset = "zdata/enc/services/mosquitto/config";
+        snapshot = true;
+        backup = true;
+      };
+      "/opt/services/mosquitto/data" = {
+        dataset = "zdata/enc/services/mosquitto/data";
+        snapshot = true;
+        backup = true;
+      };
+      "/opt/services/mosquitto/log" = {
+        dataset = "zdata/enc/services/mosquitto/log";
+        snapshot = true;
+        backup = true;
+      };
     };
   };
 }
