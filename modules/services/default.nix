@@ -31,6 +31,7 @@
     ./home-assistant/wyoming-piper.nix
     ./home-assistant/matter.nix
     ./home-assistant/otbr.nix
+    ./home-assistant/esphome.nix
     ./llm/ollama.nix
     ./llm/open-webui.nix
     ./monitoring/ntfy.nix
