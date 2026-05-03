@@ -25,6 +25,11 @@ in {
           description = "Open the firewall for the specified port";
         };
         containerFile = mkOption {type = types.path;};
+        environmentFiles = mkOption {
+          type = types.listOf types.path;
+          default = [];
+          description = "Environment files passed to the service's Quadlet [Container] section.";
+        };
 
         user = mkOption {
           type = types.nullOr types.str;
@@ -133,16 +138,31 @@ in {
       )
       cfg.services);
 
-    environment.etc =
+    environment.etc = mkMerge [
       (mapAttrs' (
           name: svc:
             nameValuePair "containers/systemd/${name}.container" {source = svc.containerFile;}
         )
         cfg.services)
-      // {
+
+      (mkMerge (mapAttrsToList (
+          name: svc:
+            optionalAttrs (svc.environmentFiles != []) {
+              "containers/systemd/${name}.container.d/10-environment-files.conf" = {
+                text = ''
+                  [Container]
+                  ${concatMapStringsSep "\n" (envFile: "EnvironmentFile=${toString envFile}") svc.environmentFiles}
+                '';
+              };
+            }
+        )
+        cfg.services))
+
+      {
         # make nvidia container toolkit available
         "cdi/nvidia-container-toolkit.json".source = "/run/cdi/nvidia-container-toolkit.json";
-      };
+      }
+    ];
 
     services.nginx.virtualHosts = mkMerge (mapAttrsToList (
         name: svc:
