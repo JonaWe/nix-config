@@ -217,12 +217,14 @@ in {
                 href = "https://hass.${serverBaseUrl}/";
                 siteMonitor = "http://127.0.0.1:8123";
                 description = "Smart Home Automations";
-                # widget = {
-                #   type = "paperlessngx";
-                #   url = "http://127.0.0.1:28981";
-                #   username = "{{HOMEPAGE_VAR_PAPERLESS_USERNAME}}";
-                #   password = "{{HOMEPAGE_VAR_PAPERLESS_PASSWORD}}";
-                # };
+              };
+            }
+            {
+              "ESPHome" = {
+                icon = "esphome.svg";
+                href = "https://esphome.${serverBaseUrl}/";
+                siteMonitor = "http://127.0.0.1:6052";
+                description = "ESP management for home assistant";
               };
             }
             {
