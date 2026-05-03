@@ -32,6 +32,18 @@
     ../../modules/wireguard-client.nix
   ];
 
+virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      swtpm.enable = true;
+    };
+  };
+
+  programs.virt-manager.enable = true;
+
+
+  users.users.jona.extraGroups = [ "libvirtd" "kvm" "dialout"];
+
   # services.cron = {
   #   enable = true;
   #   systemCronJobs = let
@@ -105,6 +117,9 @@
     fprintd
     feishin
     pkgs-unstable.gemini-cli
+    quickemu
+    remmina
+    chromium
     # libnotify
     # # lowBatteryNotifier
     # acpi
