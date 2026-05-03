@@ -7,11 +7,14 @@
   imports = [../homelab.nix];
 
   config = lib.mkIf config.homelab.enable {
+    sops.secrets."esphome/env" = {};
+
     networking.firewall.interfaces."enp5s0".allowedTCPPorts = [6053 3232];
     networking.firewall.interfaces."enp5s0".allowedUDPPorts = [5353];
 
     homelab.services.esphome = {
       containerFile = ./esphome.container;
+      environmentFiles = [config.sops.secrets."esphome/env".path];
 
       port = 6052;
 
