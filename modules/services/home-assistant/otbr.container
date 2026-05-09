@@ -29,10 +29,16 @@ Environment=FIREWALL=0
 Environment=NAT64=0
 Environment=DNS64=0
 
+HealthCmd=ot-ctl state
+HealthInterval=2m
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=120s
+HealthOnFailure=kill
+
 [Service]
 Restart=always
-; User=otbr
-; Group=otbr
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
