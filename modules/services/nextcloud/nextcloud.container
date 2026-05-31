@@ -1,0 +1,28 @@
+[Unit]
+Description=Nextcloud Server
+After=network-online.target
+
+[Container]
+Image=docker.io/library/nextcloud:stable
+ContainerName=nextcloud
+AutoUpdate=registry
+PublishPort=8052:80
+
+Environment=TZ=Europe/Berlin
+
+Environment=OVERWRITEPROTOCOL=https
+Environment=OVERWRITEHOST=nextcloud.ts.pinkorca.de
+Environment=OVERWRITECLIURL=https://nextcloud.ts.pinkorca.de
+
+Environment=TRUSTED_PROXIES=127.0.0.1 10.88.0.0/16
+
+Volume=/opt/services/nextcloud/data:/var/www/html:Z
+Volume=/etc/localtime:/etc/localtime:ro
+
+[Service]
+Restart=always
+User=nextcloud
+Group=nextcloud
+
+[Install]
+WantedBy=multi-user.target

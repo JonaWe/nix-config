@@ -38,5 +38,6 @@
     ./stirling-pdf/stirling-pdf.nix
     ./omni-tools/omni-tools.nix
     ./convertx/convertx.nix
+    ./nextcloud/nextcloud.nix
   ];
 }
