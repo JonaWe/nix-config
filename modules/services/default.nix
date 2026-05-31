@@ -39,5 +39,6 @@
     ./omni-tools/omni-tools.nix
     ./convertx/convertx.nix
     ./nextcloud/nextcloud.nix
+    ./minecraft-servers.nix
   ];
 }

@@ -129,6 +129,10 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    minecraft-servers = {
+      enable = true;
+      openFirewall = true;
+    };
     immich = {
       enable = true;
       # openFirewall = true;
