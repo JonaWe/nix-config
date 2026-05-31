@@ -32,7 +32,7 @@
     ../../modules/wireguard-client.nix
   ];
 
-virtualisation.libvirtd = {
+  virtualisation.libvirtd = {
     enable = true;
     qemu = {
       swtpm.enable = true;
@@ -41,8 +41,7 @@ virtualisation.libvirtd = {
 
   programs.virt-manager.enable = true;
 
-
-  users.users.jona.extraGroups = [ "libvirtd" "kvm" "dialout"];
+  users.users.jona.extraGroups = ["libvirtd" "kvm" "dialout"];
 
   # services.cron = {
   #   enable = true;
@@ -111,7 +110,9 @@ virtualisation.libvirtd = {
   # TODO: what is this?
   environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
 
+  programs.nix-ld.enable = true;
   environment.systemPackages = with pkgs; [
+    kicad
     cifs-utils
     dnsutils
     fprintd
