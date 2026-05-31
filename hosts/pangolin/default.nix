@@ -112,6 +112,7 @@
 
   programs.nix-ld.enable = true;
   environment.systemPackages = with pkgs; [
+    jdk25
     kicad
     cifs-utils
     dnsutils
