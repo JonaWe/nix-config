@@ -40,7 +40,7 @@
     blueman
     cliphist
     vlc
-    swww
+    awww
     libreoffice
     nautilus
     anki
@@ -66,14 +66,13 @@
     # davinci-resolve
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   services.blueman-applet.enable = true;
 
   xdg = {
     userDirs = {
       enable = true;
       createDirectories = true;
+      setSessionVariables = true;
       documents = "\$HOME/documents";
       download = "\$HOME/downloads";
       pictures = "\$HOME/pictures";
