@@ -73,7 +73,7 @@
     enable = true;
     settings = rec {
       initial_session = {
-        command = "uwsm start -S hyprland-uwsm.desktop";
+        command = "uwsm start hyprland-uwsm.desktop";
         user = "jona";
       };
       # default_session = initial_session;
