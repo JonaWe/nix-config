@@ -73,14 +73,14 @@
     enable = true;
     settings = rec {
       initial_session = {
-        command = "uwsm start -S -F /run/current-system/sw/bin/Hyprland";
+        command = "uwsm start -S hyprland-uwsm.desktop";
         user = "jona";
       };
       # default_session = initial_session;
       default_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet \
           --time --time-format '%I:%M %p | %a • %h | %F' \
-          --cmd 'uwsm start hyprland'";
+          --cmd 'uwsm start hyprland-uwsm.desktop'";
         user = "greeter";
       };
     };
