@@ -8,6 +8,7 @@
     "hyprland/workspaces": {
         //     "all-outputs": true,
         "format": "{icon}",
+        "on-click": "/home/jona/nix-config/home/programs/hyprland/switch-workspace.sh {name}",
         "format-icons": {
             "1": "1",
             "2": "2",

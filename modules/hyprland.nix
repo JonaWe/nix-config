@@ -71,16 +71,11 @@
 
   services.greetd = {
     enable = true;
-    settings = rec {
-      initial_session = {
-        command = "uwsm start hyprland-uwsm.desktop";
-        user = "jona";
-      };
-      # default_session = initial_session;
+    settings = {
       default_session = {
         command = "${pkgs.tuigreet}/bin/tuigreet \
           --time --time-format '%I:%M %p | %a • %h | %F' \
-          --cmd 'uwsm start hyprland-uwsm.desktop'";
+          --cmd 'uwsm start -e -D Hyprland hyprland.desktop'";
         user = "greeter";
       };
     };
