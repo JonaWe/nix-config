@@ -32,6 +32,14 @@
     ../../modules/wireguard-client.nix
   ];
 
+  # improve startup time
+  virtualisation.docker.enableOnBoot = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
+  boot.loader.timeout = 1;
+  # Prevent libvirtd from starting on boot to resume guests
+  virtualisation.libvirtd.onBoot = "ignore";
+  systemd.services.libvirt-guests.enable = false;
+
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
