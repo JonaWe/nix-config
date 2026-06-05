@@ -57,6 +57,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Disable NVMe deep power state transitions to prevent I/O timeouts.
+  # The SK Hynix HFS002TEJ9X162N fails to wake reliably from deep APST
+  # states on kernel 6.18, causing RCU stalls and full system freezes.
+  boot.kernelParams = ["nvme_core.default_ps_max_latency_us=0"];
+
+  # Blacklist NXP NFC controller — the nxp-nci_i2c driver fails with
+  # I2C error -121 and retries in a tight loop, burning a full CPU core.
+  boot.blacklistedKernelModules = ["nxp_nci_i2c" "nxp_nci"];
+
   services.xserver.videoDrivers = ["amdgpu"];
 
   myconf.disk = {
@@ -114,11 +123,13 @@
   environment.systemPackages = with pkgs; [
     jdk25
     kicad
+    bambu-studio
     cifs-utils
     dnsutils
     fprintd
     feishin
     pkgs-unstable.gemini-cli
+    pkgs-unstable.claude-code
     quickemu
     remmina
     chromium
