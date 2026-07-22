@@ -13,21 +13,6 @@
     ../../home/programs/discord
   ];
 
-  xdg.portal = {
-    enable = true;
-    config = {
-      common = {
-        default = [
-          "gtk"
-        ];
-      };
-    };
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.kdePackages.xdg-desktop-portal-kde
-    ];
-  };
-
   home.packages = with pkgs; [
     signal-desktop
     element-desktop

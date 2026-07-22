@@ -25,6 +25,7 @@
     ../../modules/fonts.nix
     # ../../modules/sway.nix
     ../../modules/hyprland.nix
+    ../../modules/sound.nix
     ../../modules/steam.nix
     ../../modules/bluetooth.nix
     ../../modules/powermanagement.nix
