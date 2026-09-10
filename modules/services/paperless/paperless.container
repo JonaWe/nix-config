@@ -9,6 +9,9 @@ ContainerName=paperless
 AutoUpdate=registry
 Network=host
 
+# Keeps USERMAP_UID below pointing at the host's paperless user.
+UserNS=keep-id
+
 Environment=PAPERLESS_REDIS=redis://127.0.0.1:63791
 Environment=PAPERLESS_URL=https://paperless.ts.pinkorca.de
 Environment=PAPERLESS_TIME_ZONE=Europe/Berlin
