@@ -104,8 +104,8 @@
 
   myconf.services = {
     teamspeak = {
-      enable = false;
-      openFirewall = false;
+      enable = true;
+      openFirewall = true;
     };
     syncthing = {
       enable = true;
