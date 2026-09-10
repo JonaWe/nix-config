@@ -310,8 +310,8 @@ in {
         {command = "start-swayidle";}
 
         # wallpaper
-        {command = "swww-daemon";}
-        {command = "swww img /home/jona/bg.jpg";}
+        {command = "awww-daemon";}
+        {command = "awww img /home/jona/bg.jpg";}
 
         # other stuff
         {command = "swaymsg 'workspace 17; exec ${pkgs.thunderbird}/bin/thunderbird'";}

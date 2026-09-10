@@ -55,6 +55,7 @@ in {
   config = lib.mkIf cfg.enable {
     networking.hostId = cfg.hostId;
     boot.supportedFilesystems = ["zfs"];
+    boot.zfs.forceImportRoot = false;
     services.sanoid = {
       enable = cfg.backups.enable;
       templates = {

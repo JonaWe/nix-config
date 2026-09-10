@@ -2,12 +2,13 @@
 {
     "height": 30, // Waybar height (to be removed for auto height)
     "spacing": 4, // Gaps between modules (4px)
-    "modules-left": ["hyprland/workspaces", "hyprland/submap", "hyprland/scratchpad", "hyprland/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
     "modules-center": [],
     "modules-right": ["custom/notification", "custom/kanata", "mpd", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "battery#bat2", "clock",  "tray"],
     "hyprland/workspaces": {
         //     "all-outputs": true,
         "format": "{icon}",
+        "on-click": "/home/jona/nix-config/home/programs/hyprland/switch-workspace.sh {name}",
         "format-icons": {
             "1": "1",
             "2": "2",
