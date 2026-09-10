@@ -7,6 +7,7 @@
 
   homelab.services.stirling-pdf = {
     containerFile = ./stirling-pdf.container;
+    rootless = true;
 
     user = "stirling-pdf";
     group = "stirling-pdf";

@@ -12,8 +12,6 @@ Volume=/opt/services/stirling-pdf/config:/configs:Z
 
 [Service]
 Restart=always
-User=stirling-pdf
-Group=stirling-pdf
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

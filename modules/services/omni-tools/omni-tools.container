@@ -10,8 +10,6 @@ PublishPort=8315:80
 
 [Service]
 Restart=always
-User=omni-tools
-Group=omni-tools
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

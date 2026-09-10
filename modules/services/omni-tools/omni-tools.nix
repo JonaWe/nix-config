@@ -7,6 +7,7 @@
 
   homelab.services.omni-tools = {
     containerFile = ./omni-tools.container;
+    rootless = true;
 
     user = "omni-tools";
     group = "omni-tools";
