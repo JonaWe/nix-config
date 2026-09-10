@@ -7,6 +7,7 @@
 
   homelab.services.ntfy = {
     containerFile = ./ntfy.container;
+    rootless = true;
 
     user = "ntfy";
     group = "ntfy";

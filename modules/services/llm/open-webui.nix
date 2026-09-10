@@ -7,6 +7,7 @@
 
   homelab.services.open-webui = {
     containerFile = ./open-webui.container;
+    rootless = true;
 
     user = "openwebui";
     group = "openwebui";

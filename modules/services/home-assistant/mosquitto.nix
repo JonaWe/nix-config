@@ -9,6 +9,7 @@
   homelab.services.mosquitto = {
     port = 1883;
     containerFile = ./mosquitto.container;
+    rootless = true;
 
     user = "mosquitto";
     group = "mosquitto";

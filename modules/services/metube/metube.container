@@ -16,8 +16,6 @@ Volume=/opt/services/metube/downloads:/downloads:Z
 
 [Service]
 Restart=always
-User=metube
-Group=metube
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -15,6 +15,7 @@
     homelab.services.nextcloud = {
       port = 8052;
       containerFile = ./nextcloud.container;
+      rootless = true;
 
       user = "nextcloud";
       group = "nextcloud";

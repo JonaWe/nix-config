@@ -17,8 +17,6 @@ Environment=WEBUI_AUTH=True
 
 [Service]
 Restart=always
-User=openwebui
-Group=openwebui
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

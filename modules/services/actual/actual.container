@@ -12,8 +12,6 @@ Volume=/opt/services/actual/config:/data:Z
 
 [Service]
 Restart=always
-User=actual
-Group=actual
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

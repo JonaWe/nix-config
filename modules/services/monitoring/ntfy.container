@@ -15,8 +15,6 @@ Volume=/opt/services/ntfy/cache:/etc/ntfy:Z
 
 [Service]
 Restart=always
-User=ntfy
-Group=ntfy
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

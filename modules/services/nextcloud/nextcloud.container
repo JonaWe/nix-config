@@ -21,8 +21,6 @@ Volume=/etc/localtime:/etc/localtime:ro
 
 [Service]
 Restart=always
-User=nextcloud
-Group=nextcloud
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

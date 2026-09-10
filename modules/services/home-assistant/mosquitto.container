@@ -17,8 +17,6 @@ Volume=/etc/localtime:/etc/localtime:ro
 
 [Service]
 Restart=always
-User=mosquitto
-Group=mosquitto
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

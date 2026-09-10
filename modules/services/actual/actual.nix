@@ -7,6 +7,7 @@
 
   homelab.services.actual = {
     containerFile = ./actual.container;
+    rootless = true;
 
     user = "actual";
     group = "actual";

@@ -7,6 +7,7 @@
 
   homelab.services.metube = {
     containerFile = ./metube.container;
+    rootless = true;
 
     user = "metube";
     group = "metube";
