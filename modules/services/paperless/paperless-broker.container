@@ -11,8 +11,6 @@ Volume=/opt/services/paperless/redis:/data:Z
 
 [Service]
 Restart=always
-User=paperless
-Group=paperless
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

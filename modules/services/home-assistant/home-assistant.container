@@ -15,8 +15,6 @@ Volume=/etc/localtime:/etc/localtime:ro
 
 [Service]
 Restart=always
-User=hass
-Group=hass
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

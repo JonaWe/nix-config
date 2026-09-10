@@ -25,8 +25,6 @@ Volume=/opt/services/paperless/config:/usr/src/paperless/data:Z
 
 [Service]
 Restart=always
-User=paperless
-Group=paperless
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -7,6 +7,7 @@
 
   homelab.services.paperless-broker = {
     containerFile = ./paperless-broker.container;
+    rootless = true;
 
     user = "paperless";
     group = "paperless";
@@ -24,6 +25,7 @@
 
   homelab.services.paperless = {
     containerFile = ./paperless.container;
+    rootless = true;
 
     user = "paperless";
     group = "paperless";

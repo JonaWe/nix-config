@@ -14,6 +14,7 @@
     homelab.services.home-assistant = {
       port = 8123;
       containerFile = ./home-assistant.container;
+      rootless = true;
 
       user = "hass";
       group = "hass";
