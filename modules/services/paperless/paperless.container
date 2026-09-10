@@ -28,6 +28,7 @@ Volume=/opt/services/paperless/config:/usr/src/paperless/data:Z
 
 [Service]
 Restart=always
+TimeoutStartSec=1800
 
 [Install]
 WantedBy=default.target
