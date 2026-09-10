@@ -9,6 +9,7 @@
   config = lib.mkIf config.homelab.enable {
     fileSystems."/opt/data/media" = {
       device = "/data/media/jellyfin";
+      fsType = "none";
       options = ["bind"];
     };
 
