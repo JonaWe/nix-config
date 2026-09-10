@@ -5,6 +5,11 @@
 }: {
   imports = [../homelab.nix];
 
+  # The user manager reads the EnvironmentFile as the service user.
+  sops.secrets."paperless/env" = {
+    owner = "paperless";
+  };
+
   homelab.services.paperless-broker = {
     containerFile = ./paperless-broker.container;
     rootless = true;
@@ -26,6 +31,7 @@
   homelab.services.paperless = {
     containerFile = ./paperless.container;
     rootless = true;
+    environmentFiles = [config.sops.secrets."paperless/env".path];
 
     user = "paperless";
     group = "paperless";
