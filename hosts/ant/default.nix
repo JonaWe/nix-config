@@ -36,6 +36,8 @@
 
   zramSwap.enable = true;
 
+  boot.tmp.cleanOnBoot = true;
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
