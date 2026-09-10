@@ -7,6 +7,7 @@
 
   homelab.services.convertx = {
     containerFile = ./convertx.container;
+    rootless = true;
 
     user = "convertx";
     group = "convertx";

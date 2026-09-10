@@ -16,8 +16,6 @@ Volume=/opt/services/convertx/config:/app/data:Z
 
 [Service]
 Restart=always
-User=convertx
-Group=convertx
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
