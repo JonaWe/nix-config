@@ -506,18 +506,6 @@ in {
             }
           ];
         }
-        {
-          "System" = [
-            {
-              "Olivetin" = {
-                icon = "olivetin.svg";
-                href = "https://olivetin.${serverBaseUrl}/";
-                siteMonitor = "https://qbittorrent.${serverBaseUrl}/";
-                description = "Server Commands";
-              };
-            }
-          ];
-        }
       ];
       bookmarks = [
         {

@@ -19,7 +19,6 @@
     ./searx.nix
     ./metube/metube.nix
     ./seafile.nix
-    ./olivetin.nix
     ./authentik.nix
     ./ntfy.nix
     ./restic-backup.nix
