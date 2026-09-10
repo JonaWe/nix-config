@@ -6,6 +6,20 @@
 }:
 with lib; let
   cfg = config.homelab;
+
+  # Services whose quadlet lives in /etc/containers/systemd and runs under the
+  # system manager with User=, vs. those that run as a genuine user unit.
+  systemServices = filterAttrs (_: svc: !svc.rootless) cfg.services;
+  rootlessServices = filterAttrs (_: svc: svc.rootless && svc.user != null) cfg.services;
+
+  environmentFilesDropIn = svc: ''
+    [Container]
+    ${concatMapStringsSep "\n" (envFile: "EnvironmentFile=${toString envFile}") svc.environmentFiles}
+  '';
+
+  # Quadlet directory inside a service user's home. The user's systemd
+  # instance picks these up on daemon-reload, i.e. at the latest on boot.
+  quadletDir = svc: "/var/lib/homes/${svc.user}/.config/containers/systemd";
 in {
   options.homelab.enable = mkEnableOption "Enable homelab service stack";
 
@@ -29,6 +43,20 @@ in {
           type = types.listOf types.path;
           default = [];
           description = "Environment files passed to the service's Quadlet [Container] section.";
+        };
+
+        rootless = mkOption {
+          type = types.bool;
+          default = false;
+          description = ''
+            Place the quadlet in the service user's own systemd instance
+            (~/.config/containers/systemd) instead of the system-wide
+            /etc/containers/systemd, so podman gets /run/user/<uid> as its
+            runroot and a user manager to register healthcheck timers with.
+
+            The container file must drop User=/Group= and use
+            WantedBy=default.target for this to work.
+          '';
         };
 
         user = mkOption {
@@ -143,26 +171,51 @@ in {
           name: svc:
             nameValuePair "containers/systemd/${name}.container" {source = svc.containerFile;}
         )
-        cfg.services)
+        systemServices)
 
       (mkMerge (mapAttrsToList (
           name: svc:
             optionalAttrs (svc.environmentFiles != []) {
               "containers/systemd/${name}.container.d/10-environment-files.conf" = {
-                text = ''
-                  [Container]
-                  ${concatMapStringsSep "\n" (envFile: "EnvironmentFile=${toString envFile}") svc.environmentFiles}
-                '';
+                text = environmentFilesDropIn svc;
               };
             }
         )
-        cfg.services))
+        systemServices))
 
       {
         # make nvidia container toolkit available
         "cdi/nvidia-container-toolkit.json".source = "/run/cdi/nvidia-container-toolkit.json";
       }
     ];
+
+    # Rootless services get their quadlet linked into the user's own config
+    # directory instead. L+ replaces whatever is there, so a changed store path
+    # takes effect on the next activation.
+    systemd.tmpfiles.rules = flatten (mapAttrsToList (
+        name: svc: let
+          dir = quadletDir svc;
+          owner = "${svc.user} ${
+            if svc.group != null
+            then svc.group
+            else svc.user
+          }";
+        in
+          [
+            "d /var/lib/homes/${svc.user}/.config 0755 ${owner} -"
+            "d /var/lib/homes/${svc.user}/.config/containers 0755 ${owner} -"
+            "d ${dir} 0755 ${owner} -"
+            "L+ ${dir}/${name}.container - - - - ${svc.containerFile}"
+          ]
+          ++ optionals (svc.environmentFiles != []) [
+            "d ${dir}/${name}.container.d 0755 ${owner} -"
+            # tmpfiles cannot carry multi-line content, so link a store file.
+            "L+ ${dir}/${name}.container.d/10-environment-files.conf - - - - ${
+              pkgs.writeText "${name}-environment-files.conf" (environmentFilesDropIn svc)
+            }"
+          ]
+      )
+      rootlessServices);
 
     services.nginx.virtualHosts = mkMerge (mapAttrsToList (
         name: svc:
