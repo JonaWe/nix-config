@@ -324,6 +324,9 @@ in {
       inherit serviceConfig;
       inherit partOf;
       inherit wantedBy;
+      # Starting before these are mounted writes onto the root filesystem
+      # underneath the mountpoint, where nothing can see it afterwards.
+      unitConfig.RequiresMountsFor = [cfg.dataDir.base cfg.libDir.base];
     };
   in {
     sops.secrets."arr/vpn/env" = {};
@@ -488,6 +491,11 @@ in {
       extraOptions = [
         "--pull=always"
       ];
+    };
+
+    # oci-containers generates this unit, so it misses defaultSystemDConfig.
+    systemd.services."docker-jellyfin" = lib.mkIf cfg.sonarr.enable {
+      unitConfig.RequiresMountsFor = [cfg.dataDir.base cfg.libDir.base];
     };
 
     # directories
