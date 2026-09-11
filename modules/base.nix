@@ -20,6 +20,14 @@
     options = lib.mkDefault "--delete-older-than 365d";
   };
 
+  # Unbounded, journald would grow to 10% of the filesystem. Loki keeps the
+  # searchable copy; this is only the local buffer behind it.
+  services.journald.extraConfig = lib.mkDefault ''
+    SystemMaxUse=2G
+    SystemKeepFree=5G
+    MaxRetentionSec=90day
+  '';
+
   nix.settings.allowed-users = ["@wheel"];
   security.sudo.execWheelOnly = true;
 
