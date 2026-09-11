@@ -8,7 +8,7 @@
   "schemaVersion": 39,
   "version": 1,
   "editable": true,
-  "refresh": "1m",
+  "refresh": "30s",
   "time": {
     "from": "now-6h",
     "to": "now"
@@ -40,7 +40,7 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 3,
+        "w": 4,
         "h": 4
       },
       "targets": [
@@ -49,7 +49,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "count(node_systemd_unit_state{state=\"failed\"} == 1) or vector(0)",
+          "expr": "count(node_systemd_unit_state{state=\"failed\"} == 1) + (count(homelab_user_unit_state{state=\"failed\"} == 1) or vector(0)) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -77,7 +77,14 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "links": [
+            {
+              "title": "Show the units",
+              "url": "/d/homelab-services/services-and-units",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
@@ -94,73 +101,7 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "System manager. A unit with Restart=always never reaches this state - see the crash loop panel."
-    },
-    {
-      "type": "stat",
-      "title": "Failed user units",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 3,
-        "y": 0,
-        "w": 3,
-        "h": 4
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "count(homelab_user_unit_state{state=\"failed\"} == 1) or vector(0)",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 8,
-            "showPoints": "never"
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "auto",
-        "justifyMode": "auto"
-      },
-      "description": "The 17 rootless managers, via the sweep."
+      "description": "System and rootless managers together."
     },
     {
       "type": "stat",
@@ -170,9 +111,9 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 6,
+        "x": 4,
         "y": 0,
-        "w": 3,
+        "w": 4,
         "h": 4
       },
       "targets": [
@@ -209,7 +150,14 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "links": [
+            {
+              "title": "Show the units",
+              "url": "/d/homelab-services/services-and-units",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
@@ -226,7 +174,7 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "More than 3 restarts in 15 minutes."
+      "description": "Restart=always keeps these out of \"failed\", which is why they need their own count."
     },
     {
       "type": "stat",
@@ -236,9 +184,9 @@
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 9,
+        "x": 8,
         "y": 0,
-        "w": 3,
+        "w": 4,
         "h": 4
       },
       "targets": [
@@ -271,12 +219,8 @@
                 "value": null
               },
               {
-                "color": "yellow",
+                "color": "orange",
                 "value": 1
-              },
-              {
-                "color": "red",
-                "value": 5
               }
             ]
           }
@@ -295,11 +239,12 @@
         "graphMode": "none",
         "textMode": "auto",
         "justifyMode": "auto"
-      }
+      },
+      "description": "Listed in full below."
     },
     {
       "type": "stat",
-      "title": "User managers up",
+      "title": "Images unreachable",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -307,7 +252,7 @@
       "gridPos": {
         "x": 12,
         "y": 0,
-        "w": 3,
+        "w": 4,
         "h": 4
       },
       "targets": [
@@ -316,59 +261,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(homelab_user_manager_up)",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 8,
-            "showPoints": "never"
-          },
-          "color": {
-            "mode": "palette-classic"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "textMode": "auto",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "type": "stat",
-      "title": "Sweep age",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 15,
-        "y": 0,
-        "w": 3,
-        "h": 4
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "time() - node_textfile_mtime_seconds{file=~\".*homelab_user_units.prom\"}",
+          "expr": "count(homelab_image_info{state=\"unreachable\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -384,7 +277,6 @@
           "color": {
             "mode": "thresholds"
           },
-          "unit": "s",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -394,10 +286,17 @@
               },
               {
                 "color": "red",
-                "value": 300
+                "value": 1
               }
             ]
-          }
+          },
+          "links": [
+            {
+              "title": "Show the images",
+              "url": "/d/homelab-updates/updates",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
@@ -414,19 +313,19 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "If this grows, the rootless half is blind."
+      "description": "A tag gone from the registry breaks the service on its next restart."
     },
     {
       "type": "stat",
-      "title": "Uptime",
+      "title": "Updates available",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 18,
+        "x": 16,
         "y": 0,
-        "w": 3,
+        "w": 4,
         "h": 4
       },
       "targets": [
@@ -435,7 +334,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "time() - node_boot_time_seconds",
+          "expr": "count(homelab_image_info{state=\"update\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -449,9 +348,28 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
-          "unit": "s"
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          },
+          "links": [
+            {
+              "title": "Show the list",
+              "url": "/d/homelab-updates/updates",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
@@ -463,7 +381,7 @@
           "fields": "",
           "values": false
         },
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "textMode": "auto",
         "justifyMode": "auto"
@@ -471,15 +389,15 @@
     },
     {
       "type": "stat",
-      "title": "Load 5m",
+      "title": "Bad sectors",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 21,
+        "x": 20,
         "y": 0,
-        "w": 3,
+        "w": 4,
         "h": 4
       },
       "targets": [
@@ -488,7 +406,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "node_load5",
+          "expr": "sum(smartctl_device_attribute{attribute_name=~\"Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable\",attribute_value_type=\"raw\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -502,9 +420,28 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
-          "decimals": 2
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "links": [
+            {
+              "title": "Show the drives",
+              "url": "/d/homelab-storage/storage-and-zfs",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
@@ -516,11 +453,87 @@
           "fields": "",
           "values": false
         },
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "textMode": "auto",
         "justifyMode": "auto"
-      }
+      },
+      "description": "Was zero on all three drives at setup. Any movement means a drive is remapping damage."
+    },
+    {
+      "type": "table",
+      "title": "What needs attention right now",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "ALERTS{alertstate=\"firing\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "__name__": true,
+              "Value": true,
+              "alertstate": true,
+              "provider": true,
+              "type": true
+            },
+            "renameByName": {
+              "alertname": "Alert",
+              "severity": "Severity",
+              "name": "Unit",
+              "service": "Service",
+              "pool": "Pool",
+              "device": "Drive",
+              "host": "Host"
+            }
+          }
+        }
+      ],
+      "description": "Empty is the good case. Anything here has been true long enough to matter."
     },
     {
       "type": "row",
@@ -528,7 +541,7 @@
       "collapsed": false,
       "gridPos": {
         "x": 0,
-        "y": 4,
+        "y": 12,
         "w": 24,
         "h": 1
       },
@@ -543,7 +556,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 5,
+        "y": 13,
         "w": 8,
         "h": 5
       },
@@ -616,7 +629,7 @@
       },
       "gridPos": {
         "x": 8,
-        "y": 5,
+        "y": 13,
         "w": 8,
         "h": 5
       },
@@ -685,80 +698,14 @@
     },
     {
       "type": "stat",
-      "title": "Bad sectors (all disks)",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 16,
-        "y": 5,
-        "w": 4,
-        "h": 5
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "sum(smartctl_device_attribute{attribute_name=~\"Reallocated_Sector_Ct|Current_Pending_Sector|Offline_Uncorrectable\",attribute_value_type=\"raw\"})",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 8,
-            "showPoints": "never"
-          },
-          "color": {
-            "mode": "thresholds"
-          },
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "background",
-        "graphMode": "none",
-        "textMode": "auto",
-        "justifyMode": "auto"
-      },
-      "description": "Reallocated + pending + offline uncorrectable. Was 0 on all three drives at setup."
-    },
-    {
-      "type": "stat",
       "title": "Days since scrub",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 20,
-        "y": 5,
+        "x": 16,
+        "y": 13,
         "w": 4,
         "h": 5
       },
@@ -801,7 +748,14 @@
                 "value": 45
               }
             ]
-          }
+          },
+          "links": [
+            {
+              "title": "Storage detail",
+              "url": "/d/homelab-storage/storage-and-zfs",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
@@ -818,32 +772,20 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "Empty until the timer has fired once."
+      "description": "Empty until the monthly timer has fired once."
     },
     {
-      "type": "row",
-      "title": "Services",
-      "collapsed": false,
-      "gridPos": {
-        "x": 0,
-        "y": 10,
-        "w": 24,
-        "h": 1
-      },
-      "panels": []
-    },
-    {
-      "type": "table",
-      "title": "Restarts in the last 15 min",
+      "type": "stat",
+      "title": "Rootless managers up",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 0,
-        "y": 11,
-        "w": 12,
-        "h": 7
+        "x": 20,
+        "y": 13,
+        "w": 4,
+        "h": 5
       },
       "targets": [
         {
@@ -851,97 +793,10 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(20, increase(node_systemd_service_restart_total[15m]) > 0)",
+          "expr": "sum(homelab_user_manager_up)",
           "refId": "A",
           "instant": true,
-          "range": false,
-          "format": "table"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "topk(20, increase(homelab_user_unit_restart_total[15m]) > 0)",
-          "refId": "B",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false,
-          "reducer": [
-            "sum"
-          ],
-          "countRows": false,
-          "fields": ""
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "filterable": true
-          }
-        },
-        "overrides": []
-      },
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "job": true,
-              "instance": true,
-              "host": true,
-              "__name__": true
-            },
-            "renameByName": {}
-          }
-        }
-      ],
-      "description": "The panel that would have caught slskd and recyclarr."
-    },
-    {
-      "type": "timeseries",
-      "title": "Units not active",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 11,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "count by (state) (node_systemd_unit_state{state=~\"activating|deactivating|failed\"} == 1)",
-          "refId": "A",
-          "instant": false,
-          "range": true,
-          "legendFormat": "system {{state}}"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "count by (state) (homelab_user_unit_state{state=~\"activating|deactivating|failed\"} == 1)",
-          "refId": "B",
-          "instant": false,
-          "range": true,
-          "legendFormat": "user {{state}}"
+          "range": false
         }
       ],
       "fieldConfig": {
@@ -953,21 +808,31 @@
           },
           "color": {
             "mode": "palette-classic"
-          }
+          },
+          "links": [
+            {
+              "title": "Services detail",
+              "url": "/d/homelab-services/services-and-units",
+              "targetBlank": false
+            }
+          ]
         },
         "overrides": []
       },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      },
+      "description": "A manager that stops answering takes all its services out of view."
     },
     {
       "type": "row",
@@ -983,7 +848,7 @@
     },
     {
       "type": "timeseries",
-      "title": "CPU usage",
+      "title": "CPU",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -1161,7 +1026,7 @@
     },
     {
       "type": "row",
-      "title": "Logs",
+      "title": "Recent errors",
       "collapsed": false,
       "gridPos": {
         "x": 0,
@@ -1182,7 +1047,7 @@
         "x": 0,
         "y": 26,
         "w": 24,
-        "h": 10
+        "h": 9
       },
       "targets": [
         {
@@ -1190,7 +1055,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{host=\"ant\", level=~\"emerg|alert|crit|err|warning\"}",
+          "expr": "{host=\"ant\", level=~\"emerg|alert|crit|err\"}",
           "refId": "A",
           "queryType": "range"
         }
@@ -1204,7 +1069,7 @@
         "enableLogDetails": true,
         "dedupStrategy": "none"
       },
-      "description": "Covers system units, the 17 rootless managers and the docker containers, which log to journald."
+      "description": "System units, the rootless managers and the docker containers, which log to journald."
     }
   ]
 }

@@ -25,6 +25,18 @@ loki.relabel "journal" {
     target_label  = "unit"
   }
 
+  // Every ssh login and every su creates a session-N.scope, so leaving these
+  // as a stream label put 10k values behind "unit" and broke both the label
+  // variables and any sum by (unit). An empty replacement drops the label;
+  // the log lines are still shipped, just not indexed under a unique unit.
+  rule {
+    source_labels = ["unit"]
+    regex         = "(session-[0-9]+\\.scope|run-.+|[0-9a-f]{64}-[0-9a-f]{16}\\..+)"
+    target_label  = "unit"
+    replacement   = ""
+    action        = "replace"
+  }
+
   // The label that makes rootless services searchable.
   rule {
     source_labels = ["__journal__systemd_user_unit"]

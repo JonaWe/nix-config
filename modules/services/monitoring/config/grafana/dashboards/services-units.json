@@ -8,7 +8,7 @@
   "schemaVersion": 39,
   "version": 1,
   "editable": true,
-  "refresh": "1m",
+  "refresh": "30s",
   "time": {
     "from": "now-6h",
     "to": "now"
@@ -31,8 +31,8 @@
   ],
   "panels": [
     {
-      "type": "table",
-      "title": "Not active right now",
+      "type": "stat",
+      "title": "Failed",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -40,8 +40,8 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 12,
-        "h": 8
+        "w": 5,
+        "h": 4
       },
       "targets": [
         {
@@ -49,7 +49,322 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "node_systemd_unit_state{state=~\"activating|deactivating|failed\"} == 1",
+          "expr": "count(node_systemd_unit_state{state=\"failed\"} == 1) + (count(homelab_user_unit_state{state=\"failed\"} == 1) or vector(0)) or vector(0)",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Crash looping",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 5,
+        "y": 0,
+        "w": 5,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "count(increase(node_systemd_service_restart_total[15m]) > 3) + (count(increase(homelab_user_unit_restart_total[15m]) > 3) or vector(0)) or vector(0)",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Stuck activating",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 10,
+        "y": 0,
+        "w": 5,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "count(node_systemd_unit_state{state=\"activating\",type!=\"oneshot\"} == 1) + (count(homelab_user_unit_state{state=\"activating\",type!=\"oneshot\"} == 1) or vector(0)) or vector(0)",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      },
+      "description": "Oneshots are excluded: without RemainAfterExit they sit in activating for their whole run."
+    },
+    {
+      "type": "stat",
+      "title": "Rootless managers up",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 15,
+        "y": 0,
+        "w": 5,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(homelab_user_manager_up)",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Sweep age",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 20,
+        "y": 0,
+        "w": 4,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "time() - node_textfile_mtime_seconds{file=~\".*homelab_user_units.prom\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "thresholds"
+          },
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 300
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      },
+      "description": "If this grows, the rootless half is unmonitored."
+    },
+    {
+      "type": "table",
+      "title": "Units needing attention",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "node_systemd_unit_state{state=~\"failed|deactivating\"} == 1",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -60,8 +375,30 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "homelab_user_unit_state{state=~\"activating|deactivating|failed\"} == 1",
+          "expr": "node_systemd_unit_state{state=\"activating\",type!=\"oneshot\"} == 1",
           "refId": "B",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "homelab_user_unit_state{state=~\"failed|deactivating\"} == 1",
+          "refId": "C",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "homelab_user_unit_state{state=\"activating\",type!=\"oneshot\"} == 1",
+          "refId": "D",
           "instant": true,
           "range": false,
           "format": "table"
@@ -100,22 +437,27 @@
               "__name__": true,
               "Value": true
             },
-            "renameByName": {}
+            "renameByName": {
+              "name": "Unit",
+              "state": "State",
+              "type": "Type",
+              "user": "Manager"
+            }
           }
         }
       ],
-      "description": "type=oneshot in activating is normal - those sit there for their whole run."
+      "description": "Empty is the good case."
     },
     {
       "type": "table",
-      "title": "Restart counters",
+      "title": "Restart counters, anything above zero",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 12,
-        "y": 0,
+        "x": 0,
+        "y": 13,
         "w": 12,
         "h": 8
       },
@@ -175,114 +517,63 @@
               "host": true,
               "__name__": true
             },
-            "renameByName": {}
+            "renameByName": {
+              "name": "Unit",
+              "user": "Manager",
+              "Value #A": "Restarts",
+              "Value #B": "Restarts"
+            }
           }
         }
       ],
-      "description": "Absolute counters. systemd resets these on an explicit restart."
+      "description": "Absolute counters; systemd resets them on an explicit restart."
     },
     {
-      "type": "timeseries",
-      "title": "Restart rate, system units",
+      "type": "logs",
+      "title": "Logs for the selected unit",
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 8,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "increase(node_systemd_service_restart_total[15m]) > 0",
-          "refId": "A",
-          "instant": false,
-          "range": true,
-          "legendFormat": "{{name}}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 8,
-            "showPoints": "never"
-          },
-          "color": {
-            "mode": "palette-classic"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "description": "Anything sustained above 3 fires UnitCrashLooping."
-    },
-    {
-      "type": "timeseries",
-      "title": "Restart rate, user units",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "loki",
+        "uid": "loki"
       },
       "gridPos": {
         "x": 12,
-        "y": 8,
+        "y": 13,
         "w": 12,
-        "h": 7
+        "h": 8
       },
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
+            "type": "loki",
+            "uid": "loki"
           },
-          "expr": "increase(homelab_user_unit_restart_total{user=~\"$user\"}[15m]) > 0",
+          "expr": "{host=\"ant\", unit=~\"$unit\"}",
           "refId": "A",
-          "instant": false,
-          "range": true,
-          "legendFormat": "{{user}}/{{name}}"
+          "queryType": "range"
         }
       ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 8,
-            "showPoints": "never"
-          },
-          "color": {
-            "mode": "palette-classic"
-          }
-        },
-        "overrides": []
-      },
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none"
+      },
+      "description": "Pick a unit above, then narrow it here."
+    },
+    {
+      "type": "row",
+      "title": "Context",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 21,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
     },
     {
       "type": "timeseries",
@@ -293,7 +584,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 15,
+        "y": 22,
         "w": 8,
         "h": 6
       },
@@ -341,14 +632,14 @@
     },
     {
       "type": "timeseries",
-      "title": "Units per state, user managers",
+      "title": "Units per state, rootless managers",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "x": 8,
-        "y": 15,
+        "y": 22,
         "w": 8,
         "h": 6
       },
@@ -358,7 +649,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "count by (state) (homelab_user_unit_state{user=~\"$user\"} == 1)",
+          "expr": "count by (state) (homelab_user_unit_state == 1)",
           "refId": "A",
           "instant": false,
           "range": true,
@@ -396,14 +687,14 @@
     },
     {
       "type": "timeseries",
-      "title": "User manager reachable",
+      "title": "Restarts per 15 min",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
         "x": 16,
-        "y": 15,
+        "y": 22,
         "w": 8,
         "h": 6
       },
@@ -413,11 +704,22 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "homelab_user_manager_up{user=~\"$user\"}",
+          "expr": "increase(node_systemd_service_restart_total[15m]) > 0",
           "refId": "A",
           "instant": false,
           "range": true,
-          "legendFormat": "{{user}}"
+          "legendFormat": "{{name}}"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "increase(homelab_user_unit_restart_total[15m]) > 0",
+          "refId": "B",
+          "instant": false,
+          "range": true,
+          "legendFormat": "{{user}}/{{name}}"
         }
       ],
       "fieldConfig": {
@@ -443,60 +745,26 @@
           "mode": "multi",
           "sort": "desc"
         }
-      },
-      "description": "0 means systemctl --user -M <user>@ did not answer, so that user's services are unmonitored."
-    },
-    {
-      "type": "logs",
-      "title": "Logs from the selected user managers",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 21,
-        "w": 24,
-        "h": 10
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{host=\"ant\", user_unit=~\".+\"} | uid != \"\"",
-          "refId": "A",
-          "queryType": "range"
-        }
-      ],
-      "options": {
-        "showTime": true,
-        "showLabels": false,
-        "wrapLogMessage": true,
-        "prettifyLogMessage": false,
-        "sortOrder": "Descending",
-        "enableLogDetails": true,
-        "dedupStrategy": "none"
-      },
-      "description": "Pick a unit in the log details to filter further."
+      }
     }
   ],
   "templating": {
     "list": [
       {
-        "name": "user",
-        "label": "User manager",
+        "name": "unit",
+        "label": "Unit",
         "type": "query",
         "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
+          "type": "loki",
+          "uid": "loki"
         },
         "query": {
-          "query": "label_values(homelab_user_manager_up, user)",
+          "label": "unit",
+          "stream": "{host=\"ant\"}",
+          "type": 1,
           "refId": "A"
         },
-        "refresh": 1,
+        "refresh": 2,
         "includeAll": true,
         "multi": true,
         "current": {

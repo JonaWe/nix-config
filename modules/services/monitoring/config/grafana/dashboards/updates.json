@@ -32,7 +32,7 @@
   "panels": [
     {
       "type": "stat",
-      "title": "Updates verf\u00fcgbar",
+      "title": "Updates available",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -97,7 +97,7 @@
     },
     {
       "type": "stat",
-      "title": "Nicht pr\u00fcfbar",
+      "title": "Cannot be checked",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -159,11 +159,11 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "Registry antwortet nicht oder der Tag ist verschwunden. Genau das hat recyclarr umgebracht."
+      "description": "Registry did not answer, or the tag is gone. Exactly what killed recyclarr."
     },
     {
       "type": "stat",
-      "title": "Auf neuester Version",
+      "title": "On newest version",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -224,7 +224,7 @@
     },
     {
       "type": "stat",
-      "title": "Beweglicher Tag",
+      "title": "Mutable tag",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -282,11 +282,11 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "latest/stable/main - kein Versionsvergleich m\u00f6glich. Klasse B aktualisiert sich selbst, der Docker-arr-Stack zieht bei jedem Neustart neu."
+      "description": "latest/stable/main, so no version comparison is possible. Class B updates itself; the docker arr stack pulls on every restart."
     },
     {
       "type": "table",
-      "title": "Updates verf\u00fcgbar",
+      "title": "Updates available",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -345,20 +345,20 @@
               "state": true
             },
             "renameByName": {
-              "service": "Dienst",
-              "current": "l\u00e4uft",
-              "available": "verf\u00fcgbar",
-              "runtime": "Laufzeit",
+              "service": "Service",
+              "current": "running",
+              "available": "available",
+              "runtime": "Runtime",
               "repo": "Image"
             }
           }
         }
       ],
-      "description": "Die Arbeitsliste. Tag im .container anheben, rebuild, Dienst neu starten."
+      "description": "The worklist. Bump the tag in the .container file, rebuild, restart the service."
     },
     {
       "type": "table",
-      "title": "Nicht pr\u00fcfbar",
+      "title": "Cannot be checked",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -418,20 +418,20 @@
               "available": true
             },
             "renameByName": {
-              "service": "Dienst",
-              "current": "l\u00e4uft",
-              "available": "verf\u00fcgbar",
-              "runtime": "Laufzeit",
+              "service": "Service",
+              "current": "running",
+              "available": "available",
+              "runtime": "Runtime",
               "repo": "Image"
             }
           }
         }
       ],
-      "description": "Sofort ansehen: ein verschwundener Tag bricht den Dienst beim n\u00e4chsten Neustart."
+      "description": "Look now: a vanished tag breaks the service on its next restart."
     },
     {
       "type": "table",
-      "title": "Auf neuester Version",
+      "title": "On newest version",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -491,10 +491,10 @@
               "available": true
             },
             "renameByName": {
-              "service": "Dienst",
-              "current": "l\u00e4uft",
-              "available": "verf\u00fcgbar",
-              "runtime": "Laufzeit",
+              "service": "Service",
+              "current": "running",
+              "available": "available",
+              "runtime": "Runtime",
               "repo": "Image"
             }
           }
@@ -503,7 +503,7 @@
     },
     {
       "type": "table",
-      "title": "Beweglicher Tag, nicht vergleichbar",
+      "title": "Mutable tag, not comparable",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -563,16 +563,16 @@
               "available": true
             },
             "renameByName": {
-              "service": "Dienst",
-              "current": "l\u00e4uft",
-              "available": "verf\u00fcgbar",
-              "runtime": "Laufzeit",
+              "service": "Service",
+              "current": "running",
+              "available": "available",
+              "runtime": "Runtime",
               "repo": "Image"
             }
           }
         }
       ],
-      "description": "Pinnen macht sie vergleichbar. Bei Klasse B ist der bewegliche Tag Absicht."
+      "description": "Pinning makes them comparable. For class B the mutable tag is deliberate."
     },
     {
       "type": "logs",
@@ -607,11 +607,11 @@
         "enableLogDetails": true,
         "dedupStrategy": "none"
       },
-      "description": "Hier steht \"rolled back\", wenn podman ein Update zur\u00fcckgenommen hat."
+      "description": "This is where \"rolled back\" appears when podman reverted an update."
     },
     {
       "type": "stat",
-      "title": "Letzte Pr\u00fcfung vor",
+      "title": "Last checked",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -674,7 +674,7 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "L\u00e4uft t\u00e4glich 05:00."
+      "description": "Runs daily at 05:00."
     }
   ]
 }
