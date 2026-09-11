@@ -39,7 +39,11 @@ in {
 
       "monitoring/grafana/provisioning/datasources/datasources.yml" = etcFile ./config/grafana/datasources.yml;
       "monitoring/grafana/provisioning/dashboards/dashboards.yml" = etcFile ./config/grafana/dashboards.yml;
-      "monitoring/grafana/dashboards/homelab.json" = etcFile ./config/grafana/dashboards/homelab.json;
+      "monitoring/grafana/dashboards/homelab-overview.json" = etcFile ./config/grafana/dashboards/homelab-overview.json;
+      "monitoring/grafana/dashboards/services-units.json" = etcFile ./config/grafana/dashboards/services-units.json;
+      "monitoring/grafana/dashboards/storage-zfs.json" = etcFile ./config/grafana/dashboards/storage-zfs.json;
+      "monitoring/grafana/dashboards/host.json" = etcFile ./config/grafana/dashboards/host.json;
+      "monitoring/grafana/dashboards/logs.json" = etcFile ./config/grafana/dashboards/logs.json;
     };
 
     homelab.services = {

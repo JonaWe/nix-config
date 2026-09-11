@@ -24,19 +24,27 @@ for user in $(ls -1 "$LINGER_DIR" 2>/dev/null || true); do
     continue
   fi
 
+  # A manager that blinks during an activation must not take the whole sweep
+  # down with it, or every rootless service goes unmonitored at once.
   if ! units=$(systemctl --user -M "${user}@" list-units --type=service --all \
                  --no-legend --plain 2>/dev/null | awk '{print $1}'); then
     printf 'homelab_user_manager_up{user="%s"} 0\n' "$user" >>"$managers"
     continue
   fi
-  printf 'homelab_user_manager_up{user="%s"} 1\n' "$user" >>"$managers"
 
   units=$(printf '%s\n' "$units" | grep -Ev "$TRANSIENT_RE" || true)
-  [ -n "$units" ] || continue
 
   # shellcheck disable=SC2086
-  systemctl --user -M "${user}@" show $units \
-      -p Id -p ActiveState -p NRestarts -p Type 2>/dev/null |
+  if ! show=$(systemctl --user -M "${user}@" show $units \
+                -p Id -p ActiveState -p NRestarts -p Type 2>/dev/null); then
+    printf 'homelab_user_manager_up{user="%s"} 0\n' "$user" >>"$managers"
+    continue
+  fi
+  printf 'homelab_user_manager_up{user="%s"} 1\n' "$user" >>"$managers"
+
+  [ -n "$units" ] || continue
+
+  printf '%s\n' "$show" |
     awk -v user="$user" -v states="$states" -v restarts="$restarts" '
       BEGIN { RS = ""; FS = "\n"; split("active activating deactivating inactive failed", all, " ") }
       {
