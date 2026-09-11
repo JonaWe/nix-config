@@ -569,6 +569,85 @@
         "dedupStrategy": "none"
       },
       "description": "Hier steht \"rolled back\", wenn podman ein Update zur\u00fcckgenommen hat."
+    },
+    {
+      "type": "row",
+      "title": "Bekannte Tags",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 21,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "type": "table",
+      "title": "Alle beobachteten Tags, mit Build-Datum",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 22,
+        "w": 24,
+        "h": 12
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "diun_image_created_timestamp_seconds",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "host": true,
+              "__name__": true,
+              "provider": true
+            },
+            "renameByName": {
+              "Value": "gebaut am"
+            }
+          }
+        }
+      ],
+      "description": "Die Antwort auf \"bin ich hinterher?\". Filtere auf einen Image-Namen und vergleiche mit dem Tag, der im Repo steht. Bewusst als Liste und nicht als berechneter Wert: nach Build-Datum sortiert waere es falsch, weil Patch-Releases aelterer Zweige spaeter gebaut werden als neuere Versionen."
     }
   ]
 }
