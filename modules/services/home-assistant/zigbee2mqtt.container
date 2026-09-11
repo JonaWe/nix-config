@@ -1,7 +1,6 @@
 [Unit]
 Description=Zigbee2mqtt
-After=network-online.target mosquitto.service
-Requires=mosquitto.service
+After=network-online.target
 
 [Container]
 Image=ghcr.io/koenkk/zigbee2mqtt:latest
@@ -21,6 +20,7 @@ PodmanArgs=--group-add=keep-groups
 
 [Service]
 Restart=always
+RestartSec=10
 User=zigbee2mqtt
 Group=zigbee2mqtt
 
