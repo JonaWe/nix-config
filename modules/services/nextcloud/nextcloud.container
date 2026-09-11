@@ -3,7 +3,7 @@ Description=Nextcloud Server
 After=network-online.target
 
 [Container]
-Image=docker.io/library/nextcloud:stable
+Image=docker.io/library/nextcloud:34.0.3
 ContainerName=nextcloud
 PublishPort=8052:80
 

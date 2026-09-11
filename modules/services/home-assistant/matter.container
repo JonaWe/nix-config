@@ -4,7 +4,7 @@ After=network-online.target otbr.service
 Requires=otbr.service
 
 [Container]
-Image=ghcr.io/matter-js/python-matter-server:stable
+Image=ghcr.io/matter-js/python-matter-server:8.1.2
 ; Image=ghcr.io/home-assistant-libs/python-matter-server:
 ContainerName=matter
 Network=host

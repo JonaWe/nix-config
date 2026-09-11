@@ -3,7 +3,7 @@ Description=Home Assistant Automation
 After=network-online.target
 
 [Container]
-Image=ghcr.io/home-assistant/home-assistant:stable
+Image=ghcr.io/home-assistant/home-assistant:2026.9.1
 ContainerName=home-assistant
 Network=host
 

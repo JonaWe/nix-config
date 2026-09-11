@@ -3,7 +3,7 @@ Description=Actual Budget
 After=network-online.target
 
 [Container]
-Image=docker.io/actualbudget/actual-server:latest
+Image=docker.io/actualbudget/actual-server:26.9.0
 ContainerName=actual
 PublishPort=127.0.0.1:9284:5006
 

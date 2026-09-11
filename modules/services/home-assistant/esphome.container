@@ -3,7 +3,7 @@ Description=Esphome
 After=network-online.target
 
 [Container]
-Image=ghcr.io/esphome/esphome:latest
+Image=ghcr.io/esphome/esphome:2026.8.2
 ContainerName=esphome
 
 Network=host

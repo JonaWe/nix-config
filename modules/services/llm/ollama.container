@@ -3,7 +3,7 @@ Description=Ollama LLM Server
 After=network-online.target
 
 [Container]
-Image=docker.io/ollama/ollama:latest
+Image=docker.io/ollama/ollama:0.20.5
 ContainerName=ollama
 PublishPort=11434:11434
 

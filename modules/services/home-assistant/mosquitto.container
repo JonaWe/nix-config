@@ -3,7 +3,7 @@ Description=Mosquitto
 After=network-online.target
 
 [Container]
-Image=docker.io/eclipse-mosquitto:latest
+Image=docker.io/eclipse-mosquitto:2.1.2-alpine
 ContainerName=mosquitto
 PublishPort=1883:1883
 

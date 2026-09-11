@@ -32,7 +32,7 @@
   "panels": [
     {
       "type": "stat",
-      "title": "Updates verf\u00fcgbar",
+      "title": "Neue Tags",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -49,7 +49,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "count(diun_image_update_available == 1) or vector(0)",
+          "expr": "count(diun_image_last_check_status{status=\"new\"} == 1) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -94,7 +94,7 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "Gepinnte Tags werden von Hand angehoben, siehe TODO 8."
+      "description": "Bei gepinnten Images zeigt sich eine neue Version so \u2014 als Tag, den diun noch nicht kannte. diun_image_update_available bleibt dabei 0, weil der Digest eines festen Tags sich nie bewegt."
     },
     {
       "type": "stat",
@@ -336,7 +336,7 @@
     },
     {
       "type": "table",
-      "title": "Images mit verf\u00fcgbarem Update",
+      "title": "Neue Tags und bewegte Digests",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -353,8 +353,19 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "diun_image_update_available == 1",
+          "expr": "diun_image_last_check_status{status=\"new\"} == 1",
           "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "diun_image_update_available == 1",
+          "refId": "B",
           "instant": true,
           "range": false,
           "format": "table"
@@ -392,13 +403,14 @@
               "host": true,
               "__name__": true,
               "provider": true,
+              "status": true,
               "Value": true
             },
             "renameByName": {}
           }
         }
       ],
-      "description": "Die Liste f\u00fcr das w\u00f6chentliche Anheben."
+      "description": "Die Liste f\u00fcr das w\u00f6chentliche Anheben. Oben neu aufgetauchte Tags (gepinnte Images), unten bewegte Digests (Images auf :latest oder :stable)."
     },
     {
       "type": "table",

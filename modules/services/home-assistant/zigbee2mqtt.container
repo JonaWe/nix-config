@@ -3,7 +3,7 @@ Description=Zigbee2mqtt
 After=network-online.target
 
 [Container]
-Image=ghcr.io/koenkk/zigbee2mqtt:latest
+Image=ghcr.io/koenkk/zigbee2mqtt:2.14.1
 ContainerName=zigbee2mqtt
 PublishPort=127.0.0.1:8929:8080
 
