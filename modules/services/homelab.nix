@@ -287,8 +287,10 @@ in {
 
                 unitConfig.RequiresMountsFor = [mountPoint];
 
-                before = ["${name}.service"];
-                requiredBy = ["${name}.service"];
+                # A rootless service has no system unit to order against;
+                # quadlet emits RequiresMountsFor into the user unit itself.
+                before = optional (!svc.rootless) "${name}.service";
+                requiredBy = optional (!svc.rootless) "${name}.service";
 
                 serviceConfig = {
                   Type = "oneshot";
