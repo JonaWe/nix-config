@@ -1,0 +1,26 @@
+groups:
+  - name: containers
+    interval: 1m
+    rules:
+      # podman writes "rolled back" into the UPDATED column when an image
+      # update failed to come up and it reverted. No metric carries this.
+      - alert: ContainerRolledBack
+        expr: |
+          sum by (host) (count_over_time({user_unit="podman-auto-update.service"} |= "rolled back" [15m])) > 0
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "An image update was rolled back on {{ $labels.host }}"
+          description: "podman reverted a container to its previous image. The service is running, but the update needs looking at."
+
+      # The rollback itself failed, which leaves the service down.
+      - alert: ContainerRollbackFailed
+        expr: |
+          sum by (host) (count_over_time({user_unit="podman-auto-update.service"} |~ "rolling back image|during rollback" [15m])) > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Rollback failed on {{ $labels.host }}"
+          description: "podman could not revert to the previous image, so the container is likely down."

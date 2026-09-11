@@ -30,12 +30,17 @@ in {
       "monitoring/prometheus/rules/units.yml" = etcFile ./config/prometheus/rules/units.yml;
       "monitoring/prometheus/rules/storage.yml" = etcFile ./config/prometheus/rules/storage.yml;
       "monitoring/prometheus/rules/stack.yml" = etcFile ./config/prometheus/rules/stack.yml;
+      "monitoring/prometheus/rules/updates.yml" = etcFile ./config/prometheus/rules/updates.yml;
 
       "monitoring/loki/loki.yml" = etcFile ./config/loki/loki.yml;
       # Single-tenant Loki reads rules from <dir>/fake/.
       "monitoring/loki/rules/fake/security.yml" = etcFile ./config/loki/rules/fake/security.yml;
+      "monitoring/loki/rules/fake/containers.yml" = etcFile ./config/loki/rules/fake/containers.yml;
 
       "monitoring/alertmanager/alertmanager.yml" = etcFile ./config/alertmanager/alertmanager.yml;
+
+      "monitoring/diun/diun.yml" = etcFile ./config/diun/diun.yml;
+      "monitoring/diun/images.yml" = etcFile cfg.updates.imageList;
 
       "monitoring/grafana/provisioning/datasources/datasources.yml" = etcFile ./config/grafana/datasources.yml;
       "monitoring/grafana/provisioning/dashboards/dashboards.yml" = etcFile ./config/grafana/dashboards.yml;
@@ -44,6 +49,7 @@ in {
       "monitoring/grafana/dashboards/storage-zfs.json" = etcFile ./config/grafana/dashboards/storage-zfs.json;
       "monitoring/grafana/dashboards/host.json" = etcFile ./config/grafana/dashboards/host.json;
       "monitoring/grafana/dashboards/logs.json" = etcFile ./config/grafana/dashboards/logs.json;
+      "monitoring/grafana/dashboards/updates.json" = etcFile ./config/grafana/dashboards/updates.json;
     };
 
     homelab.services = {
@@ -72,6 +78,15 @@ in {
         group = "alertmanager";
         port = 9093;
         zfsMounts = dataset "alertmanager";
+      };
+
+      diun = lib.mkIf cfg.updates.enable {
+        containerFile = ./diun.container;
+        rootless = true;
+        user = "diun";
+        group = "diun";
+        port = 9095;
+        zfsMounts = dataset "diun";
       };
 
       grafana = {

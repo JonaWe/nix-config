@@ -190,44 +190,5 @@ in {
       };
     })
 
-    (lib.mkIf cfg.updates.enable {
-      environment.etc."monitoring/diun/diun.yml" = {
-        source = ./config/diun/diun.yml;
-        mode = "0444";
-      };
-
-      environment.etc."monitoring/diun/images.yml" = {
-        source = cfg.updates.imageList;
-        mode = "0444";
-      };
-
-      users.users.diun = {
-        isSystemUser = true;
-        group = "diun";
-        home = "/var/lib/diun";
-      };
-      users.groups.diun = {};
-
-      systemd.services.diun = {
-        description = "Container image update notifier";
-        wantedBy = ["multi-user.target"];
-        after = ["network-online.target"];
-        wants = ["network-online.target"];
-        environment = {
-          DIUN_WATCH_SCHEDULE = cfg.updates.schedule;
-          DIUN_NOTIF_NTFY_ENDPOINT = cfg.ntfy.url;
-          DIUN_NOTIF_NTFY_TOPIC = cfg.ntfy.topics.updates;
-        };
-        serviceConfig = {
-          ExecStart = "${pkgs.diun}/bin/diun serve --config /etc/monitoring/diun/diun.yml";
-          User = "diun";
-          Group = "diun";
-          Restart = "always";
-          RestartSec = 30;
-          StateDirectory = "diun";
-          WorkingDirectory = "/var/lib/diun";
-        };
-      };
-    })
   ]);
 }

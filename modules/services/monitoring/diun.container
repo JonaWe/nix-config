@@ -1,0 +1,24 @@
+[Unit]
+Description=Container image update notifier
+After=network-online.target
+
+[Container]
+Image=ghcr.io/crazy-max/diun:4.33.0
+ContainerName=diun
+Network=host
+
+# Metrics default to :9090, which is Prometheus.
+Environment=DIUN_METRICS_ENABLED=true
+Environment=DIUN_METRICS_ADDR=127.0.0.1:9095
+Environment=TZ=Europe/Berlin
+
+Volume=/etc/monitoring/diun:/etc/diun:ro
+Volume=/opt/services/monitoring/diun/data:/data:Z
+
+Exec=serve --config /etc/diun/diun.yml
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

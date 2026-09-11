@@ -1,0 +1,34 @@
+groups:
+  - name: updates
+    rules:
+      - alert: ContainerUpdateAvailable
+        expr: diun_image_update_available == 1
+        for: 1h
+        labels:
+          severity: info
+        annotations:
+          summary: "Update available for {{ $labels.image }}"
+          description: "A newer image exists. Pinned tags are bumped by hand; see TODO 8."
+
+      # The failure that killed recyclarr: the tag itself vanished from the
+      # registry, so there is nothing left to pull.
+      - alert: ContainerImageUnreachable
+        expr: diun_image_last_check_status{status="error"} == 1
+        for: 2h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Image {{ $labels.image }} cannot be checked"
+          description: "diun could not read the manifest. A 404 means the tag is gone from the registry."
+
+      - alert: DiunStale
+        expr: |
+          (diun_watch_last_run_timestamp_seconds > 0)
+            and
+          (time() - diun_watch_last_run_timestamp_seconds > 36 * 3600)
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "diun has not run for over 36 hours on {{ $labels.host }}"
+          description: "Update detection is stale, so a pending update would go unnoticed."

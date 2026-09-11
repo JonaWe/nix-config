@@ -7,7 +7,12 @@
 # DIUN_WATCH_SCHEDULE from the NixOS module.
 
 db:
-  path: /var/lib/diun/diun.db
+  path: /data/diun.db
+
+metrics:
+  enabled: true
+  addr: "127.0.0.1:9095"
+  path: /metrics
 
 watch:
   workers: 5
@@ -25,4 +30,4 @@ notif:
 
 providers:
   file:
-    filename: /etc/monitoring/diun/images.yml
+    filename: /etc/diun/images.yml
