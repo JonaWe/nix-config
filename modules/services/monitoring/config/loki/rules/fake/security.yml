@@ -1,0 +1,24 @@
+groups:
+  - name: security
+    interval: 1m
+    rules:
+      # Nothing in the metrics pipeline sees this; it only exists in the log.
+      - alert: SshBruteForce
+        expr: |
+          sum by (host) (count_over_time({unit="sshd.service"} |= "Failed password" [5m])) > 50
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "SSH brute force against {{ $labels.host }}"
+          description: "More than 50 failed SSH passwords in 5 minutes."
+
+      - alert: SshInvalidUserFlood
+        expr: |
+          sum by (host) (count_over_time({unit="sshd.service"} |= "Invalid user" [5m])) > 50
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "SSH invalid-user flood against {{ $labels.host }}"
+          description: "More than 50 invalid-user attempts in 5 minutes."

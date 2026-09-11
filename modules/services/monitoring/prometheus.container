@@ -1,0 +1,22 @@
+[Unit]
+Description=Prometheus
+After=network-online.target
+
+[Container]
+Image=docker.io/prom/prometheus:v3.11.3
+ContainerName=prometheus
+Network=host
+
+# Maps the host user onto the image's own uid so /prometheus stays writable.
+UserNS=keep-id:uid=65534,gid=65534
+
+Volume=/etc/monitoring/prometheus:/etc/prometheus:ro
+Volume=/opt/services/monitoring/prometheus/data:/prometheus:Z
+
+Exec=--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --storage.tsdb.retention.time=90d --web.listen-address=127.0.0.1:9090
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

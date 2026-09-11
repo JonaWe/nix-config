@@ -252,6 +252,7 @@
       agents.enable = true;
       smart.enable = true;
       updates.enable = true;
+      stack.enable = true;
     };
   };
 

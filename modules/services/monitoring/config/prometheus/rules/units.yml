@@ -1,0 +1,82 @@
+groups:
+  - name: units
+    rules:
+      # System units come from node_exporter's systemd collector, user units
+      # from the sweep. Both carry name/type, so one rule covers both managers.
+      - alert: UnitFailed
+        expr: |
+          node_systemd_unit_state{state="failed"} == 1
+            or homelab_user_unit_state{state="failed"} == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Unit {{ $labels.name }} failed on {{ $labels.host }}"
+          description: "{{ $labels.name }} has been in state failed for 2 minutes."
+
+      # Catches units that never reach "failed" because Restart=always keeps
+      # them cycling through activating/auto-restart.
+      - alert: UnitCrashLooping
+        expr: |
+          increase(node_systemd_service_restart_total[15m]) > 3
+            or increase(homelab_user_unit_restart_total[15m]) > 3
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Unit {{ $labels.name }} is crash looping on {{ $labels.host }}"
+          description: "{{ $labels.name }} restarted {{ $value | printf \"%.0f\" }} times in 15 minutes."
+
+      # type!="oneshot" matters: a oneshot without RemainAfterExit sits in
+      # activating for its whole run, so backups would alert every night.
+      - alert: UnitActivatingTooLong
+        expr: |
+          node_systemd_unit_state{state="activating",type!="oneshot"} == 1
+            or homelab_user_unit_state{state="activating",type!="oneshot"} == 1
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unit {{ $labels.name }} stuck activating on {{ $labels.host }}"
+          description: "{{ $labels.name }} has been activating for over 30 minutes."
+
+      - alert: UnitDeactivatingTooLong
+        expr: |
+          node_systemd_unit_state{state="deactivating"} == 1
+            or homelab_user_unit_state{state="deactivating"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unit {{ $labels.name }} stuck deactivating on {{ $labels.host }}"
+          description: "{{ $labels.name }} has been deactivating for over 5 minutes."
+
+      - alert: UserManagerDown
+        expr: homelab_user_manager_up == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "User manager for {{ $labels.user }} unreachable on {{ $labels.host }}"
+          description: "systemctl --user -M {{ $labels.user }}@ did not answer, so that user's services are unmonitored."
+
+      # Without this the rootless half goes blind silently.
+      - alert: UserUnitSweepStale
+        expr: |
+          time() - node_textfile_mtime_seconds{file=~".*homelab_user_units.prom"} > 300
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "User unit sweep is stale on {{ $labels.host }}"
+          description: "The sweep has not written metrics for over 5 minutes; rootless services are unmonitored."
+
+      - alert: TextfileCollectorError
+        expr: node_textfile_scrape_error != 0
+        for: 5m
+        labels:
+          severity: warning
+          
+        annotations:
+          summary: "Textfile collector error on {{ $labels.host }}"
+          description: "node_exporter could not parse a .prom file."

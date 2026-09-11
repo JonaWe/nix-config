@@ -1,0 +1,23 @@
+[Unit]
+Description=Alertmanager
+After=network-online.target
+
+[Container]
+Image=docker.io/prom/alertmanager:v0.31.1
+ContainerName=alertmanager
+Network=host
+
+UserNS=keep-id:uid=65534,gid=65534
+
+Volume=/etc/monitoring/alertmanager:/etc/alertmanager:ro
+Volume=/opt/services/monitoring/alertmanager/data:/alertmanager:Z
+
+# An empty --cluster.listen-address disables HA mode; the default would bind
+# host port 9094 under Network=host.
+Exec=--config.file=/etc/alertmanager/alertmanager.yml --storage.path=/alertmanager --web.listen-address=127.0.0.1:9093 --cluster.listen-address=
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

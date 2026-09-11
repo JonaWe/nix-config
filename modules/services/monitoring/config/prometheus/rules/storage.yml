@@ -1,0 +1,89 @@
+groups:
+  - name: storage
+    rules:
+      - alert: SmartStatusFailed
+        expr: smartctl_device_smart_status == 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "SMART health failed on {{ $labels.device }} ({{ $labels.host }})"
+          description: "The drive reports overall SMART health as failing. Replace it."
+
+      - alert: SmartReallocatedSectors
+        expr: |
+          smartctl_device_attribute{attribute_name="Reallocated_Sector_Ct",attribute_value_type="raw"} > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Reallocated sectors on {{ $labels.device }} ({{ $labels.host }})"
+          description: "{{ $value | printf \"%.0f\" }} reallocated sectors. This counter was 0 on all drives at setup."
+
+      - alert: SmartPendingSectors
+        expr: |
+          smartctl_device_attribute{attribute_name="Current_Pending_Sector",attribute_value_type="raw"} > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Pending sectors on {{ $labels.device }} ({{ $labels.host }})"
+          description: "{{ $value | printf \"%.0f\" }} sectors are pending reallocation."
+
+      - alert: DiskTemperatureHigh
+        expr: smartctl_device_temperature{temperature_type="current"} > 50
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.device }} at {{ $value }} C on {{ $labels.host }}"
+          description: "Drive temperature above 50 C for 15 minutes. Normal range here is 37-43 C."
+
+      # 0 is ONLINE.
+      - alert: ZfsPoolDegraded
+        expr: zfs_pool_health != 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Pool {{ $labels.pool }} is not ONLINE on {{ $labels.host }}"
+          description: "zpool health reports a non-ONLINE state. raidz1 survives one disk, so act now."
+
+      - alert: ZfsPoolAlmostFull
+        expr: |
+          (1 - zfs_pool_free_bytes / zfs_pool_size_bytes) * 100 > 85
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pool {{ $labels.pool }} is {{ $value | printf \"%.0f\" }}% full on {{ $labels.host }}"
+          description: "ZFS degrades badly past 80-85% capacity."
+
+      # zfs_exporter has no scrub metric, so this keys off the timer instead.
+      # The > 0 guard matters: a timer that has never fired reports 0, which
+      # would otherwise read as "last scrubbed in 1970".
+      - alert: ZfsScrubOverdue
+        expr: |
+          (node_systemd_timer_last_trigger_seconds{name="zfs-scrub.timer"} > 0)
+            and
+          (time() - node_systemd_timer_last_trigger_seconds{name="zfs-scrub.timer"} > 45 * 24 * 3600)
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "ZFS scrub overdue on {{ $labels.host }}"
+          description: "No scrub for more than 45 days. A full scrub takes about 18 hours here."
+
+      # ZFS is excluded on purpose: avail comes from the shared pool, so a large
+      # dataset always looks nearly full while the pool has room. Pool capacity
+      # is covered by ZfsPoolAlmostFull above.
+      - alert: FilesystemAlmostFull
+        expr: |
+          node_filesystem_avail_bytes{fstype!~"tmpfs|ramfs|overlay|zfs"}
+            / node_filesystem_size_bytes{fstype!~"tmpfs|ramfs|overlay|zfs"} * 100 < 10
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.mountpoint }} below 10% free on {{ $labels.host }}"
+          description: "{{ $value | printf \"%.1f\" }}% free."

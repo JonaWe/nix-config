@@ -1,0 +1,21 @@
+groups:
+  - name: stack
+    rules:
+      - alert: ScrapeTargetDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Scrape target {{ $labels.job }} is down on {{ $labels.host }}"
+          description: "Prometheus could not scrape {{ $labels.job }} for 5 minutes."
+
+      - alert: AlertmanagerNotifyFailing
+        expr: |
+          rate(alertmanager_notifications_failed_total[10m]) > 0
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Alertmanager cannot deliver notifications on {{ $labels.host }}"
+          description: "Delivery to the ntfy webhook is failing, so other alerts may never arrive."

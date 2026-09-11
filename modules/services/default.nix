@@ -35,6 +35,7 @@
     ./llm/open-webui.nix
     ./monitoring/ntfy.nix
     ./monitoring/agents.nix
+    ./monitoring/stack.nix
     ./stirling-pdf/stirling-pdf.nix
     ./omni-tools/omni-tools.nix
     ./convertx/convertx.nix
