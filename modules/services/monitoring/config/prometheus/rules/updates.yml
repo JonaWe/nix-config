@@ -1,34 +1,32 @@
 groups:
   - name: updates
     rules:
-      - alert: ContainerUpdateAvailable
-        expr: diun_image_update_available == 1
-        for: 1h
-        labels:
-          severity: info
-        annotations:
-          summary: "Update available for {{ $labels.image }}"
-          description: "A newer image exists. Pinned tags are bumped by hand; see TODO 8."
-
-      # The failure that killed recyclarr: the tag itself vanished from the
-      # registry, so there is nothing left to pull.
+      # The failure that killed recyclarr: the tag vanished from the registry,
+      # so the next restart has nothing to pull.
       - alert: ContainerImageUnreachable
-        expr: diun_image_last_check_status{status="error"} == 1
+        expr: homelab_image_info{state="unreachable"} == 1
         for: 2h
         labels:
           severity: warning
         annotations:
-          summary: "Image {{ $labels.image }} cannot be checked"
-          description: "diun could not read the manifest. A 404 means the tag is gone from the registry."
+          summary: "{{ $labels.service }}: image cannot be checked"
+          description: "{{ $labels.repo }}:{{ $labels.current }} did not answer. A vanished tag breaks the service on its next restart."
 
-      - alert: DiunStale
+      - alert: ContainerUpdateAvailable
+        expr: homelab_image_info{state="update"} == 1
+        for: 24h
+        labels:
+          severity: info
+        annotations:
+          summary: "{{ $labels.service }}: {{ $labels.current }} -> {{ $labels.available }}"
+          description: "A newer tag matching the pinned pattern exists. Bump it in the .container file."
+
+      - alert: ImageVersionCheckStale
         expr: |
-          (diun_watch_last_run_timestamp_seconds > 0)
-            and
-          (time() - diun_watch_last_run_timestamp_seconds > 36 * 3600)
+          time() - node_textfile_mtime_seconds{file=~".*homelab_image_versions.prom"} > 36 * 3600
         for: 1h
         labels:
           severity: warning
         annotations:
-          summary: "diun has not run for over 36 hours on {{ $labels.host }}"
-          description: "Update detection is stale, so a pending update would go unnoticed."
+          summary: "Image version check is stale on {{ $labels.host }}"
+          description: "Nothing has compared running against available versions for over 36 hours."

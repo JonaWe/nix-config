@@ -63,7 +63,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -129,7 +129,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -195,7 +195,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -261,7 +261,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -382,7 +382,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "s",
           "thresholds": {
@@ -568,7 +568,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "percent",
           "min": 0,
@@ -641,7 +641,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "celsius",
           "min": 0,
@@ -716,7 +716,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -782,7 +782,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "decimals": 0,
           "thresholds": {

@@ -116,7 +116,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "percent",
           "decimals": 1,
@@ -187,7 +187,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "percent",
           "decimals": 1,
@@ -389,7 +389,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "bytes",
           "thresholds": {

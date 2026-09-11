@@ -32,7 +32,7 @@
   "panels": [
     {
       "type": "stat",
-      "title": "Neue Tags",
+      "title": "Updates verf\u00fcgbar",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -40,7 +40,7 @@
       "gridPos": {
         "x": 0,
         "y": 0,
-        "w": 5,
+        "w": 6,
         "h": 4
       },
       "targets": [
@@ -49,7 +49,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "count(diun_image_last_check_status{status=\"new\"} == 1) or vector(0)",
+          "expr": "count(homelab_image_info{state=\"update\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -63,7 +63,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -93,20 +93,19 @@
         "graphMode": "none",
         "textMode": "auto",
         "justifyMode": "auto"
-      },
-      "description": "Bei gepinnten Images zeigt sich eine neue Version so \u2014 als Tag, den diun noch nicht kannte. diun_image_update_available bleibt dabei 0, weil der Digest eines festen Tags sich nie bewegt."
+      }
     },
     {
       "type": "stat",
-      "title": "Nicht erreichbar",
+      "title": "Nicht pr\u00fcfbar",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 5,
+        "x": 6,
         "y": 0,
-        "w": 5,
+        "w": 6,
         "h": 4
       },
       "targets": [
@@ -115,7 +114,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "count(diun_image_last_check_status{status=\"error\"} == 1) or vector(0)",
+          "expr": "count(homelab_image_info{state=\"unreachable\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -129,7 +128,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
@@ -160,19 +159,19 @@
         "textMode": "auto",
         "justifyMode": "auto"
       },
-      "description": "Manifest nicht lesbar. 404 hei\u00dft: der Tag ist aus der Registry verschwunden."
+      "description": "Registry antwortet nicht oder der Tag ist verschwunden. Genau das hat recyclarr umgebracht."
     },
     {
       "type": "stat",
-      "title": "Beobachtete Images",
+      "title": "Auf neuester Version",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 10,
+        "x": 12,
         "y": 0,
-        "w": 5,
+        "w": 6,
         "h": 4
       },
       "targets": [
@@ -181,7 +180,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(diun_watch_last_run_images)",
+          "expr": "count(homelab_image_info{state=\"current\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -195,7 +194,16 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           }
         },
         "overrides": []
@@ -208,7 +216,7 @@
           "fields": "",
           "values": false
         },
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "textMode": "auto",
         "justifyMode": "auto"
@@ -216,15 +224,15 @@
     },
     {
       "type": "stat",
-      "title": "Letzter Lauf",
+      "title": "Beweglicher Tag",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
       "gridPos": {
-        "x": 15,
+        "x": 18,
         "y": 0,
-        "w": 5,
+        "w": 6,
         "h": 4
       },
       "targets": [
@@ -233,7 +241,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "time() - diun_watch_last_run_timestamp_seconds",
+          "expr": "count(homelab_image_info{state=\"mutable\"}) or vector(0)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -247,7 +255,394 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "auto",
+        "justifyMode": "auto"
+      },
+      "description": "latest/stable/main - kein Versionsvergleich m\u00f6glich. Klasse B aktualisiert sich selbst, der Docker-arr-Stack zieht bei jedem Neustart neu."
+    },
+    {
+      "type": "table",
+      "title": "Updates verf\u00fcgbar",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 24,
+        "h": 9
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "homelab_image_info{state=\"update\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "host": true,
+              "__name__": true,
+              "Value": true,
+              "state": true
+            },
+            "renameByName": {
+              "service": "Dienst",
+              "current": "l\u00e4uft",
+              "available": "verf\u00fcgbar",
+              "runtime": "Laufzeit",
+              "repo": "Image"
+            }
+          }
+        }
+      ],
+      "description": "Die Arbeitsliste. Tag im .container anheben, rebuild, Dienst neu starten."
+    },
+    {
+      "type": "table",
+      "title": "Nicht pr\u00fcfbar",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 13,
+        "w": 12,
+        "h": 7
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "homelab_image_info{state=\"unreachable\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "host": true,
+              "__name__": true,
+              "Value": true,
+              "state": true,
+              "available": true
+            },
+            "renameByName": {
+              "service": "Dienst",
+              "current": "l\u00e4uft",
+              "available": "verf\u00fcgbar",
+              "runtime": "Laufzeit",
+              "repo": "Image"
+            }
+          }
+        }
+      ],
+      "description": "Sofort ansehen: ein verschwundener Tag bricht den Dienst beim n\u00e4chsten Neustart."
+    },
+    {
+      "type": "table",
+      "title": "Auf neuester Version",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 13,
+        "w": 12,
+        "h": 7
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "homelab_image_info{state=\"current\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "host": true,
+              "__name__": true,
+              "Value": true,
+              "state": true,
+              "available": true
+            },
+            "renameByName": {
+              "service": "Dienst",
+              "current": "l\u00e4uft",
+              "available": "verf\u00fcgbar",
+              "runtime": "Laufzeit",
+              "repo": "Image"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Beweglicher Tag, nicht vergleichbar",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 20,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "homelab_image_info{state=\"mutable\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "host": true,
+              "__name__": true,
+              "Value": true,
+              "state": true,
+              "available": true
+            },
+            "renameByName": {
+              "service": "Dienst",
+              "current": "l\u00e4uft",
+              "available": "verf\u00fcgbar",
+              "runtime": "Laufzeit",
+              "repo": "Image"
+            }
+          }
+        }
+      ],
+      "description": "Pinnen macht sie vergleichbar. Bei Klasse B ist der bewegliche Tag Absicht."
+    },
+    {
+      "type": "logs",
+      "title": "podman auto-update",
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 20,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "expr": "{user_unit=\"podman-auto-update.service\"}",
+          "refId": "A",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none"
+      },
+      "description": "Hier steht \"rolled back\", wenn podman ein Update zur\u00fcckgenommen hat."
+    },
+    {
+      "type": "stat",
+      "title": "Letzte Pr\u00fcfung vor",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 28,
+        "w": 6,
+        "h": 4
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "time() - node_textfile_mtime_seconds{file=~\".*homelab_image_versions.prom\"}",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "thresholds"
           },
           "unit": "s",
           "thresholds": {
@@ -278,376 +673,8 @@
         "graphMode": "none",
         "textMode": "auto",
         "justifyMode": "auto"
-      }
-    },
-    {
-      "type": "stat",
-      "title": "Laufdauer",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
       },
-      "gridPos": {
-        "x": 20,
-        "y": 0,
-        "w": 4,
-        "h": 4
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "diun_watch_last_run_duration_seconds",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 8,
-            "showPoints": "never"
-          },
-          "color": {
-            "mode": "palette-classic"
-          },
-          "unit": "s",
-          "decimals": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "textMode": "auto",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "type": "table",
-      "title": "Neue Tags und bewegte Digests",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 4,
-        "w": 12,
-        "h": 10
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "diun_image_last_check_status{status=\"new\"} == 1",
-          "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "diun_image_update_available == 1",
-          "refId": "B",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false,
-          "reducer": [
-            "sum"
-          ],
-          "countRows": false,
-          "fields": ""
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "filterable": true
-          }
-        },
-        "overrides": []
-      },
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "job": true,
-              "instance": true,
-              "host": true,
-              "__name__": true,
-              "provider": true,
-              "status": true,
-              "Value": true
-            },
-            "renameByName": {}
-          }
-        }
-      ],
-      "description": "Die Liste f\u00fcr das w\u00f6chentliche Anheben. Oben neu aufgetauchte Tags (gepinnte Images), unten bewegte Digests (Images auf :latest oder :stable)."
-    },
-    {
-      "type": "table",
-      "title": "Images, die nicht gepr\u00fcft werden konnten",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 4,
-        "w": 12,
-        "h": 10
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "diun_image_last_check_status{status=\"error\"} == 1",
-          "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false,
-          "reducer": [
-            "sum"
-          ],
-          "countRows": false,
-          "fields": ""
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "filterable": true
-          }
-        },
-        "overrides": []
-      },
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "job": true,
-              "instance": true,
-              "host": true,
-              "__name__": true,
-              "provider": true,
-              "status": true,
-              "Value": true
-            },
-            "renameByName": {}
-          }
-        }
-      ],
-      "description": "Sofort ansehen: ein verschwundener Tag bricht den Dienst beim n\u00e4chsten Neustart."
-    },
-    {
-      "type": "timeseries",
-      "title": "Ergebnis je Lauf",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 14,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "diun_watch_last_run_images",
-          "refId": "A",
-          "instant": false,
-          "range": true,
-          "legendFormat": "{{status}}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "lineWidth": 1,
-            "fillOpacity": 40,
-            "showPoints": "never",
-            "stacking": {
-              "mode": "normal",
-              "group": "A"
-            }
-          },
-          "color": {
-            "mode": "palette-classic"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "description": "new z\u00e4hlt beim ersten Lauf alles; danach ist update die interessante Kurve."
-    },
-    {
-      "type": "logs",
-      "title": "podman auto-update",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 14,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{user_unit=\"podman-auto-update.service\"}",
-          "refId": "A",
-          "queryType": "range"
-        }
-      ],
-      "options": {
-        "showTime": true,
-        "showLabels": false,
-        "wrapLogMessage": true,
-        "prettifyLogMessage": false,
-        "sortOrder": "Descending",
-        "enableLogDetails": true,
-        "dedupStrategy": "none"
-      },
-      "description": "Hier steht \"rolled back\", wenn podman ein Update zur\u00fcckgenommen hat."
-    },
-    {
-      "type": "row",
-      "title": "Bekannte Tags",
-      "collapsed": false,
-      "gridPos": {
-        "x": 0,
-        "y": 21,
-        "w": 24,
-        "h": 1
-      },
-      "panels": []
-    },
-    {
-      "type": "table",
-      "title": "Alle beobachteten Tags, mit Build-Datum",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 22,
-        "w": 24,
-        "h": 12
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "diun_image_created_timestamp_seconds",
-          "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        }
-      ],
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false,
-          "reducer": [
-            "sum"
-          ],
-          "countRows": false,
-          "fields": ""
-        }
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "filterable": true
-          }
-        },
-        "overrides": []
-      },
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "job": true,
-              "instance": true,
-              "host": true,
-              "__name__": true,
-              "provider": true
-            },
-            "renameByName": {
-              "Value": "gebaut am"
-            }
-          }
-        }
-      ],
-      "description": "Die Antwort auf \"bin ich hinterher?\". Filtere auf einen Image-Namen und vergleiche mit dem Tag, der im Repo steht. Bewusst als Liste und nicht als berechneter Wert: nach Build-Datum sortiert waere es falsch, weil Patch-Releases aelterer Zweige spaeter gebaut werden als neuere Versionen."
+      "description": "L\u00e4uft t\u00e4glich 05:00."
     }
   ]
 }

@@ -39,8 +39,6 @@ in {
 
       "monitoring/alertmanager/alertmanager.yml" = etcFile ./config/alertmanager/alertmanager.yml;
 
-      "monitoring/diun/diun.yml" = etcFile ./config/diun/diun.yml;
-      "monitoring/diun/images.yml" = etcFile cfg.updates.imageList;
 
       "monitoring/grafana/provisioning/datasources/datasources.yml" = etcFile ./config/grafana/datasources.yml;
       "monitoring/grafana/provisioning/dashboards/dashboards.yml" = etcFile ./config/grafana/dashboards.yml;
@@ -78,15 +76,6 @@ in {
         group = "alertmanager";
         port = 9093;
         zfsMounts = dataset "alertmanager";
-      };
-
-      diun = lib.mkIf cfg.updates.enable {
-        containerFile = ./diun.container;
-        rootless = true;
-        user = "diun";
-        group = "diun";
-        port = 9095;
-        zfsMounts = dataset "diun";
       };
 
       grafana = {

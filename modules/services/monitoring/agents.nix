@@ -69,16 +69,11 @@ in {
     };
 
     updates = {
-      enable = lib.mkEnableOption "Container image update notices via diun";
-      imageList = lib.mkOption {
-        type = lib.types.path;
-        default = ./config/diun/images.yml;
-        description = "Hand-maintained list of images to watch. diun's file provider needs no container socket, which is what makes it work across both docker and 17 rootless podman users";
-      };
+      enable = lib.mkEnableOption "Daily report of running versus available image versions";
       schedule = lib.mkOption {
         type = lib.types.str;
-        default = "0 6 * * *";
-        description = "Cron expression for the image check. Daily, to stay inside anonymous registry rate limits";
+        default = "05:00";
+        description = "When to query the registries. Daily keeps anonymous rate limits comfortable";
       };
     };
 
@@ -111,6 +106,26 @@ in {
         serviceConfig = {
           Type = "oneshot";
           ExecStart = "${pkgs.bash}/bin/bash ${./scripts/user-unit-sweep.sh}";
+        };
+      };
+
+      systemd.services.image-versions = lib.mkIf cfg.updates.enable {
+        description = "Compare running image versions against the registries";
+        path = with pkgs; [skopeo podman docker util-linux systemd coreutils gawk gnugrep];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.bash}/bin/bash ${./scripts/image-versions.sh}";
+          TimeoutStartSec = "30m";
+          WorkingDirectory = "/";
+        };
+      };
+
+      systemd.timers.image-versions = lib.mkIf cfg.updates.enable {
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnCalendar = cfg.updates.schedule;
+          RandomizedDelaySec = "30m";
+          Persistent = true;
         };
       };
 

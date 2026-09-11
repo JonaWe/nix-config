@@ -64,7 +64,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "percent",
           "min": 0,
@@ -136,7 +136,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "unit": "percent",
           "min": 0,
@@ -263,7 +263,7 @@
             "showPoints": "never"
           },
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "thresholds": {
             "mode": "absolute",
