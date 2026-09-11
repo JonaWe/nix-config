@@ -5,6 +5,16 @@
 }: {
   imports = [../homelab.nix];
 
+  environment.etc."monitoring/ntfy/server.yml" = {
+    source = ./config/ntfy/server.yml;
+    mode = "0444";
+  };
+
+  environment.etc."monitoring/ntfy/templates/homelab.yml" = {
+    source = ./config/ntfy/templates/homelab.yml;
+    mode = "0444";
+  };
+
   homelab.services.ntfy = {
     containerFile = ./ntfy.container;
     rootless = true;
@@ -33,11 +43,6 @@
     };
 
     zfsMounts = {
-      "/opt/services/ntfy/config" = {
-        dataset = "zdata/enc/services/ntfy/config";
-        snapshot = true;
-        backup = true;
-      };
       "/opt/services/ntfy/cache" = {
         dataset = "zdata/enc/services/ntfy/cache";
         snapshot = true;

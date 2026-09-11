@@ -1,0 +1,13 @@
+# Without cache-file ntfy keeps messages in memory only, so every restart
+# discards the alert history.
+
+base-url: https://ntfy.ts.pinkorca.de
+listen-http: ":80"
+
+cache-file: /var/cache/ntfy/cache.db
+cache-duration: 168h
+
+attachment-cache-dir: /var/cache/ntfy/attachments
+attachment-total-size-limit: 2G
+
+template-dir: /etc/ntfy/templates

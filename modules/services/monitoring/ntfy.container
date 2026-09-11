@@ -3,15 +3,15 @@ Description=ntfy Notifications
 After=network-online.target
 
 [Container]
-Image=docker.io/binwiederhier/ntfy:latest
+Image=docker.io/binwiederhier/ntfy:v2.28.0
 ContainerName=ntfy
-AutoUpdate=registry
 PublishPort=8019:80
 
 Exec=serve
 
-Volume=/opt/services/ntfy/config:/var/cache/ntfy:Z
-Volume=/opt/services/ntfy/cache:/etc/ntfy:Z
+Volume=/etc/monitoring/ntfy/server.yml:/etc/ntfy/server.yml:ro
+Volume=/etc/monitoring/ntfy/templates:/etc/ntfy/templates:ro
+Volume=/opt/services/ntfy/cache:/var/cache/ntfy:Z
 
 [Service]
 Restart=always

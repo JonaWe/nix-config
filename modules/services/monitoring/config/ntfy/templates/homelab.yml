@@ -1,0 +1,9 @@
+# Maps Alertmanager severity onto ntfy priority. The built-in "alertmanager"
+# template discards priority from both the header and the query parameter.
+title: "{{if eq .status \"resolved\"}}OK{{else}}ALERT{{end}}: {{.commonLabels.alertname}} on {{.commonLabels.host}}"
+priority: "{{if eq .status \"resolved\"}}low{{else if eq .commonLabels.severity \"critical\"}}urgent{{else}}high{{end}}"
+message: |
+  {{range .alerts}}{{.labels.alertname}} [{{.labels.severity}}]
+  {{.annotations.summary}}
+  {{.annotations.description}}
+  {{end}}
