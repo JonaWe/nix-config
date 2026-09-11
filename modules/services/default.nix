@@ -39,6 +39,7 @@
     ./stirling-pdf/stirling-pdf.nix
     ./omni-tools/omni-tools.nix
     ./convertx/convertx.nix
+    ./bambuddy/bambuddy.nix
     ./nextcloud/nextcloud.nix
     ./minecraft-servers.nix
   ];

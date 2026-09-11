@@ -1,0 +1,23 @@
+[Unit]
+Description=Bambuddy Bambu Lab Print Management
+After=network-online.target
+
+[Container]
+Image=ghcr.io/maziggy/bambuddy:1.2.5.5
+ContainerName=bambuddy
+# Host networking is required: the printers are found over mDNS and talked to
+# over MQTT and FTP on the LAN, none of which survives a bridge.
+Network=host
+
+# The image defaults to 8000, which paperless already holds.
+Environment=PORT=8010
+Environment=TZ=Europe/Berlin
+
+Volume=/opt/services/bambuddy/data:/app/data:Z
+Volume=/opt/services/bambuddy/logs:/app/logs:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
