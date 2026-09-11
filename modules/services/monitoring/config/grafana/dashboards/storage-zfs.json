@@ -834,9 +834,39 @@
           },
           "color": {
             "mode": "palette-classic"
-          }
+          },
+          "unit": "bytes"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hit %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "percent"
+              },
+              {
+                "id": "min",
+                "value": 0
+              },
+              {
+                "id": "max",
+                "value": 100
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -848,7 +878,8 @@
           "mode": "multi",
           "sort": "desc"
         }
-      }
+      },
+      "description": "Hit ratio reads against the right axis; sharing one with a byte count would pin it to the floor."
     },
     {
       "type": "timeseries",
