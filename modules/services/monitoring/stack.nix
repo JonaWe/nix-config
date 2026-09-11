@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.myconf.services.monitoring;
@@ -48,6 +49,17 @@ in {
       "monitoring/grafana/dashboards/host.json" = etcFile ./config/grafana/dashboards/host.json;
       "monitoring/grafana/dashboards/logs.json" = etcFile ./config/grafana/dashboards/logs.json;
       "monitoring/grafana/dashboards/updates.json" = etcFile ./config/grafana/dashboards/updates.json;
+    };
+
+    # Neither reloads rule or routing files on its own, so a switch would
+    # change the file and leave the running config untouched.
+    system.activationScripts.reloadMonitoring = {
+      deps = ["etc"];
+      text = ''
+        for url in http://127.0.0.1:9090/-/reload http://127.0.0.1:9093/-/reload; do
+          ${pkgs.curl}/bin/curl -fsS -X POST --max-time 5 "$url" >/dev/null 2>&1 || true
+        done
+      '';
     };
 
     homelab.services = {
