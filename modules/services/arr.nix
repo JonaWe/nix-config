@@ -695,7 +695,7 @@ in {
 
     systemd.services."docker-recyclarr" = lib.mkIf cfg.recyclarr.enable defaultSystemDConfig;
     virtualisation.oci-containers.containers."recyclarr" = lib.mkIf cfg.recyclarr.enable {
-      image = "ghcr.io/recyclarr/recyclarr:latest";
+      image = "ghcr.io/recyclarr/recyclarr:8.7.2";
       user = "2010:2010";
       environment = {
         "TZ" = "Europe/Berlin";
