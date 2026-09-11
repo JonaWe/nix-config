@@ -565,15 +565,7 @@
       ],
       "options": {
         "showHeader": true,
-        "cellHeight": "sm",
-        "footer": {
-          "show": false,
-          "reducer": [
-            "sum"
-          ],
-          "countRows": false,
-          "fields": ""
-        }
+        "cellHeight": "sm"
       },
       "fieldConfig": {
         "defaults": {
@@ -586,14 +578,36 @@
       },
       "transformations": [
         {
+          "id": "joinByField",
+          "options": {
+            "byField": "device",
+            "mode": "outer"
+          }
+        },
+        {
           "id": "organize",
           "options": {
             "excludeByName": {
-              "Time": true,
-              "job": true,
-              "instance": true,
-              "host": true,
-              "__name__": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "job 1": true,
+              "job 2": true,
+              "job 3": true,
+              "job 4": true,
+              "instance 1": true,
+              "instance 2": true,
+              "instance 3": true,
+              "instance 4": true,
+              "host 1": true,
+              "host 2": true,
+              "host 3": true,
+              "host 4": true,
+              "__name__ 1": true,
+              "__name__ 2": true,
+              "__name__ 3": true,
+              "__name__ 4": true,
               "temperature_type": true,
               "error_log_type": true
             },

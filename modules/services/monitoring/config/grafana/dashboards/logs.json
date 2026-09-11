@@ -41,7 +41,7 @@
         "x": 0,
         "y": 0,
         "w": 24,
-        "h": 10
+        "h": 11
       },
       "targets": [
         {
@@ -61,9 +61,9 @@
         "prettifyLogMessage": false,
         "sortOrder": "Descending",
         "enableLogDetails": true,
-        "dedupStrategy": "none"
+        "dedupStrategy": "signature"
       },
-      "description": "Unfiltered by unit on purpose: this is the panel you read first."
+      "description": "Deduplicated: a service failing every 30 seconds collapses into one row with a counter instead of burying everything else."
     },
     {
       "type": "logs",
@@ -74,9 +74,9 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 10,
-        "w": 12,
-        "h": 9
+        "y": 11,
+        "w": 24,
+        "h": 10
       },
       "targets": [
         {
@@ -84,7 +84,77 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{host=\"ant\", unit=~\"$unit\", level=~\"$level\"}",
+          "expr": "{host=\"ant\", unit=~\"$unit\", level=~\"$level\"} |~ \"$search\"",
+          "refId": "A",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none"
+      },
+      "description": "Pick a unit, a level, or type text to narrow this down. Docker containers appear here under docker.service; use the Container filter on the panel below instead."
+    },
+    {
+      "type": "logs",
+      "title": "Rootless services",
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 21,
+        "w": 12,
+        "h": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "expr": "{host=\"ant\", user_unit=~\"$user_unit\", level=~\"$level\"} |~ \"$search\"",
+          "refId": "A",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none"
+      },
+      "description": "The half that systemctl --failed never shows."
+    },
+    {
+      "type": "logs",
+      "title": "Containers",
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 21,
+        "w": 12,
+        "h": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "expr": "{host=\"ant\", container=~\"$container\", level=~\"$level\"} |~ \"$search\"",
           "refId": "A",
           "queryType": "range"
         }
@@ -100,76 +170,6 @@
       }
     },
     {
-      "type": "logs",
-      "title": "Rootless units",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 10,
-        "w": 12,
-        "h": 9
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{host=\"ant\", user_unit=~\"$user_unit\", level=~\"$level\"}",
-          "refId": "A",
-          "queryType": "range"
-        }
-      ],
-      "options": {
-        "showTime": true,
-        "showLabels": false,
-        "wrapLogMessage": true,
-        "prettifyLogMessage": false,
-        "sortOrder": "Descending",
-        "enableLogDetails": true,
-        "dedupStrategy": "none"
-      },
-      "description": "Invisible to systemctl --failed; journald records them per user manager."
-    },
-    {
-      "type": "logs",
-      "title": "Containers",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 19,
-        "w": 12,
-        "h": 9
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki"
-          },
-          "expr": "{host=\"ant\", container=~\"$container\", level=~\"$level\"}",
-          "refId": "A",
-          "queryType": "range"
-        }
-      ],
-      "options": {
-        "showTime": true,
-        "showLabels": false,
-        "wrapLogMessage": true,
-        "prettifyLogMessage": false,
-        "sortOrder": "Descending",
-        "enableLogDetails": true,
-        "dedupStrategy": "none"
-      },
-      "description": "Docker logs to journald here, so the arr stack shows up too."
-    },
-    {
       "type": "timeseries",
       "title": "Log volume by level",
       "datasource": {
@@ -177,10 +177,10 @@
         "uid": "loki"
       },
       "gridPos": {
-        "x": 12,
-        "y": 19,
+        "x": 0,
+        "y": 31,
         "w": 12,
-        "h": 9
+        "h": 7
       },
       "targets": [
         {
@@ -221,10 +221,70 @@
           "sort": "desc"
         }
       }
+    },
+    {
+      "type": "timeseries",
+      "title": "Busiest units",
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 31,
+        "w": 12,
+        "h": 7
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "expr": "topk(8, sum by (unit) (count_over_time({host=\"ant\", unit=~\".+\"} [$__auto])))",
+          "refId": "A",
+          "queryType": "range"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 8,
+            "showPoints": "never"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "description": "A unit that suddenly gets loud is usually a unit in trouble."
     }
   ],
   "templating": {
     "list": [
+      {
+        "name": "search",
+        "label": "Text contains",
+        "type": "textbox",
+        "query": "",
+        "current": {
+          "text": "",
+          "value": ""
+        }
+      },
       {
         "name": "level",
         "label": "Level",

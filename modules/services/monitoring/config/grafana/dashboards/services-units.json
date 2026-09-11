@@ -364,41 +364,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "node_systemd_unit_state{state=~\"failed|deactivating\"} == 1",
+          "expr": "(node_systemd_unit_state{state=~\"failed|deactivating\"} == 1) or (node_systemd_unit_state{state=\"activating\",type!=\"oneshot\"} == 1) or (homelab_user_unit_state{state=~\"failed|deactivating\"} == 1) or (homelab_user_unit_state{state=\"activating\",type!=\"oneshot\"} == 1)",
           "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "node_systemd_unit_state{state=\"activating\",type!=\"oneshot\"} == 1",
-          "refId": "B",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "homelab_user_unit_state{state=~\"failed|deactivating\"} == 1",
-          "refId": "C",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "homelab_user_unit_state{state=\"activating\",type!=\"oneshot\"} == 1",
-          "refId": "D",
           "instant": true,
           "range": false,
           "format": "table"
@@ -467,19 +434,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(25, node_systemd_service_restart_total > 0)",
+          "expr": "topk(25, node_systemd_service_restart_total > 0) or topk(25, homelab_user_unit_restart_total > 0)",
           "refId": "A",
-          "instant": true,
-          "range": false,
-          "format": "table"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "topk(25, homelab_user_unit_restart_total > 0)",
-          "refId": "B",
           "instant": true,
           "range": false,
           "format": "table"
@@ -520,8 +476,7 @@
             "renameByName": {
               "name": "Unit",
               "user": "Manager",
-              "Value #A": "Restarts",
-              "Value #B": "Restarts"
+              "Value": "Restarts"
             }
           }
         }
@@ -767,6 +722,7 @@
         "refresh": 2,
         "includeAll": true,
         "multi": true,
+        "allValue": ".+",
         "current": {
           "text": "All",
           "value": "$__all"
