@@ -19,8 +19,6 @@ Exec=--voice de_DE-thorsten-medium --data-dir /data
 
 [Service]
 Restart=always
-User=wyoming-piper
-Group=wyoming-piper
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

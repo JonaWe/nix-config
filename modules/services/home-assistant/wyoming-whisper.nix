@@ -7,6 +7,7 @@
 
   homelab.services.wyoming-whisper = {
     containerFile = ./wyoming-whisper.container;
+    rootless = true;
 
     user = "wyoming-whisper";
     group = "wyoming-whisper";

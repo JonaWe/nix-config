@@ -20,8 +20,6 @@ AddDevice=nvidia.com/gpu=all
 
 [Service]
 Restart=always
-User=wyoming-whisper
-Group=wyoming-whisper
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

@@ -7,6 +7,7 @@
 
   homelab.services.wyoming-piper = {
     containerFile = ./wyoming-piper.container;
+    rootless = true;
 
     user = "wyoming-piper";
     group = "wyoming-piper";

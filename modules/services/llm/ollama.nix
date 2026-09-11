@@ -7,6 +7,7 @@
 
   homelab.services.ollama = {
     containerFile = ./ollama.container;
+    rootless = true;
 
     user = "ollama";
     group = "ollama";

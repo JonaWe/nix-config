@@ -22,6 +22,7 @@
     homelab.services.jellyfin = {
       port = 8096;
       containerFile = ./jellyfin.container;
+      rootless = true;
 
       user = "arr";
       group = "arr";

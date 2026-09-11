@@ -19,8 +19,6 @@ AddDevice=nvidia.com/gpu=all
 
 [Service]
 Restart=always
-User=arr
-Group=arr
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
