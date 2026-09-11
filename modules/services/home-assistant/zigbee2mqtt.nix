@@ -13,6 +13,7 @@
     homelab.services.zigbee2mqtt = {
       port = 8929;
       containerFile = ./zigbee2mqtt.container;
+      rootless = true;
 
       user = "zigbee2mqtt";
       group = "zigbee2mqtt";

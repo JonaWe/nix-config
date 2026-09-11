@@ -21,8 +21,6 @@ PodmanArgs=--group-add=keep-groups
 [Service]
 Restart=always
 RestartSec=10
-User=zigbee2mqtt
-Group=zigbee2mqtt
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
