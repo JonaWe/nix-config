@@ -5,7 +5,6 @@ After=network-online.target
 [Container]
 Image=ghcr.io/koenkk/zigbee2mqtt:latest
 ContainerName=zigbee2mqtt
-AutoUpdate=registry
 PublishPort=127.0.0.1:8929:8080
 
 Environment=TZ=Europe/Berlin

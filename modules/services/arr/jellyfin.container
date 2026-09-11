@@ -9,6 +9,15 @@ AutoUpdate=registry
 PublishPort=8096:8096
 PublishPort=7359:7359/udp
 
+# Notify=healthy makes systemd wait for this before calling the unit
+# started, which is what gives podman auto-update a failure to roll back on.
+HealthCmd=curl -fsS http://127.0.0.1:8096/health
+HealthInterval=1m
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=3m
+Notify=healthy
+
 Volume=/opt/services/jellyfin/config:/config:Z
 Volume=/opt/services/jellyfin/cache:/cache:Z
 Mount=type=tmpfs,destination=/cache/transcodes,tmpfs-size=4G

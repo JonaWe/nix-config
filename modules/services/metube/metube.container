@@ -8,6 +8,15 @@ ContainerName=metube
 AutoUpdate=registry
 PublishPort=9209:8081
 
+# Notify=healthy makes systemd wait for this before calling the unit
+# started, which is what gives podman auto-update a failure to roll back on.
+HealthCmd=curl -fsS http://127.0.0.1:8081/
+HealthInterval=1m
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=1m
+Notify=healthy
+
 Environment=TZ=Europe/Berlin
 Environment=UID=2028
 Environment=GID=2028

@@ -5,7 +5,6 @@ After=network-online.target
 [Container]
 Image=ghcr.io/open-webui/open-webui:main
 ContainerName=open-webui
-AutoUpdate=registry
 PublishPort=8014:8080
 
 Volume=/opt/services/open-webui/config:/app/backend/data:Z

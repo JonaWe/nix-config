@@ -8,6 +8,15 @@ ContainerName=omni-tools
 AutoUpdate=registry
 PublishPort=8315:80
 
+# Notify=healthy makes systemd wait for this before calling the unit
+# started, which is what gives podman auto-update a failure to roll back on.
+HealthCmd=curl -fsS http://127.0.0.1:80/
+HealthInterval=1m
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=1m
+Notify=healthy
+
 [Service]
 Restart=always
 

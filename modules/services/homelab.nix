@@ -28,6 +28,23 @@ with lib; let
 in {
   options.homelab.enable = mkEnableOption "Enable homelab service stack";
 
+  options.homelab.autoUpdate = {
+    enable = mkEnableOption ''
+      podman-auto-update for containers labelled AutoUpdate=registry.
+
+      The label is the opt-in: only containers carrying it are touched, and on
+      a pinned tag it does nothing because the digest never moves. Rollback is
+      on by default, but only bites if the unit actually fails to start — see
+      Notify=healthy in the container files.
+    '';
+
+    schedule = mkOption {
+      type = types.str;
+      default = "04:00";
+      description = "systemd calendar expression for the per-user auto-update timer";
+    };
+  };
+
   options.homelab.services = mkOption {
     description = "Declarative Homelab Services";
     default = {};
@@ -146,6 +163,16 @@ in {
 
   config = mkIf (cfg.enable && cfg.services != {}) {
     virtualisation.podman.enable = true;
+
+    # podman ships this unit, so NixOS emits a drop-in rather than replacing it.
+    systemd.user.timers.podman-auto-update = mkIf cfg.autoUpdate.enable {
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnCalendar = cfg.autoUpdate.schedule;
+        RandomizedDelaySec = "30m";
+        Persistent = true;
+      };
+    };
 
     hardware.nvidia-container-toolkit.enable = true;
 

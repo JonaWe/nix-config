@@ -257,6 +257,7 @@
   };
 
   homelab.enable = true;
+  homelab.autoUpdate.enable = true;
 
   security.acme = {
     certs."pinkorca.de".extraDomainNames = [

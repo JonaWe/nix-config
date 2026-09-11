@@ -5,7 +5,6 @@ After=network-online.target
 [Container]
 Image=docker.io/rhasspy/wyoming-piper:latest
 ContainerName=wyoming-piper
-AutoUpdate=registry
 PublishPort=127.0.0.1:10200:10200
 
 Environment=TZ=Europe/Berlin

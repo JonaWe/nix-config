@@ -6,7 +6,6 @@ Requires=paperless-broker.service
 [Container]
 Image=ghcr.io/paperless-ngx/paperless-ngx:latest
 ContainerName=paperless
-AutoUpdate=registry
 Network=host
 
 # Keeps USERMAP_UID below pointing at the host's paperless user.

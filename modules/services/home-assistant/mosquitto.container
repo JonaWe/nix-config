@@ -5,7 +5,6 @@ After=network-online.target
 [Container]
 Image=docker.io/eclipse-mosquitto:latest
 ContainerName=mosquitto
-AutoUpdate=registry
 PublishPort=1883:1883
 
 Environment=TZ=Europe/Berlin

@@ -6,7 +6,6 @@ After=network-online.target
 # Pinned: 3.7.0 demands float16, which this Pascal GPU cannot do.
 Image=lscr.io/linuxserver/faster-whisper:gpu-legacy-v3.6.0-ls63
 ContainerName=wyoming-whisper
-AutoUpdate=registry
 PublishPort=127.0.0.1:10300:10300
 
 Environment=WHISPER_LANG=de

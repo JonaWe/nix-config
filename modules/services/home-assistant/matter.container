@@ -7,7 +7,6 @@ Requires=otbr.service
 Image=ghcr.io/matter-js/python-matter-server:stable
 ; Image=ghcr.io/home-assistant-libs/python-matter-server:
 ContainerName=matter
-AutoUpdate=registry
 Network=host
 
 Environment=TZ=Europe/Berlin

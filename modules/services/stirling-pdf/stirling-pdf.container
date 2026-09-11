@@ -8,6 +8,15 @@ ContainerName=stirling-pdf
 AutoUpdate=registry
 PublishPort=8314:8080
 
+# Notify=healthy makes systemd wait for this before calling the unit
+# started, which is what gives podman auto-update a failure to roll back on.
+HealthCmd=curl -fsS http://127.0.0.1:8080/api/v1/info/status
+HealthInterval=1m
+HealthTimeout=10s
+HealthRetries=3
+HealthStartPeriod=3m
+Notify=healthy
+
 Volume=/opt/services/stirling-pdf/config:/configs:Z
 
 [Service]

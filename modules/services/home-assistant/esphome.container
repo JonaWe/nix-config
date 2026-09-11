@@ -5,7 +5,6 @@ After=network-online.target
 [Container]
 Image=ghcr.io/esphome/esphome:latest
 ContainerName=esphome
-AutoUpdate=registry
 
 Network=host
 
