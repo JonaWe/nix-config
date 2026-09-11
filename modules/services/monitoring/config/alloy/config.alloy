@@ -1,0 +1,63 @@
+// Ships the systemd journal to Loki.
+//
+// One source covers both managers: journald keeps system@*.journal and
+// user-<uid>*.journal side by side, so rootless services are readable here.
+//
+// Endpoint and host label come from the environment and the running machine,
+// so this file is identical on every host.
+
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+loki.write "default" {
+  endpoint {
+    url = sys.env("ALLOY_LOKI_URL")
+  }
+}
+
+loki.relabel "journal" {
+  forward_to = []
+
+  rule {
+    source_labels = ["__journal__systemd_unit"]
+    target_label  = "unit"
+  }
+
+  // The label that makes rootless services searchable.
+  rule {
+    source_labels = ["__journal__systemd_user_unit"]
+    target_label  = "user_unit"
+  }
+
+  rule {
+    source_labels = ["__journal__uid"]
+    target_label  = "uid"
+  }
+
+  // Docker on ant logs to journald, so this is populated for those too.
+  rule {
+    source_labels = ["__journal_container_name"]
+    target_label  = "container"
+  }
+
+  rule {
+    source_labels = ["__journal_priority_keyword"]
+    target_label  = "level"
+  }
+}
+
+loki.source.journal "read" {
+  forward_to    = [loki.write.default.receiver]
+  relabel_rules = loki.relabel.journal.rules
+  path          = "/var/log/journal"
+
+  labels = {
+    job  = "systemd-journal",
+    host = constants.hostname,
+  }
+
+  // Default is 7h; a wider window makes the first start after a rebuild useful.
+  max_age = "24h"
+}

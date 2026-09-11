@@ -247,6 +247,12 @@
       };
     };
     # ntfy.enable = true;
+
+    monitoring = {
+      agents.enable = true;
+      smart.enable = true;
+      updates.enable = true;
+    };
   };
 
   homelab.enable = true;
