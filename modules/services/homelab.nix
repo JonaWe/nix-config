@@ -297,9 +297,12 @@ in {
                   RemainAfterExit = true;
                 };
 
+                # Not recursive: a fresh dataset mounts as root:root, and the
+                # container owns everything it creates below. Repair a tree by
+                # hand if one ever needs it.
                 script = ''
-                  chown -R ${chownUser}:${chownGroup} ${mountPoint}
-                  chmod -R 0775 ${mountPoint}
+                  chown ${chownUser}:${chownGroup} ${mountPoint}
+                  chmod 0775 ${mountPoint}
                 '';
               };
             }
