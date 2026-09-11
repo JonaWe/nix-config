@@ -267,6 +267,27 @@ in {
                 description = "Money Budgeting";
               };
             }
+            {
+              Bambuddy = {
+                icon = "sh-bambuddy.png";
+                href = "https://bambuddy.${serverBaseUrl}/";
+                siteMonitor = "http://127.0.0.1:8010/";
+                description = "Bambu Lab Print Management";
+              };
+            }
+          ];
+        }
+        {
+          "System" = [
+            {
+              Grafana = {
+                icon = "grafana.png";
+                # Straight to the overview rather than Grafana's own landing page.
+                href = "https://grafana.${serverBaseUrl}/d/homelab-overview/homelab-overview";
+                siteMonitor = "http://127.0.0.1:3000/api/health";
+                description = "Monitoring";
+              };
+            }
           ];
         }
         {
