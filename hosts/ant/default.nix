@@ -162,6 +162,8 @@
     };
     jellyfin = {
       enable = true;
+      user = "arr";
+      group = "arr";
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
