@@ -17,6 +17,11 @@ with lib; let
     ${concatMapStringsSep "\n" (envFile: "EnvironmentFile=${toString envFile}") svc.environmentFiles}
   '';
 
+  startTimeoutDropIn = svc: ''
+    [Service]
+    TimeoutStartSec=${toString svc.startTimeout}
+  '';
+
   # Quadlet directory inside a service user's home. The user's systemd
   # instance picks these up on daemon-reload, i.e. at the latest on boot.
   quadletDir = svc: "/var/lib/homes/${svc.user}/.config/containers/systemd";
@@ -56,6 +61,16 @@ in {
 
             The container file must drop User=/Group= and use
             WantedBy=default.target for this to work.
+          '';
+        };
+
+        startTimeout = mkOption {
+          type = types.int;
+          default = 1800;
+          description = ''
+            Seconds a rootless service may take to start, as a quadlet
+            drop-in. Generous because the start includes the image pull.
+            Lower it for a service that should fail fast.
           '';
         };
 
@@ -206,10 +221,13 @@ in {
             "d /var/lib/homes/${svc.user}/.config/containers 0755 ${owner} -"
             "d ${dir} 0755 ${owner} -"
             "L+ ${dir}/${name}.container - - - - ${svc.containerFile}"
-          ]
-          ++ optionals (svc.environmentFiles != []) [
             "d ${dir}/${name}.container.d 0755 ${owner} -"
             # tmpfiles cannot carry multi-line content, so link a store file.
+            "L+ ${dir}/${name}.container.d/10-start-timeout.conf - - - - ${
+              pkgs.writeText "${name}-start-timeout.conf" (startTimeoutDropIn svc)
+            }"
+          ]
+          ++ optionals (svc.environmentFiles != []) [
             "L+ ${dir}/${name}.container.d/10-environment-files.conf - - - - ${
               pkgs.writeText "${name}-environment-files.conf" (environmentFilesDropIn svc)
             }"
