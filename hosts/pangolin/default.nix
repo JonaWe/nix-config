@@ -129,6 +129,11 @@
   environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
 
   programs.nix-ld.enable = true;
+
+  # The Bambu network plugin bundles an OpenSSL whose compiled-in CA path does
+  # not exist, so without this it has no trust store at all.
+  environment.sessionVariables.SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+  security.pki.certificateFiles = [./bambuddy-virtual-printer-ca.crt];
   environment.systemPackages = with pkgs; [
     jdk25
     kicad
