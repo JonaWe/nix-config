@@ -50,7 +50,7 @@ in {
         #   DISABLE_REGISTRATION = true;
         # };
         server = {
-          HTTP_PORT = 3002;
+          HTTP_PORT = 3012;
           ROOT_URL = "https://gitea.ts.pinkorca.de/";
           DOMAIN = "gitea.ts.pinkorca.de";
           SSH_USER = "git";
@@ -97,7 +97,7 @@ in {
       useACMEHost = "pinkorca.de";
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://localhost:3002/";
+        proxyPass = "http://localhost:3012/";
       };
     };
   };

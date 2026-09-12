@@ -162,11 +162,11 @@ in {
               Gitea = {
                 icon = "gitea.png";
                 href = "https://gitea.${serverBaseUrl}/";
-                siteMonitor = "http://localhost:3002";
+                siteMonitor = "http://localhost:3012";
                 description = "Git Server";
                 widget = {
                   type = "gitea";
-                  url = "http://localhost:3002";
+                  url = "http://localhost:3012";
                   key = "{{HOMEPAGE_VAR_GITEA_API_KEY}}";
                 };
               };
