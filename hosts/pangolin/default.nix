@@ -133,6 +133,7 @@
     jdk25
     kicad
     bambu-studio
+    orca-slicer
     cifs-utils
     dnsutils
     fprintd
