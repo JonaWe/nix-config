@@ -9,6 +9,8 @@ ContainerName=bambuddy
 # over MQTT and FTP on the LAN, none of which survives a bridge.
 Network=host
 
+AddCapability=NET_BIND_SERVICE
+
 # The image defaults to 8000, which paperless already holds.
 Environment=PORT=8010
 Environment=TZ=Europe/Berlin

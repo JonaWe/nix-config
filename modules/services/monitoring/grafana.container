@@ -10,7 +10,7 @@ Network=host
 UserNS=keep-id:uid=472,gid=472
 
 Environment=GF_SERVER_HTTP_ADDR=127.0.0.1
-Environment=GF_SERVER_HTTP_PORT=3000
+Environment=GF_SERVER_HTTP_PORT=3300
 Environment=GF_SERVER_ROOT_URL=https://grafana.ts.pinkorca.de
 Environment=GF_ANALYTICS_REPORTING_ENABLED=false
 Environment=GF_ANALYTICS_CHECK_FOR_UPDATES=false

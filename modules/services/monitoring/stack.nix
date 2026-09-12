@@ -95,7 +95,7 @@ in {
         rootless = true;
         user = "grafana";
         group = "grafana";
-        port = 3000;
+        port = 3300;
         zfsMounts = dataset "grafana";
 
         nginx = {
