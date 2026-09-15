@@ -7,6 +7,8 @@ Image=docker.io/library/nextcloud:34.0.3
 ContainerName=nextcloud
 PublishPort=8052:80
 
+UserNS=keep-id:uid=33,gid=33
+
 Environment=TZ=Europe/Berlin
 
 Environment=OVERWRITEPROTOCOL=https
