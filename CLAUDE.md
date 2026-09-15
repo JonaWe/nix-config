@@ -73,6 +73,48 @@ Modules use two custom option namespaces:
 - ZFS dataset mounts with sanoid snapshot policies
 - Permission-setting systemd oneshot services
 
+#### Rootless containers and file ownership
+
+A `rootless = true` service runs podman as its own service user, so **container
+root is that user**, and the ZFS mounts it writes end up owned by that uid.
+
+If the image drops to a non-root user (apache runs as `www-data`, eclipse-mosquitto
+as `mosquitto`), that user is *not* container root and cannot write the mounted
+data — it sees the tree as `root:root 0775`. The failure is a confusing one,
+because the container starts and only writes fail: nextcloud answered 500 with
+SQLite reporting "attempt to write a readonly database".
+
+Map the host's service user onto the uid the image actually runs as:
+
+```
+UserNS=keep-id:uid=33,gid=33
+```
+
+Check the image before adding a service, and again when migrating one to
+rootless. Derive the uid rather than guessing it — from a running container,
+`<host uid of the container PID> - <subuid start from /etc/subuid> + 1`.
+
+`keep-id` also means the entrypoint no longer starts as container root, so an
+image binding a privileged port needs the floor lowered in its own network
+namespace as well:
+
+```
+Sysctl=net.ipv4.ip_unprivileged_port_start=80
+```
+
+Quadlet splits `Environment=` on spaces to separate `KEY=VALUE` pairs. A value
+containing a space needs quotes around the value, not the pair:
+`Environment=TRUSTED_PROXIES="127.0.0.1 10.88.0.0/16"`.
+
+A `nixos-rebuild switch` does **not** restart rootless services — it only relinks
+the quadlet and runs a daemon-reload, so the container keeps its old definition.
+Restart it explicitly:
+
+```bash
+runuser -u <name> -- env XDG_RUNTIME_DIR=/run/user/$(id -u <name>) \
+  systemctl --user restart <name>.service
+```
+
 ### Secrets
 
 Secrets are managed via sops-nix with age encryption. The encrypted secrets live in a separate git repo (`git+ssh://git@github.com/JonaWe/nix-secrets.git`) referenced as the `mysecrets` flake input. Age key is at `/root/.config/sops/age/keys.txt`. Services reference secrets via `config.sops.secrets."path/to/secret".path`.

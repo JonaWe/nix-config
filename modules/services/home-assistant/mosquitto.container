@@ -7,6 +7,8 @@ Image=docker.io/eclipse-mosquitto:2.1.2-alpine
 ContainerName=mosquitto
 PublishPort=1883:1883
 
+UserNS=keep-id:uid=1883,gid=1883
+
 Environment=TZ=Europe/Berlin
 
 Volume=/opt/services/mosquitto/config:/mosquitto/config:Z
