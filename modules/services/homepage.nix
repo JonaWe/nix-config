@@ -135,6 +135,7 @@ in {
                 widget = {
                   type = "jellyfin";
                   url = "http://127.0.0.1:8096";
+                  version = "2";
                   enableBlocks = true;
                   enableNowPlaying = true;
                   enableUser = false;
