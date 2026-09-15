@@ -20,6 +20,8 @@ Environment=TRUSTED_PROXIES="127.0.0.1 10.88.0.0/16"
 
 Volume=/opt/services/nextcloud/data:/var/www/html:Z
 Volume=/etc/localtime:/etc/localtime:ro
+# No :Z here, relabelling the host's postgres runtime dir would break it.
+Volume=/run/postgresql:/run/postgresql:ro
 
 [Service]
 Restart=always
