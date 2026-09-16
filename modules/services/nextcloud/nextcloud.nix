@@ -24,6 +24,10 @@
         enable = true;
         domain = "nextcloud.ts.pinkorca.de";
         websockets = true;
+        extraConfig = ''
+            client_max_body_size 16G;
+            proxy_request_buffering off;
+        '';
       };
 
       zfsMounts = {
