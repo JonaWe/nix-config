@@ -339,11 +339,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1793486523,
-        "narHash": "sha256-56FDQFA+2QvtVNdjkF+hnMV2unQ+SqoNzU2oEBy5rvQ=",
+        "lastModified": 1793489396,
+        "narHash": "sha256-lYYZgzq5MepetEvPuv5ywyWAHaCWswc++LUaBp3wR3c=",
         "ref": "refs/heads/main",
-        "rev": "c95e21bef0cac728b6b5f3b44cebb2c36ec63939",
-        "revCount": 133,
+        "rev": "8f7a05b0ece0d844a822a8eb8403c6fbd8a3eb9e",
+        "revCount": 140,
         "type": "git",
         "url": "ssh://git@github.com/JonaWe/PhotonToMemory.git"
       },
