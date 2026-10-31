@@ -17,7 +17,7 @@
     '';
   };
   users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBjGQP+a5gpUSfha442tu7tTW7rhnp6Mh1e30rR7id+F jona@arch-jona"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOJLRsOWHhKvbKZVd+TQWJ3zk8zGc8MSNboYBk4/bSF1 jona@me.de"
   ];
   services.fail2ban = {
     enable = false;
