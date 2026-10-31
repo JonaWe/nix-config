@@ -51,6 +51,10 @@ in {
     };
     systemd.services.photon-to-memory.unitConfig.RequiresMountsFor =
       lib.mkIf cfg.zfsIntegration.enable ["/var/lib/private/photon-to-memory"];
+    # nofail drops the mount's ordering before local-fs.target; without this a
+    # persistent backup timer could write into the empty mount point on zroot.
+    systemd.services.photon-to-memory-backup.unitConfig.RequiresMountsFor =
+      lib.mkIf cfg.zfsIntegration.enable ["/var/lib/private/photon-to-memory"];
 
     services.sanoid = lib.mkIf cfg.zfsIntegration.enableBackups {
       datasets = {
