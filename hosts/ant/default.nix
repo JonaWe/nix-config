@@ -123,6 +123,11 @@
       zfsIntegration.enable = true;
       zfsIntegration.enableBackups = true;
     };
+    photon-to-memory = {
+      enable = true;
+      zfsIntegration.enable = true;
+      zfsIntegration.enableBackups = true;
+    };
     unifi-controller = {
       enable = true;
     };

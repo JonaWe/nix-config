@@ -42,5 +42,6 @@
     ./bambuddy/bambuddy.nix
     ./nextcloud/nextcloud.nix
     ./minecraft-servers.nix
+    ./photon-to-memory.nix
   ];
 }

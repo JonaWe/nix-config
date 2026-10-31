@@ -23,6 +23,7 @@
       url = "git+ssh://git@github.com/JonaWe/nix-secrets.git?shallow=1";
       flake = false;
     };
+    photon-to-memory.url = "git+ssh://git@github.com/JonaWe/PhotonToMemory.git";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
   outputs = inputs @ {
