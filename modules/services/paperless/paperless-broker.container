@@ -6,6 +6,9 @@ After=network-online.target
 Image=docker.io/library/redis:8
 ContainerName=paperless-broker
 PublishPort=127.0.0.1:63791:6379
+
+UserNS=keep-id:uid=999,gid=999
+
 Volume=/opt/services/paperless/redis:/data:Z
 
 [Service]
