@@ -6,13 +6,15 @@
 }: let
   cfg = config.homelab;
 
-  backupDatasets = lib.flatten (lib.mapAttrsToList (
-      name: svc: let
-        backupMounts = lib.filterAttrs (mp: opts: opts.backup) svc.zfsMounts;
-      in
-        map (opts: opts.dataset) (lib.attrValues backupMounts)
-    )
-    cfg.services);
+  backupDatasets =
+    lib.flatten (lib.mapAttrsToList (
+        name: svc: let
+          backupMounts = lib.filterAttrs (mp: opts: opts.backup) svc.zfsMounts;
+        in
+          map (opts: opts.dataset) (lib.attrValues backupMounts)
+      )
+      cfg.services)
+    ++ cfg.extraBackupDatasets;
 
   datasetString = builtins.concatStringsSep " " backupDatasets;
 in

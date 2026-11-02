@@ -45,6 +45,12 @@ in {
     };
   };
 
+  options.homelab.extraBackupDatasets = mkOption {
+    type = types.listOf types.str;
+    default = [];
+    description = "Datasets outside homelab.services to include in the offsite restic backup.";
+  };
+
   options.homelab.services = mkOption {
     description = "Declarative Homelab Services";
     default = {};

@@ -41,6 +41,7 @@
     ./convertx/convertx.nix
     ./bambuddy/bambuddy.nix
     ./nextcloud/nextcloud.nix
+    ./fluxer/fluxer.nix
     ./minecraft-servers.nix
     ./photon-to-memory.nix
   ];

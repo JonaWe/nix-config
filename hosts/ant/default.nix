@@ -252,6 +252,7 @@
       };
     };
     # ntfy.enable = true;
+    fluxer.enable = true;
 
     monitoring = {
       agents.enable = true;
