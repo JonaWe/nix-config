@@ -262,6 +262,16 @@
     };
   };
 
+  # The 980 occasionally reports a single 84 C composite reading while idle,
+  # setting critical warning bit 1. Ignore that bit and move the critical
+  # limit above the bogus value; sustained heat still raises DiskTemperatureHigh.
+  services.smartd.devices = [
+    {
+      device = "/dev/disk/by-id/nvme-Samsung_SSD_980_500GB_S64DNL0T513845T";
+      options = "-H 0xfd -W 4,70,85";
+    }
+  ];
+
   homelab.enable = true;
   homelab.autoUpdate.enable = true;
 
